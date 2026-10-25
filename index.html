@@ -2,592 +2,864 @@
 <html lang="th">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <meta name="format-detection" content="telephone=no">
-  <meta name="referrer" content="no-referrer">
-  <title>ป้าเข็ม ขายของ | Shopee Official Affiliate Hub</title>
-  
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="pa-khem-avatar.png">
-
-  <!-- Google Fonts: Kanit & Prompt -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ปลาแดดเดียว ป้าเข็ม คัดพิเศษ | คลังสินค้าแท้ 100% สด สะอาด ไร้ฝุ่น</title>
+  <meta name="description" content="ปลาแดดเดียวสูตรโบราณ ป้าเข็ม คัดพิเศษ 7 หมวดหมู่ยอดนิยม: ปลาสลิดบางบ่อ, หมึกไข่ปากน้ำปราณ, ปลาหลดธรรมชาติ, ปลาช่อนแม่ลา, ปลากุเลาตากใบ, ปลานิล, ปลาดุก, ปลาสวาย ซีลสูญญากาศส่งตรงถึงบ้าน">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Canvas Confetti -->
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Prompt', 'sans-serif'],
-            kanit: ['Kanit', 'sans-serif'],
-          },
-          colors: {
-            shopee: {
-              DEFAULT: '#ee4d2d',
-              dark: '#d03b1f',
-              light: '#ff5722',
-              bg: '#f5f5f5'
-            }
-          }
-        }
-      }
-    }
-  </script>
-
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    body {
-      background-color: #f8fafc;
-      font-family: 'Prompt', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      -webkit-tap-highlight-color: transparent;
+    :root {
+      --primary: #c2410c;
+      --primary-hover: #9a3412;
+      --primary-light: #fff7ed;
+      --accent: #059669;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --border: #e2e8f0;
+      --radius: 16px;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+      --shadow-md: 0 4px 14px rgba(0,0,0,0.08);
+      --shadow-lg: 0 10px 25px rgba(0,0,0,0.12);
     }
-    .hide-scrollbar::-webkit-scrollbar {
-      display: none;
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Prompt', sans-serif; -webkit-tap-highlight-color: transparent; }
+    body { background-color: var(--bg); color: var(--text-main); line-height: 1.5; padding-bottom: 90px; }
+    .container { max-width: 900px; margin: 0 auto; padding: 16px; }
+
+    /* Header Nav */
+    header {
+      background: #ffffff;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 12px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: var(--shadow-sm);
     }
-    .hide-scrollbar {
-      -ms-overflow-style: none;
-      scrollbar-width: none;
+    .logo-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+      font-size: 1.15rem;
+      color: var(--primary);
+      text-decoration: none;
     }
-    .line-clamp-2 {
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
+    .header-links { display: flex; gap: 8px; align-items: center; }
+    .line-btn-nav {
+      background: #06c755;
+      color: #fff;
+      padding: 6px 14px;
+      border-radius: 99px;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .admin-link-nav {
+      background: #f1f5f9;
+      color: #334155;
+      padding: 6px 12px;
+      border-radius: 99px;
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 600;
+      border: 1px solid var(--border);
+    }
+
+    /* Hero Banner */
+    .hero-banner {
+      background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%);
+      color: white;
+      border-radius: var(--radius);
+      padding: 24px 20px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-md);
+      position: relative;
       overflow: hidden;
     }
+    .hero-banner::after {
+      content: '🐟';
+      position: absolute;
+      right: -20px;
+      bottom: -30px;
+      font-size: 8rem;
+      opacity: 0.15;
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.2);
+      backdrop-filter: blur(4px);
+      padding: 4px 12px;
+      border-radius: 99px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .hero-title { font-size: 1.6rem; font-weight: 700; line-height: 1.25; margin-bottom: 8px; }
+    .hero-desc { font-size: 0.92rem; opacity: 0.95; line-height: 1.45; max-width: 600px; }
+
+    /* 4 Trust USPs */
+    .usp-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+    @media(min-width: 640px) { .usp-grid { grid-template-columns: repeat(4, 1fr); } }
+    .usp-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: var(--shadow-sm);
+    }
+    .usp-icon { font-size: 1.5rem; }
+    .usp-text strong { display: block; font-size: 0.85rem; color: #1e293b; }
+    .usp-text span { font-size: 0.72rem; color: var(--text-muted); }
+
+    /* Category Filter Tabs */
+    .filter-section {
+      margin-bottom: 16px;
+    }
+    .section-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #0f172a;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .filter-tabs {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 6px;
+      scrollbar-width: none;
+    }
+    .filter-tabs::-webkit-scrollbar { display: none; }
+    .tab-pill {
+      background: #fff;
+      border: 1px solid var(--border);
+      padding: 8px 16px;
+      border-radius: 99px;
+      font-size: 0.88rem;
+      font-weight: 500;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: all 0.2s;
+      color: #475569;
+    }
+    .tab-pill.active {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+      box-shadow: 0 2px 8px rgba(194, 65, 12, 0.3);
+    }
+
+    /* Product Cards Grid */
+    .product-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    @media(min-width: 600px) {
+      .product-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    .prod-card {
+      background: #fff;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s ease;
+      position: relative;
+    }
+    .prod-card:hover {
+      border-color: #fdba74;
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+    .prod-card.selected {
+      border-color: var(--primary);
+      background: var(--primary-light);
+      box-shadow: 0 0 0 2px var(--primary);
+    }
+    .card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+    .prod-badge {
+      background: #fef3c7;
+      color: #92400e;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 6px;
+    }
+    .prod-badge.hot { background: #fee2e2; color: #b91c1c; }
+    .prod-badge.rare { background: #ede9fe; color: #6d28d9; }
+    .prod-badge.royal { background: #fef08a; color: #854d0e; }
+    
+    .prod-name { font-size: 1.05rem; font-weight: 700; color: #1e293b; margin-bottom: 4px; line-height: 1.3; }
+    .prod-desc { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 12px; line-height: 1.45; }
+    
+    .prod-spec-row {
+      display: flex;
+      gap: 8px;
+      font-size: 0.78rem;
+      background: #f8fafc;
+      padding: 6px 10px;
+      border-radius: 8px;
+      margin-bottom: 14px;
+      color: #334155;
+    }
+    .prod-price-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: auto;
+      padding-top: 10px;
+      border-top: 1px dashed var(--border);
+    }
+    .price-box .price { font-size: 1.35rem; font-weight: 700; color: var(--primary); }
+    .price-box .unit { font-size: 0.78rem; color: var(--text-muted); }
+    .price-box .orig-price { font-size: 0.8rem; text-decoration: line-through; color: #94a3b8; margin-left: 4px; }
+    
+    .btn-select-prod {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.2s;
+    }
+    .btn-select-prod:hover { background: var(--primary-hover); }
+
+    /* Order Form Section */
+    .order-box {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow-md);
+      margin-bottom: 32px;
+    }
+    .selected-summary {
+      background: var(--primary-light);
+      border: 1.5px solid #fdba74;
+      border-radius: 12px;
+      padding: 14px 18px;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .selected-summary .prod-info strong { display: block; font-size: 1rem; color: #9a3412; }
+    .selected-summary .prod-info span { font-size: 0.82rem; color: #7c2d12; }
+    .selected-summary .total-price { font-size: 1.4rem; font-weight: 700; color: #c2410c; }
+
+    .form-group { margin-bottom: 14px; }
+    .form-group label { display: block; font-size: 0.88rem; font-weight: 600; margin-bottom: 6px; color: #334155; }
+    .form-control {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border 0.2s;
+    }
+    .form-control:focus { border-color: var(--primary); }
+
+    .pay-methods { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 6px; }
+    .pay-opt {
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      padding: 12px;
+      text-align: center;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .pay-opt.active {
+      border-color: var(--accent);
+      background: #ecfdf5;
+      color: #065f46;
+    }
+
+    .btn-submit {
+      width: 100%;
+      background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%);
+      color: white;
+      border: none;
+      padding: 16px;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(194, 65, 12, 0.35);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      margin-top: 18px;
+      transition: transform 0.1s;
+    }
+    .btn-submit:active { transform: scale(0.99); }
+    .btn-submit:disabled { opacity: 0.7; cursor: not-allowed; }
+
+    /* Sticky Bottom Order Bar */
+    .sticky-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #fff;
+      border-top: 1px solid var(--border);
+      padding: 12px 16px;
+      box-shadow: 0 -4px 15px rgba(0,0,0,0.08);
+      z-index: 90;
+    }
+    .sticky-bar-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .sticky-btn {
+      background: var(--primary);
+      color: #fff;
+      padding: 10px 22px;
+      border-radius: 99px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    /* Success Modal */
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.65);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+    .modal-box {
+      background: #fff;
+      width: 100%;
+      max-width: 440px;
+      border-radius: 20px;
+      padding: 24px;
+      text-align: center;
+    }
+    .modal-box .icon { font-size: 3.5rem; margin-bottom: 8px; }
   </style>
 </head>
-<body class="text-gray-800 pb-16 antialiased selection:bg-orange-500 selection:text-white">
+<body>
 
-  <!-- 1. Top Announcement Bar -->
-  <div class="bg-gradient-to-r from-red-600 via-orange-600 to-amber-600 text-white text-[11px] sm:text-xs py-1.5 px-4 text-center font-medium shadow-sm flex items-center justify-center gap-2">
-    <span class="animate-pulse">🔥</span>
-    <span>ดีล Shopee แนะนำพิเศษโดย <b>ป้าเข็ม</b> ของแท้ 100% คัดสรรราคาคุ้มค่า</span>
-    <span class="hidden sm:inline bg-white/20 px-2 py-0.5 rounded-full text-[10px]">อัปเดตตลอด 24 ชม.</span>
-  </div>
-
-  <!-- 2. Sticky Header & Search Bar -->
-  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm">
-    <div class="max-w-4xl mx-auto px-3 sm:px-4 py-2.5">
-      <div class="flex items-center justify-between gap-3">
-        
-        <!-- Logo / Avatar -->
-        <a href="#" onclick="clearSearch(); return false;" class="flex items-center gap-2.5 shrink-0 group">
-          <div class="w-10 h-10 rounded-full overflow-hidden border-2 border-orange-500 shadow-sm bg-orange-100 shrink-0 relative">
-            <img 
-              src="pa-khem-avatar.png" 
-              alt="ป้าเข็ม" 
-              class="w-full h-full object-cover"
-              onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=ป้าเข็ม&background=ee4d2d&color=fff&size=128&bold=true';"
-            >
-          </div>
-          <div class="flex flex-col">
-            <span class="font-kanit font-extrabold text-sm sm:text-base text-gray-900 leading-tight group-hover:text-orange-600 transition-colors flex items-center gap-1">
-              ป้าเข็ม ขายของ <span class="text-[10px] bg-red-100 text-red-600 font-bold px-1.5 py-0.2 rounded-full">Mall</span>
-            </span>
-            <span class="text-[10px] text-gray-500 font-normal">
-              ผู้ช่วยค้นหาดีล Shopee แท้ 100%
-            </span>
-          </div>
-        </a>
-
-        <!-- Action Buttons -->
-        <div class="flex items-center gap-2">
-          
-
-          <!-- LINE OA Link -->
-          <a 
-            href="https://line.me/R/ti/p/@137gsref" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            class="bg-[#06C755] hover:bg-[#05b34c] text-white text-xs font-semibold px-2.5 py-1.5 rounded-xl shadow-sm flex items-center gap-1 active:scale-95 transition-all"
-          >
-            <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 5.92 2 10.75c0 2.96 1.7 5.58 4.29 7.15-.19.68-.7 2.47-.8 2.85-.13.48.18.47.38.34.16-.1 2.21-1.51 3.12-2.13.98.27 2.02.42 3.01.42 5.52 0 10-3.92 10-8.75S17.52 2 12 2z"/></svg>
-            <span class="hidden sm:inline">ทักแชท</span>
-          </a>
-        </div>
-      </div>
-
-      <!-- Search Input Box -->
-      <div class="mt-2.5 relative">
-        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-        </div>
-        <input 
-          type="text" 
-          id="searchInput" 
-          oninput="handleSearchDebounced(event)" 
-          placeholder="ค้นหาชื่อสินค้า เช่น หูฟัง, หม้อทอด, เซรั่ม, พัดลม..." 
-          class="w-full pl-9 pr-9 py-2 bg-gray-100 hover:bg-gray-100/80 focus:bg-white text-xs sm:text-sm rounded-xl border border-transparent focus:border-orange-500 focus:ring-2 focus:ring-orange-200 outline-none transition-all placeholder-gray-400"
-          autocomplete="off"
-        >
-        <button 
-          id="clearBtn" 
-          onclick="clearSearch()" 
-          class="hidden absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 text-sm"
-        >
-          ✕
-        </button>
-      </div>
-    </div>
-
-    <!-- Category Tabs Carousel -->
-    <div class="bg-gradient-to-r from-orange-600 via-orange-500 to-amber-600 py-1.5 px-3">
-      <div class="max-w-4xl mx-auto flex items-center gap-1.5 overflow-x-auto hide-scrollbar" id="categoryTabs">
-        <!-- Injected via JS -->
-      </div>
+  <!-- Navigation -->
+  <header>
+    <a href="#" class="logo-badge">
+      🐟 ป้าเข็ม คัดพิเศษ
+    </a>
+    <div class="header-links">
+      <a href="admin.html" class="admin-link-nav">⚙️ ระบบแอดมิน</a>
+      <a href="https://lin.ee/o9Kjp1N" target="_blank" class="line-btn-nav">
+        <span>💬 ทัก LINE</span>
+      </a>
     </div>
   </header>
 
-  <!-- Main Content Container -->
-  <main class="max-w-4xl mx-auto px-3 sm:px-4 pt-3.5">
-
+  <main class="container">
+    
     <!-- Hero Banner -->
-    <div class="bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 rounded-2xl p-4 text-white shadow-sm flex items-center justify-between relative overflow-hidden">
-      <div class="z-10 max-w-[75%]">
-        <span class="inline-block bg-white/20 backdrop-blur-md text-[11px] font-semibold px-2.5 py-0.5 rounded-full mb-1">
-          ✨ Shopee Official Affiliate Hub
-        </span>
-        <h2 class="text-base sm:text-lg font-bold leading-tight" id="heroBannerTitle">
-          คลังสินค้าแนะนำพิเศษ Shopee ของแท้ 100%
-        </h2>
-        <p class="text-xs text-orange-100 mt-0.5">
-          ตรวจเช็คลิงก์แท้และโปรโมชั่นแล้วทุกชิ้น ช้อปปลอดภัยผ่านแอป Shopee โดยตรง
-        </p>
-      </div>
-      <div class="text-right z-10 flex flex-col items-end">
-        <span class="text-3xl font-extrabold tracking-tight font-kanit">4.9★</span>
-        <span class="text-[10px] text-yellow-200">คะแนนรีวิวเฉลี่ย</span>
-      </div>
-      <div class="absolute -right-6 -bottom-6 w-32 h-32 bg-white/10 rounded-full blur-xl"></div>
+    <div class="hero-banner">
+      <span class="hero-badge">🌟 ปลาแดดเดียวสูตรโบราณ คัดพิเศษ 100%</span>
+      <h1 class="hero-title">เค็มกำลังดี เนื้อแน่นนุ่มฟู<br>ตากในมุ้งโซล่าร์ สะอาดไร้ฝุ่นแมลงวัน</h1>
+      <p class="hero-desc">
+        คัดสรร 7 หมวดหมู่ปลาและอาหารทะเลแดดเดียวยอดนิยม ส่งตรงจากแหล่งผลิตดั้งเดิม (บางบ่อ, ปากน้ำปราณ, สิงห์บุรี แม่ลา, ตากใบ) ซีลสูญญากาศแช่แข็งสดใหม่ถึงหน้าบ้าน
+      </p>
     </div>
 
-    <!-- Featured Direct Product (ปลาแดดเดียว ป้าเข็ม คัดพิเศษ) -->
-    <div class="mt-3.5 bg-gradient-to-r from-amber-50 via-orange-50 to-red-50 border-2 border-orange-300 rounded-2xl p-3.5 sm:p-4 shadow-sm flex flex-col sm:flex-row items-center gap-4 relative overflow-hidden">
-      <div class="relative shrink-0 w-full sm:w-36 h-36 rounded-xl overflow-hidden shadow-md border border-orange-200 bg-orange-100">
-        <img src="fried_fish.jpg" alt="ปลาแดดเดียวสูตรโบราณ ป้าเข็ม" class="w-full h-full object-cover">
-        <span class="absolute top-2 left-2 bg-red-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow">⭐ สินค้าเด็ดป้าเข็ม</span>
-      </div>
-      <div class="flex-1 w-full text-center sm:text-left">
-        <div class="flex flex-wrap items-center justify-center sm:justify-start gap-1.5 mb-1">
-          <span class="bg-amber-100 text-amber-800 text-[10px] font-bold px-2 py-0.5 rounded-full">🐟 ปลาแดดเดียวสูตรโบราณ</span>
-          <span class="bg-emerald-100 text-emerald-700 text-[10px] font-bold px-2 py-0.5 rounded-full">🌿 ปลอดสาร 100%</span>
-          <span class="bg-blue-100 text-blue-700 text-[10px] font-bold px-2 py-0.5 rounded-full">❄️ ขนส่งห้องเย็น</span>
+    <!-- 4 Trust USPs -->
+    <div class="usp-grid">
+      <div class="usp-card">
+        <span class="usp-icon">🌿</span>
+        <div class="usp-text">
+          <strong>ไร้สารเคมี 100%</strong>
+          <span>ไม่แช่ฟอร์มาลีน ไม่ใส่ดินประสิว</span>
         </div>
-        <h3 class="font-kanit font-extrabold text-base sm:text-lg text-gray-900 leading-snug">
-          ปลาแดดเดียว ป้าเข็ม คัดพิเศษ (สูตรโบราณ เค็มพอดี ตากมุ้งไร้ฝุ่นแมลงวัน)
-        </h3>
-        <p class="text-xs text-gray-600 mt-1 line-clamp-2">
-          "เค็มกำลังดี เนื้อแน่นนุ่มฟู ตากในมุ้งไร้ฝุ่นแมลงวัน ทอดแล้วหอมฟุ้งจนต้องเติมข้าว" สะอาด ปลอดภัย ซีลสูญญากาศส่งตรงถึงบ้าน
-        </p>
-        <div class="mt-3 flex items-center justify-center sm:justify-start gap-2.5">
-          <a href="fish.html" class="bg-gradient-to-r from-red-600 to-orange-500 hover:from-red-700 hover:to-orange-600 text-white font-bold text-xs sm:text-sm px-5 py-2.5 rounded-xl shadow-md active:scale-95 transition-all flex items-center gap-1.5">
-            <span>🛒 สั่งซื้อตรงกับป้าเข็ม (COD / โอน)</span>
-            <span class="text-xs">➔</span>
-          </a>
-          <a href="https://line.me/R/ti/p/@137gsref" target="_blank" rel="noopener noreferrer" class="bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 text-xs font-semibold px-3 py-2.5 rounded-xl transition-all">
-            สอบถามป้าเข็ม LINE
-          </a>
+      </div>
+      <div class="usp-card">
+        <span class="usp-icon">🧂</span>
+        <div class="usp-text">
+          <strong>หมักเค็มพอดี</strong>
+          <span>เกลือสมุทร 3% เค็มกลมกล่อม</span>
+        </div>
+      </div>
+      <div class="usp-card">
+        <span class="usp-icon">☀️</span>
+        <div class="usp-text">
+          <strong>มุ้งชีวภาพปิด</strong>
+          <span>ตากพลังงานแสงอาทิตย์ ไร้แมลง</span>
+        </div>
+      </div>
+      <div class="usp-card">
+        <span class="usp-icon">❄️</span>
+        <div class="usp-text">
+          <strong>ซีลสูญญากาศ</strong>
+          <span>ส่งพร้อมเจลเก็บความเย็น</span>
         </div>
       </div>
     </div>
 
-    <!-- Filter & Result Stats Bar -->
-    <div class="flex items-center justify-between mt-3.5 mb-2 text-xs text-gray-500">
-      <div class="flex items-center gap-1.5">
-        <span>แสดง</span>
-        <span id="productCount" class="font-bold text-orange-600 bg-orange-50 px-2 py-0.5 rounded-md border border-orange-200">กำลังโหลด...</span>
+    <!-- Category Filter Tabs -->
+    <section class="filter-section">
+      <div class="section-title">
+        <span>📦 แคตตาล็อกสินค้าพร้อมส่ง (7 หมวดหมู่ยอดนิยม)</span>
+        <span style="font-size:0.85rem; color:var(--accent); font-weight:600;">พร้อมส่งทันที ✅</span>
       </div>
-      <div class="flex gap-1.5">
-        <button id="sortSalesBtn" class="px-2.5 py-1 rounded-lg bg-orange-50 border border-orange-300 text-orange-600 font-bold transition-all text-xs" onclick="setSortMode('sales')">
-          🔥 ขายดีสุด
+      <div class="filter-tabs">
+        <button class="tab-pill active" onclick="filterCategory('all', this)">🌟 ทั้งหมด (11)</button>
+        <button class="tab-pill" onclick="filterCategory('slid', this)">🥇 ปลาสลิดบางบ่อ (4)</button>
+        <button class="tab-pill" onclick="filterCategory('squid', this)">🦑 หมึกไข่ปากน้ำปราณ (1)</button>
+        <button class="tab-pill" onclick="filterCategory('lod_chon', this)">🌿 ปลาช่อน & ปลาหลด (2)</button>
+        <button class="tab-pill" onclick="filterCategory('kulao', this)">👑 ปลากุเลาตากใบ (1)</button>
+        <button class="tab-pill" onclick="filterCategory('mass', this)">🌾 ปลานิล / ดุก / สวาย (3)</button>
+      </div>
+    </section>
+
+    <!-- Product Cards Grid -->
+    <div class="product-grid" id="productGrid">
+      <!-- Populated dynamically via JS -->
+    </div>
+
+    <!-- Order Form Section -->
+    <section class="order-box" id="order-section">
+      <h3 style="font-size:1.25rem; font-weight:700; margin-bottom:14px; color:#0f172a;">
+        📝 สั่งซื้อสินค้า & ข้อมูลจัดส่ง (เก็บเงินปลายทางได้)
+      </h3>
+
+      <!-- Selected Item Display -->
+      <div class="selected-summary">
+        <div class="prod-info">
+          <strong id="displaySelectedName">ปลาสลิดแดดเดียว คัดพิเศษ (ไซส์กลาง 1 กิโลกรัม)</strong>
+          <span id="displaySelectedSpec">ขนาด 1,000 กรัม (7 - 8 ตัว / กก.) | ส่งรถเย็น</span>
+        </div>
+        <div class="total-price" id="displaySelectedPrice">290 ฿</div>
+      </div>
+
+      <form id="orderForm" onsubmit="submitOrder(event)">
+        <div class="form-group">
+          <label for="custName">ชื่อ-นามสกุล ผู้รับ *</label>
+          <input type="text" id="custName" class="form-control" placeholder="เช่น คุณสมชาย สบายดี" required>
+        </div>
+
+        <div class="form-group">
+          <label for="custPhone">เบอร์โทรศัพท์ (สำหรับพนักงานส่งของ) *</label>
+          <input type="tel" id="custPhone" class="form-control" placeholder="เช่น 0812345678" required pattern="[0-9]{9,10}">
+        </div>
+
+        <div class="form-group">
+          <label for="custAddress">ที่อยู่จัดส่งโดยละเอียด *</label>
+          <textarea id="custAddress" class="form-control" rows="3" placeholder="บ้านเลขที่, ซอย, ถนน, ตำบล, อำเภอ, จังหวัด, รหัสไปรษณีย์" required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>วิธีชำระเงิน *</label>
+          <div class="pay-methods">
+            <div class="pay-opt active" id="pay-cod" onclick="selectPayment('COD')">
+              🚚 เก็บเงินปลายทาง (COD)
+            </div>
+            <div class="pay-opt" id="pay-transfer" onclick="selectPayment('TRANSFER')">
+              💳 โอนเงิน / ทักไลน์
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="custNote">หมายเหตุเพิ่มเติม (ถ้ามี)</label>
+          <input type="text" id="custNote" class="form-control" placeholder="เช่น ฝากไว้ป้อมยาม, โทรแจ้งก่อนส่ง">
+        </div>
+
+        <button type="submit" class="btn-submit" id="submitBtn">
+          <span>ยืนยันการสั่งซื้อ (<span id="btnPrice">290</span> บาท)</span>
+          <span>👉</span>
         </button>
-        <button id="sortRatingBtn" class="px-2.5 py-1 rounded-lg bg-white border border-gray-200 text-gray-700 font-medium transition-all text-xs" onclick="setSortMode('rating')">
-          ⭐ เรตติ้งสูง
-        </button>
-      </div>
-    </div>
-
-    <!-- Active Search Filter Alert -->
-    <div id="searchAlert" class="hidden bg-orange-50 border border-orange-200 rounded-xl p-2.5 mb-3 flex items-center justify-between text-xs text-orange-800">
-      <div class="flex items-center gap-1.5">
-        <span>🔍 ผลค้นหาคำว่า:</span>
-        <b id="searchAlertKeyword" class="text-orange-600"></b>
-      </div>
-      <button onclick="clearSearch()" class="text-[11px] bg-white border border-orange-300 text-orange-700 px-2 py-0.5 rounded-md hover:bg-orange-100 font-medium">
-        ✕ ล้างการค้นหา
-      </button>
-    </div>
-
-    <!-- Product Grid -->
-    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3" id="productGrid">
-      <!-- Loading Skeletons -->
-      <div class="bg-white rounded-xl p-3 shadow-sm animate-pulse h-64 border border-gray-100"></div>
-      <div class="bg-white rounded-xl p-3 shadow-sm animate-pulse h-64 border border-gray-100"></div>
-      <div class="bg-white rounded-xl p-3 shadow-sm animate-pulse h-64 border border-gray-100"></div>
-      <div class="bg-white rounded-xl p-3 shadow-sm animate-pulse h-64 border border-gray-100"></div>
-    </div>
-
-    <!-- Load More Button -->
-    <div id="loadMoreArea" class="text-center mt-6 hidden">
-      <button 
-        onclick="loadMoreProducts()" 
-        class="bg-white border-2 border-orange-500 text-orange-600 hover:bg-orange-50 font-bold px-6 py-2.5 rounded-full shadow-sm text-xs transition-all active:scale-95 flex items-center gap-1.5 mx-auto"
-      >
-        <span>👇 ดูสินค้าเพิ่มเติม</span>
-        <span class="bg-orange-100 text-orange-700 px-2 py-0.2 rounded-full text-[10px] font-extrabold" id="remainingCount">+0</span>
-      </button>
-    </div>
-
-    <!-- Empty State -->
-    <div id="emptyState" class="hidden text-center py-16 bg-white rounded-2xl shadow-sm mt-4 border border-gray-100">
-      <div class="w-16 h-16 mx-auto mb-3 text-orange-400">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-      </div>
-      <h3 class="text-sm font-bold text-gray-800">ไม่พบสินค้าที่คุณค้นหา</h3>
-      <p class="text-xs text-gray-500 mt-1">ลองค้นหาด้วยคำอื่น หรือเลือกดูหมวดหมู่ด้านบนนะลูก 😊</p>
-      <button onclick="clearSearch()" class="mt-4 bg-orange-600 text-white text-xs font-bold px-4 py-2 rounded-full shadow hover:bg-orange-700">
-        ดูสินค้าทั้งหมด
-      </button>
-    </div>
+      </form>
+    </section>
 
   </main>
 
-  
+  <!-- Sticky Bottom Bar -->
+  <div class="sticky-bar">
+    <div class="sticky-bar-inner">
+      <div>
+        <div style="font-size:0.8rem; color:var(--text-muted);" id="stickyProdName">ปลาสลิดกลาง (1kg)</div>
+        <strong style="font-size:1.15rem; color:var(--primary);" id="stickyPriceText">290 บาท</strong>
+      </div>
+      <a href="#order-section" class="sticky-btn">สั่งซื้อทันที 🛒</a>
+    </div>
+  </div>
 
-  <!-- JavaScript Application Logic -->
+  <!-- Success Confirmation Modal -->
+  <div class="modal-backdrop" id="successModal">
+    <div class="modal-box">
+      <div class="icon">🎉</div>
+      <h3 style="font-size:1.35rem; font-weight:700; margin-bottom:6px;">บันทึกออเดอร์สำเร็จแล้วค่ะ!</h3>
+      <div style="background:#fffbeb; border:1px dashed #f59e0b; border-radius:12px; padding:12px; margin:14px 0; text-align:left; font-size:0.88rem; line-height:1.5;">
+        <div><b>รหัสออเดอร์:</b> <span id="modalOrderId" style="color:var(--primary); font-weight:700;"></span></div>
+        <div id="modalSummary"></div>
+      </div>
+      <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:16px;">
+        ป้าเข็มได้รับข้อมูลเรียบร้อย กำลังเตรียมแพ็คสดใหม่ใส่ซองฟอยล์พร้อมเจลเก็บความเย็นส่งถึงหน้าบ้านคุณนะคะ 💕
+      </p>
+      <a href="https://lin.ee/o9Kjp1N" class="line-btn-nav" style="justify-content:center; width:100%; padding:12px; font-size:0.95rem; margin-bottom:8px;">
+        💬 คุยกับป้าเข็มผ่าน LINE ต่อ
+      </a>
+      <button onclick="closeModal()" style="background:none; border:none; color:#64748b; font-size:0.88rem; cursor:pointer; padding:6px;">
+        ปิดหน้าต่างนี้
+      </button>
+    </div>
+  </div>
+
   <script>
-    const SUPABASE_URL = "https://usqhvujqmnxqrdoovvnp.supabase.co";
-    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVzcWh2dWpxbW54cXJkb292dm5wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQyOTc4NjAsImV4cCI6MjA2OTg3Mzg2MH0.3kCGGAe1OoSJ_SCN_NDSdnKep1hXIMgMxR1lBd_i2eI";
-
-    let allProducts = [];
-    let currentCategory = 'all';
-    let currentSearch = '';
-    let sortMode = 'sales';
-    let displayLimit = 24;
-    let searchDebounceTimer = null;
-    let isFullCatalogLoaded = false;
-
-    const CATEGORIES = [
-      { id: 'all', label: '🔥 ทั้งหมด' },
-      { id: 'ของใช้ในบ้าน', label: '🏠 ของใช้ในบ้าน' },
-      { id: 'เครื่องใช้ไฟฟ้า', label: '⚡ เครื่องใช้ไฟฟ้า' },
-      { id: 'สัตว์เลี้ยง', label: '🐾 สัตว์เลี้ยง' },
-      { id: 'เครื่องครัว', label: '🍳 เครื่องครัว' },
-      { id: 'ไอที', label: '💻 ไอที & แกดเจ็ต' },
-      { id: 'สุขภาพ', label: '🩺 สุขภาพ' },
-      { id: 'ความงาม', label: '💄 ความงาม' },
-      { id: 'ยานยนต์', label: '🚗 อุปกรณ์ติดรถ' }
+    // 11 Master Products across 7 popular categories
+    const PRODUCTS = [
+      {
+        sku: 'SKU-SLID-MD-1KG',
+        category: 'slid',
+        name: 'ปลาสลิดแดดเดียว คัดพิเศษ (ไซส์กลาง)',
+        badge: 'ขายดีอันดับ 1 🔥',
+        badgeClass: 'hot',
+        desc: 'ปลาสลิดบางบ่อแท้ คัดไซส์ยอดนิยมประจำบ้าน ตัดหัวควักไส้สะอาด ทอดกรอบนอกนุ่มฟู เค็มกำลังดี',
+        pieces: '7 - 8 ตัว / กิโลกรัม',
+        weight: '1,000 กรัม',
+        price: 290,
+        origPrice: 350
+      },
+      {
+        sku: 'SKU-SLID-MD-500G',
+        category: 'slid',
+        name: 'ปลาสลิดแดดเดียว (ชุดทดลองชิม)',
+        badge: 'ทดลองชิม ✨',
+        badgeClass: '',
+        desc: 'ขนาดครึ่งกิโลกรัม เหมาะสำหรับ 1-2 มื้อ ซีลสูญญากาศแยกเก็บในช่องฟรีซได้นาน 6 เดือน',
+        pieces: '3 - 4 ตัว / แพ็ค',
+        weight: '500 กรัม',
+        price: 160,
+        origPrice: 190
+      },
+      {
+        sku: 'SKU-SLID-MD-2KG',
+        category: 'slid',
+        name: 'ปลาสลิดแดดเดียว (ชุดครอบครัวสุดคุ้ม)',
+        badge: 'สุดคุ้มประหยัด 💰',
+        badgeClass: '',
+        desc: 'บรรจุถุงละ 1 กิโลกรัม 2 ถุงแยกกัน คุ้มค่าที่สุด ประหยัดค่าส่ง ทานได้ทั้งครอบครัว',
+        pieces: '14 - 16 ตัว (2 ถุง)',
+        weight: '2,000 กรัม',
+        price: 550,
+        origPrice: 680
+      },
+      {
+        sku: 'SKU-SLID-JB-1KG',
+        category: 'slid',
+        name: 'ปลาสลิดแดดเดียว ไซส์จัมโบ้พรีเมียม',
+        badge: 'เกรดส่งออก 👑',
+        badgeClass: 'royal',
+        desc: 'ตัวใหญ่พิเศษ เนื้อหนาเป็นลอน มันแทรก ทอดแล้วเนื้อฟูแน่นหนา ไม่ยุบ ซื้อเป็นของฝากยอดเยี่ยม',
+        pieces: '5 - 6 ตัว / กิโลกรัม',
+        weight: '1,000 กรัม',
+        price: 340,
+        origPrice: 420
+      },
+      {
+        sku: 'SKU-SQUID-EG-500G',
+        category: 'squid',
+        name: 'หมึกไข่แดดเดียว ปากน้ำปราณบุรีแท้',
+        badge: 'ซีฟู้ดยอดฮิต 🦑',
+        badgeClass: 'hot',
+        desc: 'หมึกสดจากเรือไดหมึกปากน้ำปราณ ตาก 1 แดดพอผิวนอกตึง เนื้อเด้งกรอบ ไข่แน่นเต็มท้อง หวานธรรมชาติ',
+        pieces: '6 - 8 ตัว / แพ็ค',
+        weight: '500 กรัม',
+        price: 340,
+        origPrice: 390
+      },
+      {
+        sku: 'SKU-LOD-NAT-500G',
+        category: 'lod_chon',
+        name: 'ปลาหลดแดดเดียว ธรรมชาติแท้',
+        badge: 'ของหายากตามฤดูกาล 🌟',
+        badgeClass: 'rare',
+        desc: 'ปลาหลดแม่น้ำธรรมชาติ 100% ก้างนุ่ม ทอดกรอบเคี้ยวเพลินได้ทั้งตัว ปลายฝนต้นหนาวขายดีจนไม่พอขาย',
+        pieces: '12 - 18 ตัว / แพ็ค',
+        weight: '500 กรัม',
+        price: 350,
+        origPrice: 420
+      },
+      {
+        sku: 'SKU-CHON-MD-1KG',
+        category: 'lod_chon',
+        name: 'ปลาช่อนแดดเดียว แล่ผ่าหลังบั้งเนื้อ',
+        badge: 'สูตรแม่ลา สิงห์บุรี 🌿',
+        badgeClass: '',
+        desc: 'ปลาช่อนธรรมชาติ ไร้กลิ่นสาบโคลน บั้งเนื้อสวย หมักเกลือสมุทร ทอดฟูกรอบนอกนุ่มฉ่ำ',
+        pieces: '4 - 5 ตัว / กิโลกรัม',
+        weight: '1,000 กรัม',
+        price: 360,
+        origPrice: 450
+      },
+      {
+        sku: 'SKU-KULAO-TB-1KG',
+        category: 'kulao',
+        name: 'ปลากุเลาแดดเดียว สูตรตากใบ',
+        badge: 'ราชาแห่งปลาเค็ม 👑',
+        badgeClass: 'royal',
+        desc: 'ปลากุเลาท้องถิ่นตากใบแท้ เนื้อร่วนซุยเป็นเม็ดทราย เค็มน้อย หอมฟุ้ง บีบมะนาวโรยพริกขี้หนูสุดฟิน',
+        pieces: '3 - 4 ตัว / กิโลกรัม',
+        weight: '1,000 กรัม',
+        price: 480,
+        origPrice: 590
+      },
+      {
+        sku: 'SKU-NIL-FL-1KG',
+        category: 'mass',
+        name: 'ปลานิลแดดเดียว แล่แบะผีเสื้อ',
+        badge: 'กึ่งไร้ก้าง ทานง่าย 🌾',
+        badgeClass: '',
+        desc: 'ปลานิลกระชังน้ำไหล แล่ผีเสื้อกึ่งไร้ก้าง เนื้อนุ่มฟู ทานง่าย เด็กและผู้สูงอายุชอบมาก คุ้มค่าประหยัด',
+        pieces: '3 - 4 ตัว / กิโลกรัม',
+        weight: '1,000 กรัม',
+        price: 260,
+        origPrice: 320
+      },
+      {
+        sku: 'SKU-DUK-CT-1KG',
+        category: 'mass',
+        name: 'ปลาดุกแดดเดียว หั่นท่อนแว่น',
+        badge: 'ผัดเผ็ด/ทอดกรอบ 🍲',
+        badgeClass: '',
+        desc: 'ปลาดุกอุยคัดไซส์ หั่นชิ้นแว่นพอดีคำ หมักน้ำปลาแท้ หนังตึงกรอบ เนื้อหนานุ่ม ไม่คาว',
+        pieces: '12 - 16 ชิ้น / กก.',
+        weight: '1,000 กรัม',
+        price: 280,
+        origPrice: 350
+      },
+      {
+        sku: 'SKU-SWAI-SL-1KG',
+        category: 'mass',
+        name: 'ปลาสวายแดดเดียว แล่เนื้อล้วนไร้ก้าง',
+        badge: 'ราคาประหยัด อิ่มคุ้ม 🥣',
+        badgeClass: '',
+        desc: 'ปลาสวายสดแล่เนื้อล้วนไร้ก้าง ล้างคาวสะอาด ตากแดดเดียวพอแห้ง ทอดกินกับแกงส้ม อิ่มคุ้มทั้งบ้าน',
+        pieces: '8 - 10 ชิ้น / กก.',
+        weight: '1,000 กรัม',
+        price: 250,
+        origPrice: 290
+      }
     ];
 
-    function escapeHtml(str) {
-      if (!str) return '';
-      return String(str)
-        .replace(/&/g, '&amp;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#39;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;');
-    }
+    let currentSelectedSku = 'SKU-SLID-MD-1KG';
+    let currentPayment = 'COD';
 
-    function getSafeShopeeUrl(p) {
-      const raw = (p.affiliate_url || '').trim();
-      if (raw && !raw.includes('/test') && (raw.startsWith('https://s.shopee.co.th/') || raw.startsWith('https://shopee.co.th/'))) {
-        const sep = raw.includes('?') ? '&' : '?';
-        return raw + sep + 'openExternalBrowser=1';
-      }
-      return 'https://shopee.co.th/search?keyword=' + encodeURIComponent(p.name || 'ป้าเข็ม') + '&openExternalBrowser=1';
-    }
-
-    // 1. Initialize Categories
-    function renderCategoryTabs() {
-      const container = document.getElementById('categoryTabs');
-      container.innerHTML = CATEGORIES.map(c => `
-        <button 
-          onclick="filterCategory('${c.id}')"
-          class="px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap transition-all ${
-            currentCategory === c.id 
-              ? 'bg-white text-orange-600 font-bold shadow-sm scale-105' 
-              : 'text-orange-100 hover:bg-white/20'
-          }"
-        >
-          ${c.label}
-        </button>
+    function renderProducts(filterCat = 'all') {
+      const grid = document.getElementById('productGrid');
+      const filtered = filterCat === 'all' ? PRODUCTS : PRODUCTS.filter(p => p.category === filterCat);
+      
+      grid.innerHTML = filtered.map(p => `
+        <div class="prod-card ${p.sku === currentSelectedSku ? 'selected' : ''}" id="card-${p.sku}">
+          <div>
+            <div class="card-top">
+              <span class="prod-badge ${p.badgeClass}">${p.badge}</span>
+              <span style="font-size:0.75rem; color:#94a3b8; font-weight:600;">${p.sku}</span>
+            </div>
+            <div class="prod-name">${p.name}</div>
+            <div class="prod-desc">${p.desc}</div>
+            <div class="prod-spec-row">
+              <span>⚖️ ${p.weight}</span>
+              <span>•</span>
+              <span>🐟 ${p.pieces}</span>
+            </div>
+          </div>
+          <div class="prod-price-row">
+            <div class="price-box">
+              <span class="price">${p.price}.-</span>
+              <span class="orig-price">${p.origPrice}.-</span>
+              <span class="unit">/ กล่อง</span>
+            </div>
+            <button class="btn-select-prod" onclick="selectProduct('${p.sku}')">
+              <span>🛒 สั่งสินค้านี้</span>
+            </button>
+          </div>
+        </div>
       `).join('');
     }
 
-    function filterCategory(catId) {
-      currentCategory = catId;
-      displayLimit = 24;
-      renderCategoryTabs();
-      renderProducts();
+    function filterCategory(cat, btn) {
+      document.querySelectorAll('.tab-pill').forEach(el => el.classList.remove('active'));
+      btn.classList.add('active');
+      renderProducts(cat);
     }
 
-    // 2. Multi-Phase Supabase Ingestion (Instant 0.2s First Contentful Paint + Full Hydration)
-    async function fetchProducts() {
-      try {
-        // Phase 1: Load Top items with verified authentic images immediately for instant visual UI
-        const urlFast = `${SUPABASE_URL}/rest/v1/products?select=id,name,category,sales_count,rating,image_url,affiliate_url&link_status=eq.ok&image_url=not.is.null&order=sales_count.desc&limit=300`;
-        const resFast = await fetch(urlFast, {
-          headers: { "apikey": SUPABASE_KEY, "Authorization": `Bearer ${SUPABASE_KEY}` }
-        });
-        if (resFast.ok) {
-          allProducts = await resFast.json();
-          renderProducts();
-        }
+    function selectProduct(sku) {
+      currentSelectedSku = sku;
+      const p = PRODUCTS.find(x => x.sku === sku);
+      if (!p) return;
 
-        // Phase 2: Background Hydrate full catalog silently
-        setTimeout(async () => {
-          try {
-            const urlFull1 = `${SUPABASE_URL}/rest/v1/products?select=id,name,category,sales_count,rating,image_url,affiliate_url&link_status=eq.ok&order=sales_count.desc&limit=1000`;
-            const urlFull2 = `${SUPABASE_URL}/rest/v1/products?select=id,name,category,sales_count,rating,image_url,affiliate_url&link_status=eq.ok&order=sales_count.desc&offset=1000&limit=1000`;
-            const urlFull3 = `${SUPABASE_URL}/rest/v1/products?select=id,name,category,sales_count,rating,image_url,affiliate_url&link_status=eq.ok&order=sales_count.desc&offset=2000&limit=1000`;
+      document.querySelectorAll('.prod-card').forEach(c => c.classList.remove('selected'));
+      const activeCard = document.getElementById(`card-${sku}`);
+      if (activeCard) activeCard.classList.add('selected');
 
-            const [r1, r2, r3] = await Promise.all([
-              fetch(urlFull1, { headers: { "apikey": SUPABASE_KEY, "Authorization": `Bearer ${SUPABASE_KEY}` } }),
-              fetch(urlFull2, { headers: { "apikey": SUPABASE_KEY, "Authorization": `Bearer ${SUPABASE_KEY}` } }),
-              fetch(urlFull3, { headers: { "apikey": SUPABASE_KEY, "Authorization": `Bearer ${SUPABASE_KEY}` } })
-            ]);
+      // Update Form display
+      document.getElementById('displaySelectedName').innerText = p.name;
+      document.getElementById('displaySelectedSpec').innerText = `ขนาด ${p.weight} (${p.pieces}) | ซีลสูญญากาศส่งรถเย็น`;
+      document.getElementById('displaySelectedPrice').innerText = `${p.price} ฿`;
+      document.getElementById('btnPrice').innerText = p.price;
 
-            const b1 = r1.ok ? await r1.json() : [];
-            const b2 = r2.ok ? await r2.json() : [];
-            const b3 = r3.ok ? await r3.json() : [];
-            const fullCatalog = [...b1, ...b2, ...b3];
-            
-            // Merge deduplicated
-            const seen = new Set();
-            const merged = [];
-            for (const p of fullCatalog) {
-              if (p.id && !seen.has(p.id)) {
-                seen.add(p.id);
-                merged.push(p);
-              }
-            }
-            allProducts = merged;
-            isFullCatalogLoaded = true;
-            renderProducts();
-          } catch (_) {}
-        }, 300);
+      // Update Sticky Bar
+      document.getElementById('stickyProdName').innerText = p.name;
+      document.getElementById('stickyPriceText').innerText = `${p.price} บาท`;
 
-      } catch (err) {
-        console.error('Fetch products error:', err);
+      // Smooth scroll to order section
+      const orderSec = document.getElementById('order-section');
+      if (orderSec) {
+        orderSec.scrollIntoView({ behavior: 'smooth' });
       }
     }
 
-    function setSortMode(mode) {
-      sortMode = mode;
-      const salesBtn = document.getElementById('sortSalesBtn');
-      const ratingBtn = document.getElementById('sortRatingBtn');
-      if (mode === 'sales') {
-        salesBtn.className = "px-2.5 py-1 rounded-lg bg-orange-50 border border-orange-300 text-orange-600 font-bold transition-all text-xs";
-        ratingBtn.className = "px-2.5 py-1 rounded-lg bg-white border border-gray-200 text-gray-700 font-medium transition-all text-xs";
-      } else {
-        salesBtn.className = "px-2.5 py-1 rounded-lg bg-white border border-gray-200 text-gray-700 font-medium transition-all text-xs";
-        ratingBtn.className = "px-2.5 py-1 rounded-lg bg-orange-50 border border-orange-300 text-orange-600 font-bold transition-all text-xs";
-      }
-      renderProducts();
+    function selectPayment(method) {
+      currentPayment = method;
+      document.getElementById('pay-cod').classList.toggle('active', method === 'COD');
+      document.getElementById('pay-transfer').classList.toggle('active', method === 'TRANSFER');
     }
 
-    function getFilteredProducts() {
-      const seenNames = new Set();
-      const term = (currentSearch || '').trim().toLowerCase();
+    async function submitOrder(e) {
+      e.preventDefault();
+      
+      const name = document.getElementById('custName').value.trim();
+      const phone = document.getElementById('custPhone').value.trim();
+      const address = document.getElementById('custAddress').value.trim();
+      const noteInput = document.getElementById('custNote');
+      const note = noteInput ? noteInput.value.trim() : '';
 
-      return allProducts.filter(p => {
-        const cleanName = (p.name || '').trim().toLowerCase();
-        if (!cleanName || seenNames.has(cleanName)) return false;
-        seenNames.add(cleanName);
-
-        const hasImg = p.image_url && p.image_url.trim().length > 10;
-        // กฎเหล็ก: แสดงเฉพาะสินค้าที่มีภาพสินค้าแท้ 100% เท่านั้น (Zero-Placeholder Policy)
-        if (!hasImg) return false;
-
-        const cat = (p.category || '').toLowerCase();
-
-        // If user is searching, search globally across all categories!
-        if (term) {
-          return cleanName.includes(term) || cat.includes(term);
-        }
-
-        // Otherwise filter by category tab
-        if (currentCategory === 'all') return true;
-
-        if (currentCategory === 'ของใช้ในบ้าน') {
-          return cat.includes('ของใช้') || cat.includes('บ้าน') || /ที่นอน|หมอน|โซฟา|ปลั๊ก|สวิตช์|ถุงสูญญากาศ|โคมไฟ|กริ่ง/i.test(cleanName);
-        } else if (currentCategory === 'เครื่องใช้ไฟฟ้า') {
-          return cat.includes('ไฟฟ้า') || /ทีวี|tv|แอร์|ตู้เย็น|พัดลม|เครื่องฟอก|เครื่องดูดฝุ่น|เตารีด|เครื่องทำน้ำอุ่น/i.test(cleanName);
-        } else if (currentCategory === 'สัตว์เลี้ยง') {
-          return cat.includes('สัตว์') || /แมว|สุนัข|หมา/i.test(cleanName);
-        } else if (currentCategory === 'เครื่องครัว') {
-          return cat.includes('ครัว') || /หม้อ|เตา|กระทะ|ปั่น|กาแฟ|แก้ว|กระติก/i.test(cleanName);
-        } else if (currentCategory === 'ไอที') {
-          return cat.includes('ไอที') || /หูฟัง|wifi|zigbee|บลูทูธ|กล้อง|คีย์บอร์ด|ถ่าน|rf/i.test(cleanName);
-        } else if (currentCategory === 'สุขภาพ') {
-          return cat.includes('สุขภาพ') || /นวด|ที่นอน/i.test(cleanName);
-        } else if (currentCategory === 'ความงาม') {
-          return cat.includes('ความงาม') || /ครีม|เซรั่ม|มาส์ก|ย้อมผม/i.test(cleanName);
-        } else if (currentCategory === 'ยานยนต์') {
-          return cat.includes('ยานยนต์') || /รถ|ฉีดน้ำ|จักรยาน/i.test(cleanName);
-        } else {
-          return cat.includes(currentCategory);
-        }
-      }).sort((a, b) => {
-        const aHasImg = (a.image_url && a.image_url.trim().length > 10) ? 1 : 0;
-        const bHasImg = (b.image_url && b.image_url.trim().length > 10) ? 1 : 0;
-        if (aHasImg !== bHasImg) return bHasImg - aHasImg; // Items with real images always first!
-        if (sortMode === 'sales') {
-          return (b.sales_count || 0) - (a.sales_count || 0);
-        } else {
-          return (Number(b.rating) || 4.9) - (Number(a.rating) || 4.9);
-        }
-      });
-    }
-
-    const PLACEHOLDER_IMG = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 400 400'><rect width='100%' height='100%' fill='%23FFF5F2'/><circle cx='200' cy='175' r='55' fill='%23FFE3DC'/><path d='M185 165c0-8.28 6.72-15 15-15s15 6.72 15 15v10h-30v-10zm-10 10v35c0 5.52 4.48 10 10 10h30c5.52 0 10-4.48 10-10v-35h-50z' fill='%23EE4D2D'/><text x='50%' y='275' font-family='Prompt, sans-serif' font-size='15' font-weight='bold' fill='%23EE4D2D' text-anchor='middle'>Shopee ของแท้ 100%</text><text x='50%' y='300' font-family='Prompt, sans-serif' font-size='12' fill='%23888888' text-anchor='middle'>ดูรูปภาพเพิ่มเติมในแอป Shopee</text></svg>";
-
-    function getProductImage(p) {
-      if (p.image_url && p.image_url.trim().length > 10) {
-        return p.image_url.trim();
-      }
-      return PLACEHOLDER_IMG;
-    }
-
-    // 3. Paginated Rendering (Smooth 60 FPS)
-    function renderProducts() {
-      const filtered = getFilteredProducts();
-      const grid = document.getElementById('productGrid');
-      const countEl = document.getElementById('productCount');
-      const emptyEl = document.getElementById('emptyState');
-      const loadMoreArea = document.getElementById('loadMoreArea');
-      const remainingCountEl = document.getElementById('remainingCount');
-      const searchAlert = document.getElementById('searchAlert');
-      const searchAlertKeyword = document.getElementById('searchAlertKeyword');
-
-      countEl.innerText = `${filtered.length.toLocaleString('th-TH')} รายการ`;
-
-      if (currentSearch) {
-        searchAlert.classList.remove('hidden');
-        searchAlertKeyword.innerText = `"${currentSearch}" (${filtered.length} รายการ)`;
-      } else {
-        searchAlert.classList.add('hidden');
-      }
-
-      if (filtered.length === 0) {
-        grid.innerHTML = '';
-        emptyEl.classList.remove('hidden');
-        loadMoreArea.classList.add('hidden');
+      if (!name || !phone || !address) {
+        alert('กรุณากรอกข้อมูล ชื่อ, เบอร์โทร และที่อยู่จัดส่งให้ครบถ้วนนะคะ 💕');
         return;
       }
 
-      emptyEl.classList.add('hidden');
-      const visibleProducts = filtered.slice(0, displayLimit);
+      const p = PRODUCTS.find(x => x.sku === currentSelectedSku) || PRODUCTS[0];
+      const btn = document.getElementById('submitBtn');
+      btn.disabled = true;
+      btn.innerText = 'กำลังส่งออเดอร์... ⏳';
 
-      grid.innerHTML = visibleProducts.map(p => {
-        const img = getProductImage(p);
-        const safeUrl = getSafeShopeeUrl(p);
-        const safeName = escapeHtml(p.name);
-        const salesText = p.sales_count >= 1000 
-          ? `ขายแล้ว ${(p.sales_count / 1000).toFixed(1)}k ชิ้น` 
-          : `ขายแล้ว ${p.sales_count || 0} ชิ้น`;
-        
-        return `
-          <div class="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col justify-between border border-gray-100">
-            <a href="${safeUrl}" target="_blank" rel="noopener noreferrer" class="block relative w-full pt-[100%] bg-gray-50 overflow-hidden cursor-pointer">
-              <img 
-                src="${img}" 
-                alt="${safeName}" 
-                loading="lazy"
-                decoding="async"
-                referrerpolicy="no-referrer"
-                class="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                onerror="this.onerror=null; this.src=PLACEHOLDER_IMG;"
-              >
-              <div class="absolute top-2 left-2 bg-red-600 text-white text-[9px] font-bold px-1.5 py-0.5 rounded shadow">
-                ของแท้ 100%
-              </div>
-              <div class="absolute bottom-1 right-1 bg-green-600/90 text-white text-[8px] font-semibold px-1 rounded backdrop-blur-sm">
-                ✓ Shopee Mall
-              </div>
-            </a>
+      const now = new Date();
+      const pad = n => (n < 10 ? '0' : '') + n;
+      const orderId = 'PKF-' + pad(now.getMonth()+1) + pad(now.getDate()) + pad(now.getHours()) + pad(now.getMinutes()) + pad(now.getSeconds());
 
-            <div class="p-3 flex-1 flex flex-col justify-between">
-              <div>
-                <a href="${safeUrl}" target="_blank" rel="noopener noreferrer" class="text-xs font-semibold text-gray-800 line-clamp-2 leading-relaxed hover:text-orange-600 transition-colors" title="${safeName}">
-                  ${safeName}
-                </a>
-                <div class="flex items-center gap-1.5 mt-2 text-[10px] text-gray-500">
-                  <span class="flex items-center text-amber-500 font-bold">
-                    ★ ${p.rating ? Number(p.rating).toFixed(1) : '4.9'}
-                  </span>
-                  <span>•</span>
-                  <span>${salesText}</span>
-                </div>
-              </div>
+      const payload = {
+        action: 'order_fish',
+        order_id: orderId,
+        name: name,
+        phone: phone,
+        address: address,
+        package: p.sku,
+        package_name: p.name,
+        price: p.price,
+        payment_method: currentPayment,
+        note: note
+      };
 
-              <div class="mt-3 pt-2 border-t border-gray-50">
-                <a 
-                  href="${safeUrl}" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  class="w-full bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-semibold text-xs py-2 rounded-lg flex items-center justify-center gap-1 shadow-sm active:scale-95 transition-all text-center no-underline"
-                >
-                  <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
-                  สั่งซื้อที่ Shopee
-                </a>
-              </div>
-            </div>
-          </div>
-        `;
-      }).join('');
+      // 1. Supabase Direct Insert (Full CORS * Enabled)
+      const supaUrl = 'https://usqhvujqmnxqrdoovvnp.supabase.co/rest/v1/direct_orders';
+      const supaKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVzcWh2dWpxbW54cXJkb292dm5wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQyOTc4NjAsImV4cCI6MjA2OTg3Mzg2MH0.3kCGGAe1OoSJ_SCN_NDSdnKep1hXIMgMxR1lBd_i2eI';
+      
+      const supaPromise = fetch(supaUrl, {
+        method: 'POST',
+        headers: {
+          'apikey': supaKey,
+          'Authorization': 'Bearer ' + supaKey,
+          'Content-Type': 'application/json',
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify({
+          order_code: orderId,
+          product_name: p.name,
+          package_code: p.sku,
+          package_name: p.name,
+          price: p.price,
+          customer_name: name,
+          phone: phone,
+          address: address,
+          payment_method: currentPayment,
+          status: 'PENDING',
+          note: note || null,
+          created_at: now.toISOString()
+        })
+      }).catch(err => console.log('Supa error:', err));
 
-      if (filtered.length > displayLimit) {
-        loadMoreArea.classList.remove('hidden');
-        remainingCountEl.innerText = `+${filtered.length - displayLimit}`;
-      } else {
-        loadMoreArea.classList.add('hidden');
-      }
+      // 2. Google Apps Script Webhook (Telegram Push Alert)
+      const gasUrl = 'https://script.google.com/macros/s/AKfycbwYZZYui21pdZiC7HF8yte_ILMwoUEmZOoZaixJPsE69WH80qVN2Durai-zNyAeoaP5vg/exec';
+      const gasPromise = fetch(gasUrl, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload)
+      }).catch(err => console.log('GAS error:', err));
+
+      // Wait max 800ms
+      await Promise.race([
+        Promise.all([supaPromise, gasPromise]),
+        new Promise(resolve => setTimeout(resolve, 800))
+      ]);
+
+      // 3. Show Success Modal
+      document.getElementById('modalOrderId').innerText = orderId;
+      document.getElementById('modalSummary').innerHTML = `
+        <div><b>สินค้า:</b> ${p.name}</div>
+        <div><b>ยอดชำระ:</b> ${p.price.toLocaleString()} บาท (${currentPayment === 'COD' ? '🚚 เก็บเงินปลายทาง' : '💳 โอนเงิน'})</div>
+        <div><b>ผู้รับ:</b> คุณ${name} (${phone})</div>
+      `;
+      document.getElementById('successModal').style.display = 'flex';
+      document.getElementById('orderForm').reset();
+
+      btn.disabled = false;
+      btn.innerHTML = `<span>ยืนยันการสั่งซื้อ (${p.price.toLocaleString()} บาท)</span> <span>👉</span>`;
     }
 
-    function loadMoreProducts() {
-      displayLimit += 24;
-      renderProducts();
+    function closeModal() {
+      document.getElementById('successModal').style.display = 'none';
     }
 
-    // 4. Instant Client-Side Search (0ms latency!)
-    function handleSearchDebounced(e) {
-      clearTimeout(searchDebounceTimer);
-      const val = e.target.value.trim();
-      searchDebounceTimer = setTimeout(() => {
-        currentSearch = val;
-        displayLimit = 24;
-        const clearBtn = document.getElementById('clearBtn');
-        if (currentSearch) {
-          clearBtn.classList.remove('hidden');
-        } else {
-          clearBtn.classList.add('hidden');
-        }
-        renderProducts();
-      }, 150);
-    }
-
-    function clearSearch() {
-      document.getElementById('searchInput').value = '';
-      currentSearch = '';
-      document.getElementById('clearBtn').classList.add('hidden');
-      displayLimit = 24;
-      renderProducts();
-    }
-
-    
-    // Initialize Page
-    document.addEventListener('DOMContentLoaded', () => {
-      renderCategoryTabs();
-      fetchProducts();
-    });
+    // Initialize
+    renderProducts('all');
   </script>
+
 </body>
 </html>

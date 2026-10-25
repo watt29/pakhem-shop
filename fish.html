@@ -2,42 +2,45 @@
 <html lang="th">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>ปลาแดดเดียว ป้าเข็ม คัดพิเศษ | สูตรโบราณ เค็มพอดี สะอาดไร้ฝุ่น 100%</title>
-  <meta name="description" content="ปลาแดดเดียว ป้าเข็ม คัดพิเศษ สูตรโบราณเค็มพอดี เนื้อแน่นนุ่มฟู ตากในมุ้งไร้ฝุ่นแมลงวัน ทอดแล้วหอมฟุ้ง ซีลสูญญากาศส่งตรงถึงบ้าน">
-  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ปลาแดดเดียว ป้าเข็ม คัดพิเศษ | คลังสินค้าแท้ 100% สด สะอาด ไร้ฝุ่น</title>
+  <meta name="description" content="ปลาแดดเดียวสูตรโบราณ ป้าเข็ม คัดพิเศษ 7 หมวดหมู่ยอดนิยม: ปลาสลิดบางบ่อ, หมึกไข่ปากน้ำปราณ, ปลาหลดธรรมชาติ, ปลาช่อนแม่ลา, ปลากุเลาตากใบ, ปลานิล, ปลาดุก, ปลาสวาย ซีลสูญญากาศส่งตรงถึงบ้าน">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  
   <style>
     :root {
       --primary: #c2410c;
       --primary-hover: #9a3412;
-      --accent: #f59e0b;
-      --bg: #fffbeb;
+      --primary-light: #fff7ed;
+      --accent: #059669;
+      --bg: #f8fafc;
       --card-bg: #ffffff;
-      --text: #1f2937;
-      --text-muted: #6b7280;
-      --success: #10b981;
-      --border: #fde68a;
-      --radius: 18px;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --border: #e2e8f0;
+      --radius: 16px;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+      --shadow-md: 0 4px 14px rgba(0,0,0,0.08);
+      --shadow-lg: 0 10px 25px rgba(0,0,0,0.12);
     }
-    
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Prompt', sans-serif; }
-    body { background-color: var(--bg); color: var(--text); line-height: 1.6; padding-bottom: 90px; }
-    
-    /* Header & Nav */
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Prompt', sans-serif; -webkit-tap-highlight-color: transparent; }
+    body { background-color: var(--bg); color: var(--text-main); line-height: 1.5; padding-bottom: 90px; }
+    .container { max-width: 900px; margin: 0 auto; padding: 16px; }
+
+    /* Header Nav */
     header {
       background: #ffffff;
+      border-bottom: 1px solid var(--border);
       position: sticky;
       top: 0;
       z-index: 100;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
       padding: 12px 16px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      box-shadow: var(--shadow-sm);
     }
     .logo-badge {
       display: flex;
@@ -48,6 +51,7 @@
       color: var(--primary);
       text-decoration: none;
     }
+    .header-links { display: flex; gap: 8px; align-items: center; }
     .line-btn-nav {
       background: #06c755;
       color: #fff;
@@ -56,252 +60,315 @@
       text-decoration: none;
       font-size: 0.85rem;
       font-weight: 600;
-      display: flex;
+      display: inline-flex;
       align-items: center;
       gap: 6px;
     }
-
-    .container { max-width: 640px; margin: 0 auto; padding: 16px; }
-
-    /* Hero Section */
-    .hero-card {
-      background: #fff;
-      border-radius: var(--radius);
-      overflow: hidden;
-      box-shadow: 0 10px 30px rgba(194, 65, 12, 0.08);
-      margin-bottom: 20px;
+    .admin-link-nav {
+      background: #f1f5f9;
+      color: #334155;
+      padding: 6px 12px;
+      border-radius: 99px;
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 600;
       border: 1px solid var(--border);
     }
-    .hero-img-wrap {
-      position: relative;
-      width: 100%;
-      height: 320px;
-      background: #f3f4f6;
-    }
-    .hero-img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    .hero-badge-top {
-      position: absolute;
-      top: 14px;
-      left: 14px;
-      background: linear-gradient(135deg, #ef4444, #dc2626);
-      color: white;
-      padding: 6px 14px;
-      border-radius: 99px;
-      font-weight: 600;
-      font-size: 0.85rem;
-      box-shadow: 0 4px 10px rgba(239, 68, 68, 0.4);
-    }
-    .hero-content {
-      padding: 20px;
-    }
-    .hero-title {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: #111827;
-      margin-bottom: 8px;
-      line-height: 1.3;
-    }
-    .hero-desc {
-      color: var(--text-muted);
-      font-size: 0.95rem;
-      margin-bottom: 16px;
-    }
 
-    /* Trust Highlights Grid */
-    .features-grid {
+    /* Hero Banner */
+    .hero-banner {
+      background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%);
+      color: white;
+      border-radius: var(--radius);
+      padding: 24px 20px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-md);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-banner::after {
+      content: '🐟';
+      position: absolute;
+      right: -20px;
+      bottom: -30px;
+      font-size: 8rem;
+      opacity: 0.15;
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.2);
+      backdrop-filter: blur(4px);
+      padding: 4px 12px;
+      border-radius: 99px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .hero-title { font-size: 1.6rem; font-weight: 700; line-height: 1.25; margin-bottom: 8px; }
+    .hero-desc { font-size: 0.92rem; opacity: 0.95; line-height: 1.45; max-width: 600px; }
+
+    /* 4 Trust USPs */
+    .usp-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
       margin-bottom: 24px;
     }
-    .feature-box {
+    @media(min-width: 640px) { .usp-grid { grid-template-columns: repeat(4, 1fr); } }
+    .usp-card {
       background: #fff;
-      padding: 14px;
-      border-radius: 14px;
       border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
       display: flex;
-      flex-direction: column;
-      gap: 6px;
+      align-items: center;
+      gap: 10px;
+      box-shadow: var(--shadow-sm);
     }
-    .feature-icon { font-size: 1.6rem; }
-    .feature-title { font-weight: 600; font-size: 0.95rem; color: #1f2937; }
-    .feature-text { font-size: 0.8rem; color: var(--text-muted); line-height: 1.4; }
+    .usp-icon { font-size: 1.5rem; }
+    .usp-text strong { display: block; font-size: 0.85rem; color: #1e293b; }
+    .usp-text span { font-size: 0.72rem; color: var(--text-muted); }
 
-    /* Package Selector */
+    /* Category Filter Tabs */
+    .filter-section {
+      margin-bottom: 16px;
+    }
     .section-title {
       font-size: 1.25rem;
       font-weight: 700;
-      color: #111827;
-      margin-bottom: 14px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .packages {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-bottom: 24px;
-    }
-    .pkg-card {
-      background: #fff;
-      border: 2px solid #e5e7eb;
-      border-radius: var(--radius);
-      padding: 16px;
-      cursor: pointer;
+      color: #0f172a;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      margin-bottom: 12px;
+    }
+    .filter-tabs {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 6px;
+      scrollbar-width: none;
+    }
+    .filter-tabs::-webkit-scrollbar { display: none; }
+    .tab-pill {
+      background: #fff;
+      border: 1px solid var(--border);
+      padding: 8px 16px;
+      border-radius: 99px;
+      font-size: 0.88rem;
+      font-weight: 500;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: all 0.2s;
+      color: #475569;
+    }
+    .tab-pill.active {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+      box-shadow: 0 2px 8px rgba(194, 65, 12, 0.3);
+    }
+
+    /* Product Cards Grid */
+    .product-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    @media(min-width: 600px) {
+      .product-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    .prod-card {
+      background: #fff;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: var(--shadow-sm);
       transition: all 0.2s ease;
       position: relative;
     }
-    .pkg-card.active {
+    .prod-card:hover {
+      border-color: #fdba74;
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+    .prod-card.selected {
       border-color: var(--primary);
-      background: #fff7ed;
-      box-shadow: 0 4px 15px rgba(194, 65, 12, 0.12);
+      background: var(--primary-light);
+      box-shadow: 0 0 0 2px var(--primary);
     }
-    .pkg-tag {
-      position: absolute;
-      top: -10px;
-      right: 16px;
-      background: var(--accent);
-      color: #78350f;
+    .card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+    .prod-badge {
+      background: #fef3c7;
+      color: #92400e;
       font-size: 0.75rem;
-      font-weight: 700;
-      padding: 2px 10px;
-      border-radius: 99px;
-    }
-    .pkg-info h4 { font-size: 1.05rem; font-weight: 600; color: #111827; }
-    .pkg-info p { font-size: 0.82rem; color: var(--text-muted); }
-    .pkg-price { text-align: right; }
-    .pkg-price .price { font-size: 1.35rem; font-weight: 700; color: var(--primary); }
-    .pkg-price .unit { font-size: 0.75rem; color: var(--text-muted); }
-
-    /* Fast Order Form */
-    .order-card {
-      background: #fff;
-      border-radius: var(--radius);
-      padding: 20px;
-      border: 1px solid var(--border);
-      box-shadow: 0 8px 25px rgba(0,0,0,0.04);
-      margin-bottom: 24px;
-    }
-    .form-group { margin-bottom: 14px; }
-    .form-group label {
-      display: block;
-      font-size: 0.9rem;
       font-weight: 600;
-      margin-bottom: 6px;
-      color: #374151;
+      padding: 3px 8px;
+      border-radius: 6px;
     }
+    .prod-badge.hot { background: #fee2e2; color: #b91c1c; }
+    .prod-badge.rare { background: #ede9fe; color: #6d28d9; }
+    .prod-badge.royal { background: #fef08a; color: #854d0e; }
+    
+    .prod-name { font-size: 1.05rem; font-weight: 700; color: #1e293b; margin-bottom: 4px; line-height: 1.3; }
+    .prod-desc { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 12px; line-height: 1.45; }
+    
+    .prod-spec-row {
+      display: flex;
+      gap: 8px;
+      font-size: 0.78rem;
+      background: #f8fafc;
+      padding: 6px 10px;
+      border-radius: 8px;
+      margin-bottom: 14px;
+      color: #334155;
+    }
+    .prod-price-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: auto;
+      padding-top: 10px;
+      border-top: 1px dashed var(--border);
+    }
+    .price-box .price { font-size: 1.35rem; font-weight: 700; color: var(--primary); }
+    .price-box .unit { font-size: 0.78rem; color: var(--text-muted); }
+    .price-box .orig-price { font-size: 0.8rem; text-decoration: line-through; color: #94a3b8; margin-left: 4px; }
+    
+    .btn-select-prod {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.2s;
+    }
+    .btn-select-prod:hover { background: var(--primary-hover); }
+
+    /* Order Form Section */
+    .order-box {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow-md);
+      margin-bottom: 32px;
+    }
+    .selected-summary {
+      background: var(--primary-light);
+      border: 1.5px solid #fdba74;
+      border-radius: 12px;
+      padding: 14px 18px;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .selected-summary .prod-info strong { display: block; font-size: 1rem; color: #9a3412; }
+    .selected-summary .prod-info span { font-size: 0.82rem; color: #7c2d12; }
+    .selected-summary .total-price { font-size: 1.4rem; font-weight: 700; color: #c2410c; }
+
+    .form-group { margin-bottom: 14px; }
+    .form-group label { display: block; font-size: 0.88rem; font-weight: 600; margin-bottom: 6px; color: #334155; }
     .form-control {
       width: 100%;
       padding: 12px 14px;
-      border: 1.5px solid #d1d5db;
-      border-radius: 12px;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
       font-size: 0.95rem;
       outline: none;
-      transition: border-color 0.2s;
+      transition: border 0.2s;
     }
     .form-control:focus { border-color: var(--primary); }
-    
-    .pay-methods {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-top: 8px;
-    }
+
+    .pay-methods { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 6px; }
     .pay-opt {
-      border: 1.5px solid #e5e7eb;
-      border-radius: 12px;
+      border: 2px solid var(--border);
+      border-radius: 10px;
       padding: 12px;
       text-align: center;
-      cursor: pointer;
       font-size: 0.9rem;
       font-weight: 600;
-      background: #fff;
+      cursor: pointer;
       transition: all 0.2s;
     }
     .pay-opt.active {
-      border-color: var(--primary);
-      background: #fff7ed;
-      color: var(--primary);
+      border-color: var(--accent);
+      background: #ecfdf5;
+      color: #065f46;
     }
 
     .btn-submit {
       width: 100%;
-      background: linear-gradient(135deg, #ea580c, #c2410c);
-      color: #fff;
+      background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%);
+      color: white;
       border: none;
       padding: 16px;
-      border-radius: 99px;
-      font-size: 1.15rem;
+      border-radius: 12px;
+      font-size: 1.1rem;
       font-weight: 700;
       cursor: pointer;
-      box-shadow: 0 6px 20px rgba(234, 88, 12, 0.4);
+      box-shadow: 0 4px 14px rgba(194, 65, 12, 0.35);
       display: flex;
       justify-content: center;
       align-items: center;
       gap: 8px;
-      transition: transform 0.1s, opacity 0.2s;
+      margin-top: 18px;
+      transition: transform 0.1s;
     }
-    .btn-submit:active { transform: scale(0.98); }
-    .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+    .btn-submit:active { transform: scale(0.99); }
+    .btn-submit:disabled { opacity: 0.7; cursor: not-allowed; }
 
-    /* Sticky Bottom Bar */
+    /* Sticky Bottom Order Bar */
     .sticky-bar {
       position: fixed;
       bottom: 0;
       left: 0;
       right: 0;
-      background: rgba(255,255,255,0.95);
-      backdrop-filter: blur(10px);
-      box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
+      background: #fff;
+      border-top: 1px solid var(--border);
       padding: 12px 16px;
-      display: flex;
-      justify-content: center;
-      z-index: 999;
+      box-shadow: 0 -4px 15px rgba(0,0,0,0.08);
+      z-index: 90;
     }
     .sticky-bar-inner {
-      max-width: 640px;
-      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
       display: flex;
-      gap: 12px;
+      justify-content: space-between;
       align-items: center;
     }
-    .sticky-price {
-      display: flex;
-      flex-direction: column;
-    }
-    .sticky-price span { font-size: 0.75rem; color: var(--text-muted); }
-    .sticky-price strong { font-size: 1.35rem; color: var(--primary); font-weight: 700; }
     .sticky-btn {
-      flex: 1;
       background: var(--primary);
       color: #fff;
-      padding: 12px;
+      padding: 10px 22px;
       border-radius: 99px;
-      text-align: center;
-      font-weight: 600;
       text-decoration: none;
-      font-size: 1rem;
-      box-shadow: 0 4px 14px rgba(194, 65, 12, 0.3);
+      font-weight: 600;
+      font-size: 0.95rem;
     }
 
-    /* Modal */
+    /* Success Modal */
     .modal-backdrop {
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.6);
-      z-index: 2000;
+      background: rgba(0,0,0,0.65);
+      z-index: 1000;
       align-items: center;
       justify-content: center;
-      padding: 20px;
+      padding: 16px;
     }
     .modal-box {
       background: #fff;
@@ -311,115 +378,101 @@
       padding: 24px;
       text-align: center;
     }
-    .modal-icon { font-size: 3.5rem; margin-bottom: 12px; }
-  
-    
-      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
-    }
-
+    .modal-box .icon { font-size: 3.5rem; margin-bottom: 8px; }
   </style>
 </head>
 <body>
 
+  <!-- Navigation -->
   <header>
-    <a href="/shop" class="logo-badge">
-      🐟 ป้าเข็ม ขายของ
+    <a href="#" class="logo-badge">
+      🐟 ป้าเข็ม คัดพิเศษ
     </a>
-    <a href="https://lin.ee/o9Kjp1N" target="_blank" class="line-btn-nav">
-      <span>💬 ปรึกษาป้าเข็ม LINE</span>
-    </a>
+    <div class="header-links">
+      <a href="admin.html" class="admin-link-nav">⚙️ ระบบแอดมิน</a>
+      <a href="https://lin.ee/o9Kjp1N" target="_blank" class="line-btn-nav">
+        <span>💬 ทัก LINE</span>
+      </a>
+    </div>
   </header>
 
   <main class="container">
     
-    <!-- Hero Card -->
-    <div class="hero-card">
-      <div class="hero-img-wrap">
-        <span class="hero-badge-top">🔥 ของแท้สูตรโบราณ</span>
-        <img src="fried_fish.jpg" alt="ปลาแดดเดียวสูตรโบราณ ป้าเข็ม" class="hero-img" onerror="this.src='pa-khem-avatar.png'">
+    <!-- Hero Banner -->
+    <div class="hero-banner">
+      <span class="hero-badge">🌟 ปลาแดดเดียวสูตรโบราณ คัดพิเศษ 100%</span>
+      <h1 class="hero-title">เค็มกำลังดี เนื้อแน่นนุ่มฟู<br>ตากในมุ้งโซล่าร์ สะอาดไร้ฝุ่นแมลงวัน</h1>
+      <p class="hero-desc">
+        คัดสรร 7 หมวดหมู่ปลาและอาหารทะเลแดดเดียวยอดนิยม ส่งตรงจากแหล่งผลิตดั้งเดิม (บางบ่อ, ปากน้ำปราณ, สิงห์บุรี แม่ลา, ตากใบ) ซีลสูญญากาศแช่แข็งสดใหม่ถึงหน้าบ้าน
+      </p>
+    </div>
+
+    <!-- 4 Trust USPs -->
+    <div class="usp-grid">
+      <div class="usp-card">
+        <span class="usp-icon">🌿</span>
+        <div class="usp-text">
+          <strong>ไร้สารเคมี 100%</strong>
+          <span>ไม่แช่ฟอร์มาลีน ไม่ใส่ดินประสิว</span>
+        </div>
       </div>
-      <div class="hero-content">
-        <h1 class="hero-title">ปลาแดดเดียว ป้าเข็ม คัดพิเศษ</h1>
-        <p class="hero-desc">หมักสูตรโบราณต้นตำรับ เค็มกำลังดี เนื้อแน่นนุ่มฟู ทอดแล้วหอมกรอบนอกนุ่มใน ไร้กลิ่นคาว ผลิตสดใหม่สะอาดทุกล็อต</p>
-        <div class="slogan-box">
-          <p>✨ <em>"เค็มกำลังดี เนื้อแน่นนุ่มฟู ตากในมุ้งไร้ฝุ่นแมลงวัน ทอดแล้วหอมฟุ้งจนต้องเติมข้าว"</em></p>
+      <div class="usp-card">
+        <span class="usp-icon">🧂</span>
+        <div class="usp-text">
+          <strong>หมักเค็มพอดี</strong>
+          <span>เกลือสมุทร 3% เค็มกลมกล่อม</span>
+        </div>
+      </div>
+      <div class="usp-card">
+        <span class="usp-icon">☀️</span>
+        <div class="usp-text">
+          <strong>มุ้งชีวภาพปิด</strong>
+          <span>ตากพลังงานแสงอาทิตย์ ไร้แมลง</span>
+        </div>
+      </div>
+      <div class="usp-card">
+        <span class="usp-icon">❄️</span>
+        <div class="usp-text">
+          <strong>ซีลสูญญากาศ</strong>
+          <span>ส่งพร้อมเจลเก็บความเย็น</span>
         </div>
       </div>
     </div>
 
-    <!-- 4 USP Features -->
-    <div class="features-grid">
-      <div class="feature-box">
-        <span class="feature-icon">🐟</span>
-        <div class="feature-title">ปลาสดคัดไซส์พิเศษ</div>
-        <div class="feature-text">คัดตัวสวย เนื้อแน่นทุกล็อต สดจากธรรมชาติ ไม่ใช่ปลาค้างสต็อก เนื้อไม่เละ</div>
-      </div>
-      <div class="feature-box">
-        <span class="feature-icon">☀️</span>
-        <div class="feature-title">ตากสะอาดในโรงมุ้ง 100%</div>
-        <div class="feature-text">ตากพลังงานแสงอาทิตย์ในมุ้งมิดชิด มั่นใจไร้ฝุ่น ไร้แมลงวัน ไร้สารเคมีและฟอร์มาลีน</div>
-      </div>
-      <div class="feature-box">
-        <span class="feature-icon">🧂</span>
-        <div class="feature-title">สูตรเค็มพอดี กลมกล่อม</div>
-        <div class="feature-text">หมักเกลือธรรมชาติสูตรโบราณ เค็มกำลังดี ไม่เค็มไตพัง ทานกับข้าวสวยร้อนๆ ฟินที่สุด</div>
-      </div>
-      <div class="feature-box">
-        <span class="feature-icon">📦</span>
-        <div class="feature-title">ซีลสูญญากาศหนาพิเศษ</div>
-        <div class="feature-text">ฉีกซองลงกระทะได้ทันที ไร้กลิ่นคาวติดตู้เย็น ตุนติดช่องฟรีซได้นาน 3-6 เดือน</div>
-      </div>
-    </div>
-    <!-- Package Selector -->
-    <div class="section-title">
-      📦 เลือกชุดโปรโมชั่นสุดคุ้ม
-    </div>
-        <!-- Urgency Batch Banner -->
-    
-
-    <div class="packages">
-      
-      <div class="pkg-card" onclick="selectPackage('500g', 'ชุดทดลองชิม (500 กรัม)', 160)" id="pkg-500g">
-        <div class="pkg-info">
-          <h4>ชุดทดลองชิม (500 กรัม)</h4>
-          <p>เหมาะสำหรับ 1-2 ท่าน ซีลสูญญากาศพร้อมทอด</p>
-        </div>
-        <div class="pkg-price">
-          <div class="price">160.-</div>
-          <div class="unit">ค่าส่ง 40.-</div>
-        </div>
-      </div>
-
-      <div class="pkg-card active" onclick="selectPackage('1kg', 'ชุดครอบครัวยอดนิยม (1 กิโลกรัม)', 290)" id="pkg-1kg">
-        <span class="pkg-tag">ขายดีสุดคุ้ม 🔥</span>
-        <div class="pkg-info">
-          <h4>ชุดครอบครัว (1 กิโลกรัม)</h4>
-          <p>ปริมาณจุใจ คละไซส์คัดพิเศษ ส่งฟรีทั่วไทย!</p>
-        </div>
-        <div class="pkg-price">
-          <div class="price">290.-</div>
-          <div class="unit" style="color:var(--success); font-weight:600;">ส่งฟรี!</div>
-        </div>
-      </div>
-
-      <div class="pkg-card" onclick="selectPackage('2kg', 'ชุดเหมาตุนสุดคุ้ม (2 กิโลกรัม)', 550)" id="pkg-2kg">
-        <span class="pkg-tag">แถมพริกน้ำปลาสูตรลับ ✨</span>
-        <div class="pkg-info">
-          <h4>ชุดเหมาตุน (2 กิโลกรัม)</h4>
-          <p>แบ่งซีล 4 แพ็ค แช่ฟรีซเก็บได้นาน 6 เดือน</p>
-        </div>
-        <div class="pkg-price">
-          <div class="price">550.-</div>
-          <div class="unit" style="color:var(--success); font-weight:600;">ส่งฟรี!</div>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- Order Form -->
-    <div class="order-card" id="order-section">
+    <!-- Category Filter Tabs -->
+    <section class="filter-section">
       <div class="section-title">
-        📝 ข้อมูลจัดส่ง (กรอกง่ายใน 30 วิ)
+        <span>📦 แคตตาล็อกสินค้าพร้อมส่ง (7 หมวดหมู่ยอดนิยม)</span>
+        <span style="font-size:0.85rem; color:var(--accent); font-weight:600;">พร้อมส่งทันที ✅</span>
+      </div>
+      <div class="filter-tabs">
+        <button class="tab-pill active" onclick="filterCategory('all', this)">🌟 ทั้งหมด (11)</button>
+        <button class="tab-pill" onclick="filterCategory('slid', this)">🥇 ปลาสลิดบางบ่อ (4)</button>
+        <button class="tab-pill" onclick="filterCategory('squid', this)">🦑 หมึกไข่ปากน้ำปราณ (1)</button>
+        <button class="tab-pill" onclick="filterCategory('lod_chon', this)">🌿 ปลาช่อน & ปลาหลด (2)</button>
+        <button class="tab-pill" onclick="filterCategory('kulao', this)">👑 ปลากุเลาตากใบ (1)</button>
+        <button class="tab-pill" onclick="filterCategory('mass', this)">🌾 ปลานิล / ดุก / สวาย (3)</button>
+      </div>
+    </section>
+
+    <!-- Product Cards Grid -->
+    <div class="product-grid" id="productGrid">
+      <!-- Populated dynamically via JS -->
+    </div>
+
+    <!-- Order Form Section -->
+    <section class="order-box" id="order-section">
+      <h3 style="font-size:1.25rem; font-weight:700; margin-bottom:14px; color:#0f172a;">
+        📝 สั่งซื้อสินค้า & ข้อมูลจัดส่ง (เก็บเงินปลายทางได้)
+      </h3>
+
+      <!-- Selected Item Display -->
+      <div class="selected-summary">
+        <div class="prod-info">
+          <strong id="displaySelectedName">ปลาสลิดแดดเดียว คัดพิเศษ (ไซส์กลาง 1 กิโลกรัม)</strong>
+          <span id="displaySelectedSpec">ขนาด 1,000 กรัม (7 - 8 ตัว / กก.) | ส่งรถเย็น</span>
+        </div>
+        <div class="total-price" id="displaySelectedPrice">290 ฿</div>
       </div>
 
       <form id="orderForm" onsubmit="submitOrder(event)">
@@ -460,57 +513,245 @@
           <span>👉</span>
         </button>
       </form>
-    </div>
+    </section>
 
   </main>
 
   <!-- Sticky Bottom Bar -->
   <div class="sticky-bar">
     <div class="sticky-bar-inner">
-      <div class="sticky-price">
-        <span id="stickyPkgName">ชุดครอบครัว (1 kg)</span>
-        <strong id="stickyPriceText">290 บาท</strong>
+      <div>
+        <div style="font-size:0.8rem; color:var(--text-muted);" id="stickyProdName">ปลาสลิดกลาง (1kg)</div>
+        <strong style="font-size:1.15rem; color:var(--primary);" id="stickyPriceText">290 บาท</strong>
       </div>
-      <a href="#order-section" class="sticky-btn">สั่งซื้อเลยทันที 🛒</a>
+      <a href="#order-section" class="sticky-btn">สั่งซื้อทันที 🛒</a>
     </div>
   </div>
 
-    <!-- Success Modal -->
+  <!-- Success Confirmation Modal -->
   <div class="modal-backdrop" id="successModal">
     <div class="modal-box">
-      <div class="modal-icon">🎉</div>
-      <h3 style="font-size:1.4rem; font-weight:700; color:#111827; margin-bottom:8px;">บันทึกออเดอร์สำเร็จแล้วค่ะ!</h3>
-      <div style="background:#fffbeb; border:1px dashed #f59e0b; border-radius:12px; padding:12px; margin-bottom:14px; text-align:left;">
-        <p style="font-size:0.85rem; color:#78350f; margin-bottom:4px;">
-          รหัสสั่งซื้อ: <strong id="modalOrderId" style="color:#c2410c; font-size:1.05rem;"></strong>
-        </p>
-        <p id="modalSummary" style="font-size:0.82rem; color:#4b5563; line-height:1.4;"></p>
+      <div class="icon">🎉</div>
+      <h3 style="font-size:1.35rem; font-weight:700; margin-bottom:6px;">บันทึกออเดอร์สำเร็จแล้วค่ะ!</h3>
+      <div style="background:#fffbeb; border:1px dashed #f59e0b; border-radius:12px; padding:12px; margin:14px 0; text-align:left; font-size:0.88rem; line-height:1.5;">
+        <div><b>รหัสออเดอร์:</b> <span id="modalOrderId" style="color:var(--primary); font-weight:700;"></span></div>
+        <div id="modalSummary"></div>
       </div>
-      <p style="color:var(--text-muted); font-size:0.88rem; margin-bottom:16px;">
-        ป้าเข็มได้รับข้อมูลเรียบร้อย กำลังเตรียมแพ็คปลาสดใหม่ซีลสูญญากาศและส่งรถเย็นถึงหน้าบ้านคุณนะคะ 💕
+      <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:16px;">
+        ป้าเข็มได้รับข้อมูลเรียบร้อย กำลังเตรียมแพ็คสดใหม่ใส่ซองฟอยล์พร้อมเจลเก็บความเย็นส่งถึงหน้าบ้านคุณนะคะ 💕
       </p>
-      <a href="https://lin.ee/o9Kjp1N" class="line-btn-nav" style="justify-content:center; padding:12px; margin-bottom:10px; width:100%; border-radius:12px;">
+      <a href="https://lin.ee/o9Kjp1N" class="line-btn-nav" style="justify-content:center; width:100%; padding:12px; font-size:0.95rem; margin-bottom:8px;">
         💬 คุยกับป้าเข็มผ่าน LINE ต่อ
       </a>
-      <button onclick="closeModal()" style="background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:0.9rem; padding:8px;">
+      <button onclick="closeModal()" style="background:none; border:none; color:#64748b; font-size:0.88rem; cursor:pointer; padding:6px;">
         ปิดหน้าต่างนี้
       </button>
     </div>
   </div>
 
   <script>
-    let currentPkg = { code: '1kg', name: 'ชุดครอบครัว (1 กิโลกรัม)', price: 290 };
+    // 11 Master Products across 7 popular categories
+    const PRODUCTS = [
+      {
+        sku: 'SKU-SLID-MD-1KG',
+        category: 'slid',
+        name: 'ปลาสลิดแดดเดียว คัดพิเศษ (ไซส์กลาง)',
+        badge: 'ขายดีอันดับ 1 🔥',
+        badgeClass: 'hot',
+        desc: 'ปลาสลิดบางบ่อแท้ คัดไซส์ยอดนิยมประจำบ้าน ตัดหัวควักไส้สะอาด ทอดกรอบนอกนุ่มฟู เค็มกำลังดี',
+        pieces: '7 - 8 ตัว / กิโลกรัม',
+        weight: '1,000 กรัม',
+        price: 290,
+        origPrice: 350
+      },
+      {
+        sku: 'SKU-SLID-MD-500G',
+        category: 'slid',
+        name: 'ปลาสลิดแดดเดียว (ชุดทดลองชิม)',
+        badge: 'ทดลองชิม ✨',
+        badgeClass: '',
+        desc: 'ขนาดครึ่งกิโลกรัม เหมาะสำหรับ 1-2 มื้อ ซีลสูญญากาศแยกเก็บในช่องฟรีซได้นาน 6 เดือน',
+        pieces: '3 - 4 ตัว / แพ็ค',
+        weight: '500 กรัม',
+        price: 160,
+        origPrice: 190
+      },
+      {
+        sku: 'SKU-SLID-MD-2KG',
+        category: 'slid',
+        name: 'ปลาสลิดแดดเดียว (ชุดครอบครัวสุดคุ้ม)',
+        badge: 'สุดคุ้มประหยัด 💰',
+        badgeClass: '',
+        desc: 'บรรจุถุงละ 1 กิโลกรัม 2 ถุงแยกกัน คุ้มค่าที่สุด ประหยัดค่าส่ง ทานได้ทั้งครอบครัว',
+        pieces: '14 - 16 ตัว (2 ถุง)',
+        weight: '2,000 กรัม',
+        price: 550,
+        origPrice: 680
+      },
+      {
+        sku: 'SKU-SLID-JB-1KG',
+        category: 'slid',
+        name: 'ปลาสลิดแดดเดียว ไซส์จัมโบ้พรีเมียม',
+        badge: 'เกรดส่งออก 👑',
+        badgeClass: 'royal',
+        desc: 'ตัวใหญ่พิเศษ เนื้อหนาเป็นลอน มันแทรก ทอดแล้วเนื้อฟูแน่นหนา ไม่ยุบ ซื้อเป็นของฝากยอดเยี่ยม',
+        pieces: '5 - 6 ตัว / กิโลกรัม',
+        weight: '1,000 กรัม',
+        price: 340,
+        origPrice: 420
+      },
+      {
+        sku: 'SKU-SQUID-EG-500G',
+        category: 'squid',
+        name: 'หมึกไข่แดดเดียว ปากน้ำปราณบุรีแท้',
+        badge: 'ซีฟู้ดยอดฮิต 🦑',
+        badgeClass: 'hot',
+        desc: 'หมึกสดจากเรือไดหมึกปากน้ำปราณ ตาก 1 แดดพอผิวนอกตึง เนื้อเด้งกรอบ ไข่แน่นเต็มท้อง หวานธรรมชาติ',
+        pieces: '6 - 8 ตัว / แพ็ค',
+        weight: '500 กรัม',
+        price: 340,
+        origPrice: 390
+      },
+      {
+        sku: 'SKU-LOD-NAT-500G',
+        category: 'lod_chon',
+        name: 'ปลาหลดแดดเดียว ธรรมชาติแท้',
+        badge: 'ของหายากตามฤดูกาล 🌟',
+        badgeClass: 'rare',
+        desc: 'ปลาหลดแม่น้ำธรรมชาติ 100% ก้างนุ่ม ทอดกรอบเคี้ยวเพลินได้ทั้งตัว ปลายฝนต้นหนาวขายดีจนไม่พอขาย',
+        pieces: '12 - 18 ตัว / แพ็ค',
+        weight: '500 กรัม',
+        price: 350,
+        origPrice: 420
+      },
+      {
+        sku: 'SKU-CHON-MD-1KG',
+        category: 'lod_chon',
+        name: 'ปลาช่อนแดดเดียว แล่ผ่าหลังบั้งเนื้อ',
+        badge: 'สูตรแม่ลา สิงห์บุรี 🌿',
+        badgeClass: '',
+        desc: 'ปลาช่อนธรรมชาติ ไร้กลิ่นสาบโคลน บั้งเนื้อสวย หมักเกลือสมุทร ทอดฟูกรอบนอกนุ่มฉ่ำ',
+        pieces: '4 - 5 ตัว / กิโลกรัม',
+        weight: '1,000 กรัม',
+        price: 360,
+        origPrice: 450
+      },
+      {
+        sku: 'SKU-KULAO-TB-1KG',
+        category: 'kulao',
+        name: 'ปลากุเลาแดดเดียว สูตรตากใบ',
+        badge: 'ราชาแห่งปลาเค็ม 👑',
+        badgeClass: 'royal',
+        desc: 'ปลากุเลาท้องถิ่นตากใบแท้ เนื้อร่วนซุยเป็นเม็ดทราย เค็มน้อย หอมฟุ้ง บีบมะนาวโรยพริกขี้หนูสุดฟิน',
+        pieces: '3 - 4 ตัว / กิโลกรัม',
+        weight: '1,000 กรัม',
+        price: 480,
+        origPrice: 590
+      },
+      {
+        sku: 'SKU-NIL-FL-1KG',
+        category: 'mass',
+        name: 'ปลานิลแดดเดียว แล่แบะผีเสื้อ',
+        badge: 'กึ่งไร้ก้าง ทานง่าย 🌾',
+        badgeClass: '',
+        desc: 'ปลานิลกระชังน้ำไหล แล่ผีเสื้อกึ่งไร้ก้าง เนื้อนุ่มฟู ทานง่าย เด็กและผู้สูงอายุชอบมาก คุ้มค่าประหยัด',
+        pieces: '3 - 4 ตัว / กิโลกรัม',
+        weight: '1,000 กรัม',
+        price: 260,
+        origPrice: 320
+      },
+      {
+        sku: 'SKU-DUK-CT-1KG',
+        category: 'mass',
+        name: 'ปลาดุกแดดเดียว หั่นท่อนแว่น',
+        badge: 'ผัดเผ็ด/ทอดกรอบ 🍲',
+        badgeClass: '',
+        desc: 'ปลาดุกอุยคัดไซส์ หั่นชิ้นแว่นพอดีคำ หมักน้ำปลาแท้ หนังตึงกรอบ เนื้อหนานุ่ม ไม่คาว',
+        pieces: '12 - 16 ชิ้น / กก.',
+        weight: '1,000 กรัม',
+        price: 280,
+        origPrice: 350
+      },
+      {
+        sku: 'SKU-SWAI-SL-1KG',
+        category: 'mass',
+        name: 'ปลาสวายแดดเดียว แล่เนื้อล้วนไร้ก้าง',
+        badge: 'ราคาประหยัด อิ่มคุ้ม 🥣',
+        badgeClass: '',
+        desc: 'ปลาสวายสดแล่เนื้อล้วนไร้ก้าง ล้างคาวสะอาด ตากแดดเดียวพอแห้ง ทอดกินกับแกงส้ม อิ่มคุ้มทั้งบ้าน',
+        pieces: '8 - 10 ชิ้น / กก.',
+        weight: '1,000 กรัม',
+        price: 250,
+        origPrice: 290
+      }
+    ];
+
+    let currentSelectedSku = 'SKU-SLID-MD-1KG';
     let currentPayment = 'COD';
 
-    function selectPackage(code, name, price) {
-      currentPkg = { code, name, price };
-      document.querySelectorAll('.pkg-card').forEach(el => el.classList.remove('active'));
-      const activeEl = document.getElementById(`pkg-${code}`);
-      if (activeEl) activeEl.classList.add('active');
+    function renderProducts(filterCat = 'all') {
+      const grid = document.getElementById('productGrid');
+      const filtered = filterCat === 'all' ? PRODUCTS : PRODUCTS.filter(p => p.category === filterCat);
+      
+      grid.innerHTML = filtered.map(p => `
+        <div class="prod-card ${p.sku === currentSelectedSku ? 'selected' : ''}" id="card-${p.sku}">
+          <div>
+            <div class="card-top">
+              <span class="prod-badge ${p.badgeClass}">${p.badge}</span>
+              <span style="font-size:0.75rem; color:#94a3b8; font-weight:600;">${p.sku}</span>
+            </div>
+            <div class="prod-name">${p.name}</div>
+            <div class="prod-desc">${p.desc}</div>
+            <div class="prod-spec-row">
+              <span>⚖️ ${p.weight}</span>
+              <span>•</span>
+              <span>🐟 ${p.pieces}</span>
+            </div>
+          </div>
+          <div class="prod-price-row">
+            <div class="price-box">
+              <span class="price">${p.price}.-</span>
+              <span class="orig-price">${p.origPrice}.-</span>
+              <span class="unit">/ กล่อง</span>
+            </div>
+            <button class="btn-select-prod" onclick="selectProduct('${p.sku}')">
+              <span>🛒 สั่งสินค้านี้</span>
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
 
-      document.getElementById('btnPrice').innerText = price.toLocaleString();
-      document.getElementById('stickyPriceText').innerText = price.toLocaleString() + ' บาท';
-      document.getElementById('stickyPkgName').innerText = name;
+    function filterCategory(cat, btn) {
+      document.querySelectorAll('.tab-pill').forEach(el => el.classList.remove('active'));
+      btn.classList.add('active');
+      renderProducts(cat);
+    }
+
+    function selectProduct(sku) {
+      currentSelectedSku = sku;
+      const p = PRODUCTS.find(x => x.sku === sku);
+      if (!p) return;
+
+      document.querySelectorAll('.prod-card').forEach(c => c.classList.remove('selected'));
+      const activeCard = document.getElementById(`card-${sku}`);
+      if (activeCard) activeCard.classList.add('selected');
+
+      // Update Form display
+      document.getElementById('displaySelectedName').innerText = p.name;
+      document.getElementById('displaySelectedSpec').innerText = `ขนาด ${p.weight} (${p.pieces}) | ซีลสูญญากาศส่งรถเย็น`;
+      document.getElementById('displaySelectedPrice').innerText = `${p.price} ฿`;
+      document.getElementById('btnPrice').innerText = p.price;
+
+      // Update Sticky Bar
+      document.getElementById('stickyProdName').innerText = p.name;
+      document.getElementById('stickyPriceText').innerText = `${p.price} บาท`;
+
+      // Smooth scroll to order section
+      const orderSec = document.getElementById('order-section');
+      if (orderSec) {
+        orderSec.scrollIntoView({ behavior: 'smooth' });
+      }
     }
 
     function selectPayment(method) {
@@ -519,7 +760,7 @@
       document.getElementById('pay-transfer').classList.toggle('active', method === 'TRANSFER');
     }
 
-        async function submitOrder(e) {
+    async function submitOrder(e) {
       e.preventDefault();
       
       const name = document.getElementById('custName').value.trim();
@@ -533,12 +774,14 @@
         return;
       }
 
+      const p = PRODUCTS.find(x => x.sku === currentSelectedSku) || PRODUCTS[0];
       const btn = document.getElementById('submitBtn');
       btn.disabled = true;
       btn.innerText = 'กำลังส่งออเดอร์... ⏳';
 
       const now = new Date();
-      const orderId = 'PKF-' + Utilities_pad(now.getMonth()+1) + Utilities_pad(now.getDate()) + Utilities_pad(now.getHours()) + Utilities_pad(now.getMinutes()) + Utilities_pad(now.getSeconds());
+      const pad = n => (n < 10 ? '0' : '') + n;
+      const orderId = 'PKF-' + pad(now.getMonth()+1) + pad(now.getDate()) + pad(now.getHours()) + pad(now.getMinutes()) + pad(now.getSeconds());
 
       const payload = {
         action: 'order_fish',
@@ -546,14 +789,14 @@
         name: name,
         phone: phone,
         address: address,
-        package: currentPkg.code,
-        package_name: currentPkg.name,
-        price: currentPkg.price,
+        package: p.sku,
+        package_name: p.name,
+        price: p.price,
         payment_method: currentPayment,
         note: note
       };
 
-      // 1. Dual-Channel Transmission: Supabase Direct (Full CORS * Enabled)
+      // 1. Supabase Direct Insert (Full CORS * Enabled)
       const supaUrl = 'https://usqhvujqmnxqrdoovvnp.supabase.co/rest/v1/direct_orders';
       const supaKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVzcWh2dWpxbW54cXJkb292dm5wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQyOTc4NjAsImV4cCI6MjA2OTg3Mzg2MH0.3kCGGAe1OoSJ_SCN_NDSdnKep1hXIMgMxR1lBd_i2eI';
       
@@ -567,10 +810,10 @@
         },
         body: JSON.stringify({
           order_code: orderId,
-          product_name: 'ปลาแดดเดียวสูตรโบราณ ป้าเข็ม คัดพิเศษ',
-          package_code: currentPkg.code,
-          package_name: currentPkg.name,
-          price: currentPkg.price,
+          product_name: p.name,
+          package_code: p.sku,
+          package_name: p.name,
+          price: p.price,
           customer_name: name,
           phone: phone,
           address: address,
@@ -581,49 +824,42 @@
         })
       }).catch(err => console.log('Supa error:', err));
 
-      // 2. Google Apps Script Webhook (for Instant Telegram Commander Alert)
-      // Must use text/plain and no-cors to prevent browser preflight CORS block!
+      // 2. Google Apps Script Webhook (Telegram Push Alert)
       const gasUrl = 'https://script.google.com/macros/s/AKfycbwYZZYui21pdZiC7HF8yte_ILMwoUEmZOoZaixJPsE69WH80qVN2Durai-zNyAeoaP5vg/exec';
       const gasPromise = fetch(gasUrl, {
         method: 'POST',
         mode: 'no-cors',
-        headers: {
-          'Content-Type': 'text/plain;charset=utf-8'
-        },
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
         body: JSON.stringify(payload)
       }).catch(err => console.log('GAS error:', err));
 
-      // Wait max 800ms for network request
+      // Wait max 800ms
       await Promise.race([
         Promise.all([supaPromise, gasPromise]),
         new Promise(resolve => setTimeout(resolve, 800))
       ]);
 
-      // 3. Instant Visual Confirmation Modal
+      // 3. Show Success Modal
       document.getElementById('modalOrderId').innerText = orderId;
-      const summaryEl = document.getElementById('modalSummary');
-      if (summaryEl) {
-        summaryEl.innerHTML = `<strong>สินค้า:</strong> ${currentPkg.name}<br><strong>ยอดเงิน:</strong> ${currentPkg.price.toLocaleString()} บาท (${currentPayment === 'COD' ? 'เก็บเงินปลายทาง' : 'โอนเงิน'})<br><strong>ผู้รับ:</strong> คุณ${name} (${phone})`;
-      }
+      document.getElementById('modalSummary').innerHTML = `
+        <div><b>สินค้า:</b> ${p.name}</div>
+        <div><b>ยอดชำระ:</b> ${p.price.toLocaleString()} บาท (${currentPayment === 'COD' ? '🚚 เก็บเงินปลายทาง' : '💳 โอนเงิน'})</div>
+        <div><b>ผู้รับ:</b> คุณ${name} (${phone})</div>
+      `;
       document.getElementById('successModal').style.display = 'flex';
       document.getElementById('orderForm').reset();
 
       btn.disabled = false;
-      btn.innerHTML = `<span>ยืนยันการสั่งซื้อ (${currentPkg.price.toLocaleString()} บาท)</span> <span>👉</span>`;
-    }
-
-    function Utilities_pad(n) {
-      return (n < 10 ? '0' : '') + n;
+      btn.innerHTML = `<span>ยืนยันการสั่งซื้อ (${p.price.toLocaleString()} บาท)</span> <span>👉</span>`;
     }
 
     function closeModal() {
       document.getElementById('successModal').style.display = 'none';
     }
-  
-    
 
+    // Initialize
+    renderProducts('all');
   </script>
-  
 
 </body>
 </html>
