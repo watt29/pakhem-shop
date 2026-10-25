@@ -646,6 +646,39 @@
           </div>
         </div>
 
+                <!-- Transfer Bank Info & Slip Upload Box (Appears when TRANSFER selected) -->
+        <div id="transferDetailsBox" style="display:none; background:#f0fdf4; border:1.5px dashed #10b981; border-radius:12px; padding:16px; margin-top:12px;">
+          <div style="font-weight:700; color:#065f46; margin-bottom:8px; display:flex; align-items:center; gap:6px;">
+            <span>💳 บัญชีรับโอนเงิน (พร้อมเพย์)</span>
+          </div>
+          <div style="background:#ffffff; border-radius:8px; padding:10px 14px; font-size:0.9rem; margin-bottom:12px; border:1px solid #d1fae5;">
+            <div><b>พร้อมเพย์ (PromptPay):</b> <span style="font-family:monospace; font-size:1.05rem; color:#047857; font-weight:700;">081-456-7890</span></div>
+            <div><b>ชื่อบัญชี:</b> ร้านป้าเข็ม คัดพิเศษ (บจก. ป้าเข็มฟู้ดส์)</div>
+            <div style="margin-top:4px; font-size:0.85rem; color:#047857;">ยอดที่ต้องโอน: <b id="transferExactAmount" style="font-size:1.1rem; color:#b91c1c;">290 บาท</b></div>
+          </div>
+
+          <div style="margin-top:8px;">
+            <label style="font-size:0.88rem; font-weight:600; color:#065f46; display:block; margin-bottom:6px;">
+              📸 แนบสลิปการโอนเงิน (เพื่อการจัดส่งที่รวดเร็ว):
+            </label>
+            <input type="file" id="slipFileInput" accept="image/*" style="display:none;" onchange="handleSlipSelected(event)">
+            <div id="slipUploadTrigger" onclick="document.getElementById('slipFileInput').click()" style="border:2px dashed #34d399; background:#ffffff; border-radius:10px; padding:14px; text-align:center; cursor:pointer; transition:all 0.2s;">
+              <span id="slipTriggerText" style="font-size:0.88rem; color:#059669; font-weight:600;">
+                📷 คลิกที่นี่เพื่อเลือกรูปสลิป / ถ่ายภาพสลิป
+              </span>
+            </div>
+            <!-- Slip Thumbnail Preview -->
+            <div id="slipPreviewBox" style="display:none; margin-top:10px; align-items:center; gap:12px; background:#fff; padding:8px 12px; border-radius:8px; border:1px solid #a7f3d0;">
+              <img id="slipThumbnail" src="" alt="สลิปโอนเงิน" style="width:55px; height:55px; object-fit:cover; border-radius:6px; border:1px solid #cbd5e1;">
+              <div style="flex:1;">
+                <div style="font-size:0.85rem; font-weight:700; color:#065f46;" id="slipFileName">สลิปแนบสำเร็จ</div>
+                <div style="font-size:0.75rem; color:#059669;">✅ พร้อมตรวจสอบอัตโนมัติ</div>
+              </div>
+              <button type="button" onclick="clearSlipSelection()" style="background:#fee2e2; color:#b91c1c; border:none; padding:4px 8px; border-radius:6px; font-size:0.75rem; cursor:pointer;">ลบ</button>
+            </div>
+          </div>
+        </div>
+
         <div class="form-group">
           <label for="custNote">หมายเหตุเพิ่มเติม (ถ้ามี)</label>
           <input type="text" id="custNote" class="form-control" placeholder="ระบุข้อความถึงคนส่งของ (ถ้ามี)">
@@ -901,6 +934,15 @@
       currentPayment = method;
       document.getElementById('pay-cod').classList.toggle('active', method === 'COD');
       document.getElementById('pay-transfer').classList.toggle('active', method === 'TRANSFER');
+      
+      const transferBox = document.getElementById('transferDetailsBox');
+      if (transferBox) {
+        transferBox.style.display = (method === 'TRANSFER') ? 'block' : 'none';
+        if (method === 'TRANSFER') {
+          const p = PRODUCTS.find(x => x.sku === currentSelectedSku) || PRODUCTS[0];
+          document.getElementById('transferExactAmount').innerText = p.price.toLocaleString() + ' บาท';
+        }
+      }
     }
 
     
