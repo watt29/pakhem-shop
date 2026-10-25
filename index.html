@@ -98,15 +98,7 @@
 
         <!-- Action Buttons -->
         <div class="flex items-center gap-2">
-          <!-- Lucky Wheel Trigger -->
-          <button 
-            onclick="openLuckyWheel()" 
-            class="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white text-xs font-semibold px-2.5 py-1.5 rounded-xl shadow-sm flex items-center gap-1.5 active:scale-95 transition-all"
-            title="หมุนวงล้อแจกโค้ด"
-          >
-            <span class="text-sm">🎯</span>
-            <span class="hidden sm:inline">สุ่มโค้ดลับ</span>
-          </button>
+          
 
           <!-- LINE OA Link -->
           <a 
@@ -266,49 +258,7 @@
 
   </main>
 
-  <!-- Lucky Wheel Modal -->
-  <div id="luckyModal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="bg-white rounded-3xl max-w-sm w-full p-6 text-center relative shadow-2xl overflow-hidden">
-      <button onclick="closeLuckyWheel()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-xl font-bold w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center">
-        ✕
-      </button>
-
-      <div class="mb-3">
-        <span class="text-[10px] font-extrabold bg-orange-100 text-orange-600 px-3 py-1 rounded-full uppercase tracking-wider">
-          🎁 LUCKY WHEEL
-        </span>
-        <h3 class="text-lg font-bold text-gray-800 mt-1 font-kanit">วงล้อเสี่ยงโชค แจกโค้ด Shopee</h3>
-        <p class="text-xs text-gray-500">หมุนรับโค้ดส่วนลดและโค้ดส่งฟรีประจำวัน</p>
-      </div>
-
-      <div class="relative w-64 h-64 mx-auto my-4 flex items-center justify-center">
-        <div class="absolute -top-3 z-20 text-red-600 drop-shadow">
-          <svg class="w-8 h-8 filter drop-shadow" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12 21l-6-9h12l-6 9z"/>
-          </svg>
-        </div>
-        <canvas id="wheelCanvas" width="250" height="250" class="rounded-full shadow-lg border-4 border-yellow-400"></canvas>
-      </div>
-
-      <div id="rewardBox" class="hidden bg-gradient-to-r from-orange-50 to-amber-50 border border-orange-200 rounded-2xl p-3 mb-4">
-        <p class="text-xs font-bold text-orange-600" id="rewardTitle">🎉 ยินดีด้วยค่ะ!</p>
-        <div class="flex items-center justify-center gap-2 mt-2">
-          <span class="font-mono text-sm font-extrabold bg-white px-3 py-1 rounded-lg border border-orange-300 text-gray-800" id="rewardCode">CODE123</span>
-          <button onclick="copyRewardCode()" class="bg-orange-600 text-white text-xs font-bold px-3 py-1.5 rounded-lg shadow active:scale-95">
-            คัดลอก & ช้อปเลย
-          </button>
-        </div>
-      </div>
-
-      <button 
-        onclick="spinWheel()" 
-        id="spinBtn"
-        class="w-full bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white font-bold py-3 rounded-2xl shadow-lg active:scale-95 transition-all text-sm flex items-center justify-center gap-2 font-kanit"
-      >
-        <span>🎯 แตะเพื่อเริ่มหมุนวงล้อ</span>
-      </button>
-    </div>
-  </div>
+  
 
   <!-- JavaScript Application Logic -->
   <script>
@@ -632,107 +582,7 @@
       renderProducts();
     }
 
-    // 5. Lucky Spin Wheel Logic
-    const WHEEL_PRIZES = [
-      { text: "โค้ดลด 15%", code: "MALL15OCT", color: "#ee4d2d" },
-      { text: "ส่งฟรี 0฿", code: "FREESHIPPKH", color: "#f97316" },
-      { text: "คอยน์คืน 20%", code: "COIN20PKH", color: "#eab308" },
-      { text: "ส่วนลด 100฿", code: "MALL15OCT", color: "#ef4444" },
-      { text: "โค้ดลับป้าเข็ม", code: "FREESHIPPKH", color: "#fb923c" },
-      { text: "ส่งฟรีทั่วไทย", code: "FREESHIPPKH", color: "#f59e0b" }
-    ];
-
-    let currentAngle = 0;
-    let isSpinning = false;
-
-    function drawWheel() {
-      const canvas = document.getElementById('wheelCanvas');
-      if (!canvas) return;
-      const ctx = canvas.getContext('2d');
-      const numSegments = WHEEL_PRIZES.length;
-      const segAngle = (2 * Math.PI) / numSegments;
-      const radius = canvas.width / 2;
-
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      WHEEL_PRIZES.forEach((prize, i) => {
-        const angle = i * segAngle + currentAngle;
-        ctx.beginPath();
-        ctx.moveTo(radius, radius);
-        ctx.arc(radius, radius, radius, angle, angle + segAngle);
-        ctx.fillStyle = prize.color;
-        ctx.fill();
-        ctx.stroke();
-
-        ctx.save();
-        ctx.translate(radius, radius);
-        ctx.rotate(angle + segAngle / 2);
-        ctx.textAlign = 'right';
-        ctx.fillStyle = '#ffffff';
-        ctx.font = 'bold 12px Kanit';
-        ctx.fillText(prize.text, radius - 15, 4);
-        ctx.restore();
-      });
-    }
-
-    function openLuckyWheel() {
-      document.getElementById('luckyModal').classList.remove('hidden');
-      drawWheel();
-    }
-
-    function closeLuckyWheel() {
-      document.getElementById('luckyModal').classList.add('hidden');
-    }
-
-    function spinWheel() {
-      if (isSpinning) return;
-      isSpinning = true;
-      document.getElementById('rewardBox').classList.add('hidden');
-
-      const spinRounds = 5 + Math.random() * 3;
-      const targetIndex = Math.floor(Math.random() * WHEEL_PRIZES.length);
-      const segAngle = (2 * Math.PI) / WHEEL_PRIZES.length;
-      const finalAngle = spinRounds * 2 * Math.PI + (targetIndex * segAngle);
-
-      let startTime = null;
-      const duration = 3000;
-
-      function animate(time) {
-        if (!startTime) startTime = time;
-        const progress = Math.min((time - startTime) / duration, 1);
-        const easeOut = 1 - Math.pow(1 - progress, 3);
-        currentAngle = easeOut * finalAngle;
-        drawWheel();
-
-        if (progress < 1) {
-          requestAnimationFrame(animate);
-        } else {
-          isSpinning = false;
-          const wonPrize = WHEEL_PRIZES[targetIndex];
-          showReward(wonPrize);
-          if (typeof confetti === 'function') {
-            confetti({ particleCount: 70, spread: 60, origin: { y: 0.6 } });
-          }
-        }
-      }
-      requestAnimationFrame(animate);
-    }
-
-    function showReward(prize) {
-      document.getElementById('rewardBox').classList.remove('hidden');
-      document.getElementById('rewardTitle').innerText = `🎉 ยินดีด้วยค่ะ! คุณได้รับ ${prize.text}`;
-      document.getElementById('rewardCode').innerText = prize.code;
-    }
-
-    function copyRewardCode() {
-      const code = document.getElementById('rewardCode').innerText;
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(code).catch(() => {});
-      }
-      alert(`คัดลอกโค้ด ${code} เรียบร้อยแล้วค่ะ! กำลังเปิด Shopee... 💖`);
-      window.open('https://shopee.co.th?openExternalBrowser=1', '_blank');
-    }
-
+    
     // Initialize Page
     document.addEventListener('DOMContentLoaded', () => {
       renderCategoryTabs();
