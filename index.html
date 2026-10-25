@@ -180,7 +180,6 @@
       <div class="flex items-center gap-1.5">
         <span>แสดง</span>
         <span id="productCount" class="font-bold text-orange-600 bg-orange-50 px-2 py-0.5 rounded-md border border-orange-200">กำลังโหลด...</span>
-        <span id="catalogSyncBadge" class="hidden text-[10px] text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200 font-semibold">✓ ซิงค์ครบ 1,997 ชิ้น</span>
       </div>
       <div class="flex gap-1.5">
         <button id="sortSalesBtn" class="px-2.5 py-1 rounded-lg bg-orange-50 border border-orange-300 text-orange-600 font-bold transition-all text-xs" onclick="setSortMode('sales')">
@@ -389,8 +388,6 @@
               }
               allProducts = merged;
               isFullCatalogLoaded = true;
-              const badge = document.getElementById('catalogSyncBadge');
-              if (badge) badge.classList.remove('hidden');
               renderProducts();
             }
           } catch (_) {}
