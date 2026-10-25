@@ -422,8 +422,8 @@
         seenNames.add(cleanName);
 
         const hasImg = p.image_url && p.image_url.trim().length > 10;
-        // หากเป็นการเลือกดูหมวดหมู่ทั่วไป ให้คัดเฉพาะสินค้าที่มีภาพสินค้าแท้ 100% ขึ้นมาแสดง
-        if (!term && !hasImg) return false;
+        // กฎเหล็ก: แสดงเฉพาะสินค้าที่มีภาพสินค้าแท้ 100% เท่านั้น (Zero-Placeholder Policy)
+        if (!hasImg) return false;
 
         const cat = (p.category || '').toLowerCase();
 
