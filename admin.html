@@ -106,6 +106,61 @@
     /* Tabs Content */
     .tab-content { display: none; }
     .tab-content.active { display: block; }
+
+    /* Toast Notification */
+    #toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #1e293b;
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      gap: 8px;
+      animation: fadeIn 0.2s ease-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .status-select {
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      border: 1px solid var(--border);
+      background: #fff;
+      cursor: pointer;
+    }
+    .status-select.pending { background: #fef3c7; color: #92400e; border-color: #fde68a; }
+    .status-select.confirmed { background: #e0f2fe; color: #0369a1; border-color: #bae6fd; }
+    .status-select.shipped { background: #dbeafe; color: #1e40af; border-color: #bfdbfe; }
+    .status-select.delivered { background: #dcfce7; color: #166534; border-color: #bbf7d0; }
+    .status-select.cancelled { background: #f1f5f9; color: #64748b; border-color: #cbd5e1; }
+
+    .tracking-input {
+      padding: 4px 6px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-size: 0.8rem;
+      width: 110px;
+    }
+    .tracking-save-btn {
+      padding: 3px 6px;
+      background: #f1f5f9;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.75rem;
+    }
+    .tracking-save-btn:hover { background: #e2e8f0; }
+
   </style>
 </head>
 <body>
@@ -144,7 +199,10 @@
       <section class="panel">
         <div class="panel-header">
           <h2>📦 รายการสั่งซื้อปลาแดดเดียว (Supabase PostgreSQL Realtime)</h2>
-          <button onclick="loadOrders()" class="btn-action">🔄 รีเฟรชออเดอร์</button>
+          <div style="display:flex; gap:8px;">
+            <button onclick="exportColdChainCSV()" class="btn-action" style="background:#059669; color:#fff; border-color:#059669; font-weight:600;">📥 ส่งออก CSV รถเย็น</button>
+            <button onclick="loadOrders()" class="btn-action">🔄 รีเฟรชออเดอร์</button>
+          </div>
         </div>
         <div style="overflow-x:auto;">
           <table>
@@ -155,10 +213,11 @@
                 <th>สินค้า</th>
                 <th>ยอดเงิน</th>
                 <th>วิธีชำระ</th>
-                <th>ลูกค้า</th>
-                <th>เบอร์โทร</th>
+                <th>ลูกค้า & โทร</th>
                 <th>ที่อยู่จัดส่ง</th>
-                <th>สถานะ</th>
+                <th>สถานะ (1-Click)</th>
+                <th>เลขพัสดุรถเย็น</th>
+                <th>การจัดการ</th>
               </tr>
             </thead>
             <tbody id="ordersTbody">
@@ -353,14 +412,24 @@
       if (tabId === 'orders') loadOrders();
     }
 
+    let cachedOrders = [];
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toastMsg').innerText = msg;
+      toast.style.display = 'flex';
+      setTimeout(() => { toast.style.display = 'none'; }, 2500);
+    }
+
     async function loadOrders() {
       const tbody = document.getElementById('ordersTbody');
-      tbody.innerHTML = '<tr><td colspan="9" style="text-align:center; padding:20px;">กำลังโหลดข้อมูลล่าสุด…</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="10" style="text-align:center; padding:20px;">กำลังโหลดข้อมูลล่าสุด…</td></tr>';
       try {
-        const res = await fetch(`${SUPA_URL}/direct_orders?order=id.desc&limit=50`, {
+        const res = await fetch(`${SUPA_URL}/direct_orders?order=id.desc&limit=100`, {
           headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY }
         });
         const orders = await res.json();
+        cachedOrders = orders;
         
         document.getElementById('statOrderCount').innerText = orders.length;
         const totalRev = orders.reduce((sum, o) => sum + (parseFloat(o.price) || 0), 0);
@@ -369,26 +438,249 @@
         document.getElementById('statPending').innerText = pendingCount;
 
         if (orders.length === 0) {
-          tbody.innerHTML = '<tr><td colspan="9" style="text-align:center; padding:20px;">ยังไม่มีออเดอร์ในระบบ</td></tr>';
+          tbody.innerHTML = '<tr><td colspan="10" style="text-align:center; padding:20px; color:var(--text-muted);">ยังไม่มีออเดอร์ในระบบ</td></tr>';
           return;
         }
 
-        tbody.innerHTML = orders.map(o => `
+        tbody.innerHTML = orders.map(o => {
+          const statusClass = (o.status || 'PENDING').toLowerCase();
+          return `
           <tr>
             <td><b>${o.order_code}</b></td>
             <td><small style="color:var(--text-muted);">${new Date(o.created_at).toLocaleString('th-TH')}</small></td>
             <td><b>${o.product_name || o.package_name || '-'}</b></td>
             <td><b style="color:var(--primary);">${parseFloat(o.price).toLocaleString()} ฿</b></td>
             <td><span class="badge ${o.payment_method === 'COD' ? 'pending' : 'confirmed'}">${o.payment_method}</span></td>
-            <td>${o.customer_name}</td>
-            <td>${o.phone}</td>
-            <td><small>${o.address}</small></td>
-            <td><span class="badge ${o.status === 'PENDING' ? 'pending' : 'confirmed'}">${o.status}</span></td>
+            <td><b>${o.customer_name}</b><br><small style="color:var(--text-muted);">📞 ${o.phone}</small></td>
+            <td><small style="max-width:220px; display:inline-block;">${o.address}${o.note ? `<br><span style="color:#d97706;">📝 ${o.note}</span>` : ''}</small></td>
+            <td>
+              <select class="status-select ${statusClass}" onchange="updateOrderStatus(${o.id}, this.value, this)">
+                <option value="PENDING" ${o.status === 'PENDING' ? 'selected' : ''}>🟡 รอจัดส่ง (Pending)</option>
+                <option value="CONFIRMED" ${o.status === 'CONFIRMED' ? 'selected' : ''}>🔵 ยืนยันแล้ว (Confirmed)</option>
+                <option value="SHIPPED" ${o.status === 'SHIPPED' ? 'selected' : ''}>🚚 ส่งรถเย็นแล้ว (Shipped)</option>
+                <option value="DELIVERED" ${o.status === 'DELIVERED' ? 'selected' : ''}>🟢 สำเร็จ (Delivered)</option>
+                <option value="CANCELLED" ${o.status === 'CANCELLED' ? 'selected' : ''}>⚪ ยกเลิก (Cancelled)</option>
+              </select>
+            </td>
+            <td>
+              <div style="display:flex; gap:4px; align-items:center;">
+                <input type="text" id="track-${o.id}" class="tracking-input" placeholder="เลขรถเย็น..." value="${o.tracking_number || ''}" onkeydown="if(event.key==='Enter') saveTracking(${o.id})">
+                <button onclick="saveTracking(${o.id})" class="tracking-save-btn" title="บันทึกเลขพัสดุ">💾</button>
+              </div>
+            </td>
+            <td>
+              <button onclick="printShippingSlip(${o.id})" class="btn-action green" style="padding:4px 8px; font-size:0.75rem;">📦 ใบปะหน้า</button>
+            </td>
           </tr>
-        `).join('');
+        `;
+        }).join('');
       } catch (e) {
-        tbody.innerHTML = `<tr><td colspan="9" style="text-align:center; color:red; padding:20px;">โหลดข้อมูลไม่สำเร็จ: ${e.message}</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="10" style="text-align:center; color:red; padding:20px;">โหลดข้อมูลไม่สำเร็จ: ${e.message}</td></tr>`;
       }
+    }
+
+    async function updateOrderStatus(orderId, newStatus, selectEl) {
+      try {
+        const res = await fetch(`${SUPA_URL}/direct_orders?id=eq.${orderId}`, {
+          method: 'PATCH',
+          headers: {
+            'apikey': SUPA_KEY,
+            'Authorization': 'Bearer ' + SUPA_KEY,
+            'Content-Type': 'application/json',
+            'Prefer': 'return=minimal'
+          },
+          body: JSON.stringify({ status: newStatus })
+        });
+        if (res.ok) {
+          showToast(`อัปเดตสถานะเป็น "${newStatus}" สำเร็จ!`);
+          if (selectEl) {
+            selectEl.className = 'status-select ' + newStatus.toLowerCase();
+          }
+          // Update stat counters locally
+          const target = cachedOrders.find(x => x.id === orderId);
+          if (target) target.status = newStatus;
+          const pendingCount = cachedOrders.filter(o => o.status === 'PENDING').length;
+          document.getElementById('statPending').innerText = pendingCount;
+        } else {
+          alert('ไม่สามารถอัปเดตสถานะได้');
+        }
+      } catch (e) {
+        alert('เกิดข้อผิดพลาด: ' + e.message);
+      }
+    }
+
+    async function saveTracking(orderId) {
+      const input = document.getElementById('track-' + orderId);
+      const tracking = input ? input.value.trim() : '';
+      try {
+        const res = await fetch(`${SUPA_URL}/direct_orders?id=eq.${orderId}`, {
+          method: 'PATCH',
+          headers: {
+            'apikey': SUPA_KEY,
+            'Authorization': 'Bearer ' + SUPA_KEY,
+            'Content-Type': 'application/json',
+            'Prefer': 'return=minimal'
+          },
+          body: JSON.stringify({ tracking_number: tracking })
+        });
+        if (res.ok) {
+          showToast(`บันทึกเลขพัสดุ ${tracking || '-'} เรียบร้อย!`);
+          const target = cachedOrders.find(x => x.id === orderId);
+          if (target) target.tracking_number = tracking;
+        } else {
+          alert('ไม่สามารถบันทึกเลขพัสดุได้');
+        }
+      } catch (e) {
+        alert('เกิดข้อผิดพลาด: ' + e.message);
+      }
+    }
+
+    function printShippingSlip(orderId) {
+      const o = cachedOrders.find(x => x.id === orderId);
+      if (!o) return;
+
+      const w = window.open('', '_blank', 'width=520,height=650');
+      const now = new Date();
+      const printDate = now.toLocaleDateString('th-TH') + ' ' + now.toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' });
+      const isCod = (o.payment_method || '').toUpperCase() === 'COD';
+
+      w.document.write(`
+        <!DOCTYPE html>
+        <html lang="th">
+        <head>
+          <meta charset="UTF-8">
+          <title>ใบปะหน้าพัสดุส่งด่วนรถเย็น - ${o.order_code}</title>
+          <style>
+            @page { size: 100mm 150mm; margin: 4mm; }
+            * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Prompt', sans-serif; }
+            body { padding: 4mm; width: 100%; color: #000; }
+            .slip-box { border: 2px solid #000; border-radius: 8px; padding: 4mm; height: 100%; display: flex; flex-direction: column; justify-content: space-between; }
+            .carrier-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #000; padding-bottom: 3mm; margin-bottom: 3mm; }
+            .carrier-logo { font-size: 13pt; font-weight: 700; color: #000; }
+            .carrier-badge { background: #000; color: #fff; padding: 2px 8px; font-size: 8pt; font-weight: 700; border-radius: 4px; }
+            .section { margin-bottom: 3mm; padding-bottom: 3mm; border-bottom: 1px dashed #666; font-size: 9pt; }
+            .section-title { font-size: 7.5pt; color: #555; text-transform: uppercase; font-weight: 600; margin-bottom: 1mm; }
+            .recipient-name { font-size: 13pt; font-weight: 700; }
+            .recipient-phone { font-size: 15pt; font-weight: 800; letter-spacing: 0.5px; }
+            .recipient-address { font-size: 9.5pt; line-height: 1.4; margin-top: 1mm; }
+            .item-table { width: 100%; border-collapse: collapse; font-size: 8.5pt; margin: 2mm 0; }
+            .item-table th, .item-table td { padding: 2mm; border: 1px solid #999; text-align: left; }
+            .item-table th { background: #f0f0f0; }
+            .cod-alert { border: 2.5px dashed #b91c1c; background: #fef2f2; color: #991b1b; padding: 3mm; text-align: center; border-radius: 6px; margin: 2mm 0; }
+            .cod-amount { font-size: 17pt; font-weight: 800; }
+            .paid-alert { border: 2px solid #059669; background: #ecfdf5; color: #065f46; padding: 3mm; text-align: center; border-radius: 6px; font-size: 11pt; font-weight: 700; margin: 2mm 0; }
+            .cold-warn { background: #e0f2fe; border: 1px solid #0284c7; color: #0369a1; padding: 2mm; border-radius: 4px; font-size: 8pt; font-weight: 700; text-align: center; margin-top: 2mm; }
+            .slip-footer { display: flex; justify-content: space-between; align-items: flex-end; font-size: 7pt; color: #555; margin-top: 2mm; }
+          </style>
+        </head>
+        <body onload="window.print()">
+          <div class="slip-box">
+            <div>
+              <div class="carrier-header">
+                <div>
+                  <div class="carrier-logo">🚚 บริการส่งด่วนรถเย็น (Cold Chain)</div>
+                  <div style="font-size:7.5pt; color:#444;">Inter Express Logistics / IEL (-18°C)</div>
+                </div>
+                <div class="carrier-badge">คุมอุณหภูมิ</div>
+              </div>
+
+              <div class="section">
+                <div class="section-title">ผู้ส่ง (Sender):</div>
+                <div style="font-size:9pt; font-weight:600;">🐟 ร้านปลาแดดเดียว ป้าเข็ม คัดพิเศษ (ศูนย์บางบ่อ-สมุทรปราการ)</div>
+                <div style="font-size:8pt; color:#444;">LINE OA: @137gsref | โทร: 081-456-7890</div>
+              </div>
+
+              <div class="section">
+                <div class="section-title">ผู้รับพัสดุ (Recipient):</div>
+                <div class="recipient-name">คุณ ${o.customer_name}</div>
+                <div class="recipient-phone">📞 ${o.phone}</div>
+                <div class="recipient-address">📍 ${o.address}</div>
+                ${o.note ? `<div style="font-size:8pt; color:#b45309; margin-top:1mm;"><b>โน้ต:</b> ${o.note}</div>` : ''}
+              </div>
+
+              <div style="margin: 2mm 0;">
+                <table class="item-table">
+                  <thead>
+                    <tr>
+                      <th>รายการสินค้า</th>
+                      <th style="width:70px; text-align:right;">ยอดเงิน</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><b>${o.product_name || o.package_name}</b><br><small style="color:#666;">รหัส: ${o.order_code}</small></td>
+                      <td style="text-align:right; font-weight:700;">${parseFloat(o.price).toLocaleString()} ฿</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              ${isCod ? `
+                <div class="cod-alert">
+                  <div style="font-size:9pt; font-weight:700; text-transform:uppercase;">⚠️ พัสดุเก็บเงินปลายทาง (COD)</div>
+                  <div class="cod-amount">ยอดเก็บเงิน: ${parseFloat(o.price).toLocaleString()} บาท</div>
+                  <div style="font-size:7.5pt;">(กรุณาเรียกเก็บเงินสด หรือสแกนพร้อมเพย์ก่อนส่งมอบพัสดุ)</div>
+                </div>
+              ` : `
+                <div class="paid-alert">
+                  <div>✅ ชำระเงินเรียบร้อยแล้ว (ไม่ต้องเก็บเงิน)</div>
+                  <div style="font-size:8pt; font-weight:normal;">โอนเงินผ่านระบบ / Shopee Pay แล้ว</div>
+                </div>
+              `}
+
+              <div class="cold-warn">
+                ❄️ อาหารสดแช่แข็ง ห้ามวางตากแดด ส่งรถเย็นควบคุมอุณหภูมิตลอดเส้นทาง
+              </div>
+            </div>
+
+            <div class="slip-footer">
+              <div>พิมพ์เมื่อ: ${printDate} | ระบบอัตโนมัติ ป้าเข็ม</div>
+              <div style="font-weight:700; font-size:8pt;">${o.tracking_number ? `TRACK: ${o.tracking_number}` : o.order_code}</div>
+            </div>
+          </div>
+        </body>
+        </html>
+      `);
+      w.document.close();
+    }
+
+    function exportColdChainCSV() {
+      if (!cachedOrders || cachedOrders.length === 0) {
+        alert('ยังไม่มีข้อมูลออเดอร์สำหรับส่งออก');
+        return;
+      }
+
+      // UTF-8 BOM so Thai characters open cleanly in MS Excel
+      let csvContent = "\uFEFF";
+      csvContent += "รหัสคำสั่งซื้อ,วันที่สั่ง,ชื่อผู้รับ,เบอร์โทรศัพท์,ที่อยู่จัดส่ง,รายการสินค้า,ยอดเงิน (บาท),วิธีชำระเงิน,สถานะ,เลขพัสดุรถเย็น,โน้ต\n";
+
+      cachedOrders.forEach(o => {
+        const row = [
+          `"${(o.order_code || '').replace(/"/g, '""')}"`,
+          `"${new Date(o.created_at).toLocaleString('th-TH').replace(/"/g, '""')}"`,
+          `"${(o.customer_name || '').replace(/"/g, '""')}"`,
+          `"${(o.phone || '').replace(/"/g, '""')}"`,
+          `"${(o.address || '').replace(/"/g, '""')}"`,
+          `"${(o.product_name || o.package_name || '').replace(/"/g, '""')}"`,
+          `"${parseFloat(o.price) || 0}"`,
+          `"${(o.payment_method || '').replace(/"/g, '""')}"`,
+          `"${(o.status || '').replace(/"/g, '""')}"`,
+          `"${(o.tracking_number || '').replace(/"/g, '""')}"`,
+          `"${(o.note || '').replace(/"/g, '""')}"`
+        ];
+        csvContent += row.join(',') + "\n";
+      });
+
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      const dateStr = new Date().toISOString().slice(0, 10);
+      link.setAttribute("href", url);
+      link.setAttribute("download", `InterExpress_Orders_${dateStr}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      showToast('ดาวน์โหลดไฟล์ CSV เรียบร้อย!');
     }
 
     function renderBenchmarks() {
@@ -472,7 +764,8 @@
               <div><b>${sku}</b></div>
             </div>
           </div>
-        </body>
+        <div id="toast"><span>✅</span> <span id="toastMsg">บันทึกสำเร็จ</span></div>
+</body>
         </html>
       `);
       w.document.close();
