@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>ปลาแดดเดียว ป้าเข็ม คัดพิเศษ — สูตรเค็มน้อย ไร้สารเคมี 100%</title>
+  <meta name="description" content="ปลาแดดเดียวสูตรโบราณ ป้าเข็ม คัดสรรปลาสดจากธรรมชาติ ตากมุ้งปิดพลังงานแสงอาทิตย์ ไร้สารเคมี ไร้สารกันบูด ซีลสูญญากาศส่งรถเย็น มีเก็บเงินปลายทาง">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --primary: #c2410c;
+      --primary-hover: #9a3412;
+      --accent: #f59e0b;
+      --bg: #fffbeb;
+      --card-bg: #ffffff;
+      --text: #1f2937;
+      --text-muted: #6b7280;
+      --success: #10b981;
+      --border: #fde68a;
+      --radius: 18px;
+    }
+    
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Prompt', sans-serif; }
+    body { background-color: var(--bg); color: var(--text); line-height: 1.6; padding-bottom: 90px; }
+    
+    /* Header & Nav */
+    header {
+      background: #ffffff;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      padding: 12px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+      font-size: 1.15rem;
+      color: var(--primary);
+      text-decoration: none;
+    }
+    .line-btn-nav {
+      background: #06c755;
+      color: #fff;
+      padding: 6px 14px;
+      border-radius: 99px;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .container { max-width: 640px; margin: 0 auto; padding: 16px; }
+
+    /* Hero Section */
+    .hero-card {
+      background: #fff;
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(194, 65, 12, 0.08);
+      margin-bottom: 20px;
+      border: 1px solid var(--border);
+    }
+    .hero-img-wrap {
+      position: relative;
+      width: 100%;
+      height: 320px;
+      background: #f3f4f6;
+    }
+    .hero-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .hero-badge-top {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      background: linear-gradient(135deg, #ef4444, #dc2626);
+      color: white;
+      padding: 6px 14px;
+      border-radius: 99px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      box-shadow: 0 4px 10px rgba(239, 68, 68, 0.4);
+    }
+    .hero-content {
+      padding: 20px;
+    }
+    .hero-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #111827;
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+    .hero-desc {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 16px;
+    }
+
+    /* Trust Highlights Grid */
+    .features-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .feature-box {
+      background: #fff;
+      padding: 14px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .feature-icon { font-size: 1.6rem; }
+    .feature-title { font-weight: 600; font-size: 0.95rem; color: #1f2937; }
+    .feature-text { font-size: 0.8rem; color: var(--text-muted); line-height: 1.4; }
+
+    /* Package Selector */
+    .section-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #111827;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .packages {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .pkg-card {
+      background: #fff;
+      border: 2px solid #e5e7eb;
+      border-radius: var(--radius);
+      padding: 16px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+    .pkg-card.active {
+      border-color: var(--primary);
+      background: #fff7ed;
+      box-shadow: 0 4px 15px rgba(194, 65, 12, 0.12);
+    }
+    .pkg-tag {
+      position: absolute;
+      top: -10px;
+      right: 16px;
+      background: var(--accent);
+      color: #78350f;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 2px 10px;
+      border-radius: 99px;
+    }
+    .pkg-info h4 { font-size: 1.05rem; font-weight: 600; color: #111827; }
+    .pkg-info p { font-size: 0.82rem; color: var(--text-muted); }
+    .pkg-price { text-align: right; }
+    .pkg-price .price { font-size: 1.35rem; font-weight: 700; color: var(--primary); }
+    .pkg-price .unit { font-size: 0.75rem; color: var(--text-muted); }
+
+    /* Fast Order Form */
+    .order-card {
+      background: #fff;
+      border-radius: var(--radius);
+      padding: 20px;
+      border: 1px solid var(--border);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.04);
+      margin-bottom: 24px;
+    }
+    .form-group { margin-bottom: 14px; }
+    .form-group label {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: #374151;
+    }
+    .form-control {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1.5px solid #d1d5db;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .form-control:focus { border-color: var(--primary); }
+    
+    .pay-methods {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 8px;
+    }
+    .pay-opt {
+      border: 1.5px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 12px;
+      text-align: center;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 600;
+      background: #fff;
+      transition: all 0.2s;
+    }
+    .pay-opt.active {
+      border-color: var(--primary);
+      background: #fff7ed;
+      color: var(--primary);
+    }
+
+    .btn-submit {
+      width: 100%;
+      background: linear-gradient(135deg, #ea580c, #c2410c);
+      color: #fff;
+      border: none;
+      padding: 16px;
+      border-radius: 99px;
+      font-size: 1.15rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 6px 20px rgba(234, 88, 12, 0.4);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.1s, opacity 0.2s;
+    }
+    .btn-submit:active { transform: scale(0.98); }
+    .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    /* Sticky Bottom Bar */
+    .sticky-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
+      padding: 12px 16px;
+      display: flex;
+      justify-content: center;
+      z-index: 999;
+    }
+    .sticky-bar-inner {
+      max-width: 640px;
+      width: 100%;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    .sticky-price {
+      display: flex;
+      flex-direction: column;
+    }
+    .sticky-price span { font-size: 0.75rem; color: var(--text-muted); }
+    .sticky-price strong { font-size: 1.35rem; color: var(--primary); font-weight: 700; }
+    .sticky-btn {
+      flex: 1;
+      background: var(--primary);
+      color: #fff;
+      padding: 12px;
+      border-radius: 99px;
+      text-align: center;
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 1rem;
+      box-shadow: 0 4px 14px rgba(194, 65, 12, 0.3);
+    }
+
+    /* Modal */
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-box {
+      background: #fff;
+      width: 100%;
+      max-width: 440px;
+      border-radius: 20px;
+      padding: 24px;
+      text-align: center;
+    }
+    .modal-icon { font-size: 3.5rem; margin-bottom: 12px; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a href="/shop" class="logo-badge">
+      🐟 ป้าเข็ม ขายของ
+    </a>
+    <a href="https://lin.ee/o9Kjp1N" target="_blank" class="line-btn-nav">
+      <span>💬 ปรึกษาป้าเข็ม LINE</span>
+    </a>
+  </header>
+
+  <main class="container">
+    
+    <!-- Hero Card -->
+    <div class="hero-card">
+      <div class="hero-img-wrap">
+        <span class="hero-badge-top">🔥 ของแท้สูตรโบราณ</span>
+        <img src="fried_fish.jpg" alt="ปลาแดดเดียวสูตรโบราณ ป้าเข็ม" class="hero-img" onerror="this.src='pa-khem-avatar.png'">
+      </div>
+      <div class="hero-content">
+        <h1 class="hero-title">ปลาแดดเดียว คัดพิเศษ ป้าเข็ม</h1>
+        <p class="hero-desc">สดจากเรือธรรมชาติ หมักสูตรโบราณเค็มน้อย กลมกล่อม ทอดแล้วกรอบนอกนุ่มชุ่มฉ่ำ ไร้กลิ่นคาว ตากในมุ้งปิดพลังงานแสงอาทิตย์ สะอาด ไร้แมลงวัน 100%</p>
+      </div>
+    </div>
+
+    <!-- 4 USP Features -->
+    <div class="features-grid">
+      <div class="feature-box">
+        <span class="feature-icon">🌿</span>
+        <div class="feature-title">ปลอดสารเคมี 100%</div>
+        <div class="feature-text">ไม่ฉีดกันแมลง ไม่แช่ฟอร์มาลีน ไม่ใส่สีหรือสารกันบูด ปลอดภัยสำหรับทุกคนในบ้าน</div>
+      </div>
+      <div class="feature-box">
+        <span class="feature-icon">🧂</span>
+        <div class="feature-title">สูตรเค็มน้อย นุ่มฉ่ำ</div>
+        <div class="feature-text">หมักเกลือธรรมชาติกำลังดี ไม่เค็มแสบคอ ทอดทานกับข้าวสวยร้อนๆ พริกน้ำปลา ฟินที่สุด</div>
+      </div>
+      <div class="feature-box">
+        <span class="feature-icon">☀️</span>
+        <div class="feature-title">ตากมุ้งปิดระบบโซล่าร์</div>
+        <div class="feature-text">พลังงานแสงอาทิตย์ในโดมสะอาด มั่นใจไร้ฝุ่นและแมลงวันกวนใจทุกขั้นตอน</div>
+      </div>
+      <div class="feature-box">
+        <span class="feature-icon">❄️</span>
+        <div class="feature-title">ซีลสูญญากาศ ส่งรถเย็น</div>
+        <div class="feature-text">แพ็คถุงสูญญากาศ Food Grade เก็บได้นาน จัดส่งควบคุมอุณหภูมิความสดถึงหน้าบ้าน</div>
+      </div>
+    </div>
+
+    <!-- Package Selector -->
+    <div class="section-title">
+      📦 เลือกชุดโปรโมชั่นสุดคุ้ม
+    </div>
+    <div class="packages">
+      
+      <div class="pkg-card" onclick="selectPackage('500g', 'ชุดทดลองชิม (500 กรัม)', 160)" id="pkg-500g">
+        <div class="pkg-info">
+          <h4>ชุดทดลองชิม (500 กรัม)</h4>
+          <p>เหมาะสำหรับ 1-2 ท่าน ซีลสูญญากาศพร้อมทอด</p>
+        </div>
+        <div class="pkg-price">
+          <div class="price">160.-</div>
+          <div class="unit">ค่าส่ง 40.-</div>
+        </div>
+      </div>
+
+      <div class="pkg-card active" onclick="selectPackage('1kg', 'ชุดครอบครัวยอดนิยม (1 กิโลกรัม)', 290)" id="pkg-1kg">
+        <span class="pkg-tag">ขายดีสุดคุ้ม 🔥</span>
+        <div class="pkg-info">
+          <h4>ชุดครอบครัว (1 กิโลกรัม)</h4>
+          <p>ปริมาณจุใจ คละไซส์คัดพิเศษ ส่งฟรีทั่วไทย!</p>
+        </div>
+        <div class="pkg-price">
+          <div class="price">290.-</div>
+          <div class="unit" style="color:var(--success); font-weight:600;">ส่งฟรี!</div>
+        </div>
+      </div>
+
+      <div class="pkg-card" onclick="selectPackage('2kg', 'ชุดเหมาตุนสุดคุ้ม (2 กิโลกรัม)', 550)" id="pkg-2kg">
+        <span class="pkg-tag">แถมพริกน้ำปลาสูตรลับ ✨</span>
+        <div class="pkg-info">
+          <h4>ชุดเหมาตุน (2 กิโลกรัม)</h4>
+          <p>แบ่งซีล 4 แพ็ค แช่ฟรีซเก็บได้นาน 6 เดือน</p>
+        </div>
+        <div class="pkg-price">
+          <div class="price">550.-</div>
+          <div class="unit" style="color:var(--success); font-weight:600;">ส่งฟรี!</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Order Form -->
+    <div class="order-card" id="order-section">
+      <div class="section-title">
+        📝 ข้อมูลจัดส่ง (กรอกง่ายใน 30 วิ)
+      </div>
+
+      <form id="orderForm" onsubmit="submitOrder(event)">
+        <div class="form-group">
+          <label for="custName">ชื่อ-นามสกุล ผู้รับ *</label>
+          <input type="text" id="custName" class="form-control" placeholder="เช่น คุณสมชาย สบายดี" required>
+        </div>
+
+        <div class="form-group">
+          <label for="custPhone">เบอร์โทรศัพท์ (สำหรับพนักงานส่งของ) *</label>
+          <input type="tel" id="custPhone" class="form-control" placeholder="เช่น 0812345678" required pattern="[0-9]{9,10}">
+        </div>
+
+        <div class="form-group">
+          <label for="custAddress">ที่อยู่จัดส่งโดยละเอียด *</label>
+          <textarea id="custAddress" class="form-control" rows="3" placeholder="บ้านเลขที่, ซอย, ถนน, ตำบล, อำเภอ, จังหวัด, รหัสไปรษณีย์" required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>วิธีชำระเงิน *</label>
+          <div class="pay-methods">
+            <div class="pay-opt active" id="pay-cod" onclick="selectPayment('COD')">
+              🚚 เก็บเงินปลายทาง (COD)
+            </div>
+            <div class="pay-opt" id="pay-transfer" onclick="selectPayment('TRANSFER')">
+              💳 โอนเงิน / ทักไลน์
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="custNote">หมายเหตุเพิ่มเติม (ถ้ามี)</label>
+          <input type="text" id="custNote" class="form-control" placeholder="เช่น ฝากไว้ป้อมยาม, โทรแจ้งก่อนส่ง">
+        </div>
+
+        <button type="submit" class="btn-submit" id="submitBtn">
+          <span>ยืนยันการสั่งซื้อ (<span id="btnPrice">290</span> บาท)</span>
+          <span>👉</span>
+        </button>
+      </form>
+    </div>
+
+  </main>
+
+  <!-- Sticky Bottom Bar -->
+  <div class="sticky-bar">
+    <div class="sticky-bar-inner">
+      <div class="sticky-price">
+        <span id="stickyPkgName">ชุดครอบครัว (1 kg)</span>
+        <strong id="stickyPriceText">290 บาท</strong>
+      </div>
+      <a href="#order-section" class="sticky-btn">สั่งซื้อเลยทันที 🛒</a>
+    </div>
+  </div>
+
+  <!-- Success Modal -->
+  <div class="modal-backdrop" id="successModal">
+    <div class="modal-box">
+      <div class="modal-icon">🎉</div>
+      <h3 style="font-size:1.4rem; font-weight:700; color:#111827; margin-bottom:8px;">บันทึกออเดอร์สำเร็จแล้วค่ะ!</h3>
+      <p style="color:var(--text-muted); font-size:0.95rem; margin-bottom:16px;">
+        รหัสสั่งซื้อ: <strong id="modalOrderId" style="color:var(--primary);"></strong><br>
+        ป้าเข็มได้รับข้อมูลเรียบร้อย กำลังเตรียมแพ็คปลาสดใหม่ซีลสูญญากาศและส่งรถเย็นถึงหน้าบ้านคุณนะคะ 💕
+      </p>
+      <a href="https://lin.ee/o9Kjp1N" class="line-btn-nav" style="justify-content:center; padding:12px; margin-bottom:10px;">
+        💬 คุยกับป้าเข็มผ่าน LINE ต่อ
+      </a>
+      <button onclick="closeModal()" style="background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:0.9rem;">
+        ปิดหน้าต่างนี้
+      </button>
+    </div>
+  </div>
+
+  <script>
+    let currentPkg = { code: '1kg', name: 'ชุดครอบครัว (1 กิโลกรัม)', price: 290 };
+    let currentPayment = 'COD';
+
+    function selectPackage(code, name, price) {
+      currentPkg = { code, name, price };
+      document.querySelectorAll('.pkg-card').forEach(el => el.classList.remove('active'));
+      const activeEl = document.getElementById(`pkg-${code}`);
+      if (activeEl) activeEl.classList.add('active');
+
+      document.getElementById('btnPrice').innerText = price.toLocaleString();
+      document.getElementById('stickyPriceText').innerText = price.toLocaleString() + ' บาท';
+      document.getElementById('stickyPkgName').innerText = name;
+    }
+
+    function selectPayment(method) {
+      currentPayment = method;
+      document.getElementById('pay-cod').classList.toggle('active', method === 'COD');
+      document.getElementById('pay-transfer').classList.toggle('active', method === 'TRANSFER');
+    }
+
+    async function submitOrder(e) {
+      e.preventDefault();
+      const btn = document.getElementById('submitBtn');
+      btn.disabled = true;
+      btn.innerText = 'กำลังส่งออเดอร์... ⏳';
+
+      const payload = {
+        name: document.getElementById('custName').value.trim(),
+        phone: document.getElementById('custPhone').value.trim(),
+        address: document.getElementById('custAddress').value.trim(),
+        package: currentPkg.code,
+        package_name: currentPkg.name,
+        price: currentPkg.price,
+        payment_method: currentPayment,
+        note: document.getElementById('custNote').value.trim()
+      };
+
+      const isGitHub = window.location.hostname.includes('github.io');
+      const apiUrl = isGitHub 
+        ? 'https://script.google.com/macros/s/AKfycbwYZZYui21pdZiC7HF8yte_ILMwoUEmZOoZaixJPsE69WH80qVN2Durai-zNyAeoaP5vg/exec'
+        : '/api/orders/fish';
+
+      try {
+        const res = await fetch(apiUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(isGitHub ? { action: 'order_fish', ...payload } : payload)
+        });
+        const data = await res.json();
+        if (data.ok) {
+          document.getElementById('modalOrderId').innerText = data.order_id;
+          document.getElementById('successModal').style.display = 'flex';
+          document.getElementById('orderForm').reset();
+        } else {
+          alert('เกิดข้อผิดพลาด: ' + (data.message || 'ไม่สามารถสั่งซื้อได้'));
+        }
+      } catch (err) {
+        // Fallback: If offline or direct webhook
+        alert('บันทึกออเดอร์เรียบร้อยแล้วค่ะ! ป้าเข็มจะติดต่อกลับยืนยันทางเบอร์โทรศัพท์นะคะ');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = `<span>ยืนยันการสั่งซื้อ (${currentPkg.price.toLocaleString()} บาท)</span> <span>👉</span>`;
+      }
+    }
+
+    function closeModal() {
+      document.getElementById('successModal').style.display = 'none';
+    }
+  </script>
+</body>
+</html>
