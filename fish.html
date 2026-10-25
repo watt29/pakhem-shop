@@ -903,7 +903,63 @@
       document.getElementById('pay-transfer').classList.toggle('active', method === 'TRANSFER');
     }
 
-        let isSubmitting = false;
+    
+    let selectedSlipFile = null;
+
+    function handleSlipSelected(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      if (!file.type.startsWith('image/')) {
+        alert('กรุณาเลือกไฟล์รูปภาพเท่านั้นค่ะ');
+        return;
+      }
+      selectedSlipFile = file;
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        document.getElementById('slipThumbnail').src = evt.target.result;
+        document.getElementById('slipFileName').innerText = file.name.slice(0, 20) + (file.name.length > 20 ? '…' : '');
+        document.getElementById('slipPreviewBox').style.display = 'flex';
+        document.getElementById('slipUploadTrigger').style.display = 'none';
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function clearSlipSelection() {
+      selectedSlipFile = null;
+      document.getElementById('slipFileInput').value = '';
+      document.getElementById('slipPreviewBox').style.display = 'none';
+      document.getElementById('slipUploadTrigger').style.display = 'block';
+    }
+
+    // Upload slip to Supabase Storage
+    async function uploadSlipToSupabase(orderId, file) {
+      if (!file) return null;
+      try {
+        const fileExt = file.name.split('.').pop() || 'jpg';
+        const fileName = `${orderId}_slip.${fileExt}`;
+        const supaUrl = `https://usqhvujqmnxqrdoovvnp.supabase.co/storage/v1/object/slips/${fileName}`;
+        const supaKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVzcWh2dWpxbW54cXJkb292dm5wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQyOTc4NjAsImV4cCI6MjA2OTg3Mzg2MH0.3kCGGAe1OoSJ_SCN_NDSdnKep1hXIMgMxR1lBd_i2eI';
+
+        const res = await fetch(supaUrl, {
+          method: 'POST',
+          headers: {
+            'apikey': supaKey,
+            'Authorization': 'Bearer ' + supaKey,
+            'Content-Type': file.type || 'image/jpeg'
+          },
+          body: file
+        });
+
+        if (res.ok) {
+          return `https://usqhvujqmnxqrdoovvnp.supabase.co/storage/v1/object/public/slips/${fileName}`;
+        }
+      } catch (err) {
+        console.error('Upload slip error:', err);
+      }
+      return null;
+    }
+
+    let isSubmitting = false;
 
     async function submitOrder(e) {
       e.preventDefault();
@@ -925,7 +981,15 @@
       const p = PRODUCTS.find(x => x.sku === currentSelectedSku) || PRODUCTS[0];
       const btn = document.getElementById('submitBtn');
       btn.disabled = true;
-      btn.innerText = 'กำลังส่งออเดอร์... ⏳';
+      btn.innerText = selectedSlipFile ? 'กำลังอัปโหลดสลิป... ⏳' : 'กำลังส่งออเดอร์... ⏳';
+
+
+
+      // Upload slip image if provided
+      let uploadedSlipUrl = null;
+      if (selectedSlipFile) {
+        uploadedSlipUrl = await uploadSlipToSupabase(orderId, selectedSlipFile);
+      }
 
       const now = new Date();
       const pad = n => (n < 10 ? '0' : '') + n;
@@ -942,7 +1006,8 @@
         package_name: p.name,
         price: p.price,
         payment_method: currentPayment,
-        note: note
+        note: note,
+        slip_url: uploadedSlipUrl
       };
 
       try {
@@ -970,6 +1035,7 @@
             payment_method: currentPayment,
             status: 'PENDING',
             note: note || null,
+            slip_url: uploadedSlipUrl,
             created_at: now.toISOString()
           })
         }).catch(err => console.log('Supa error:', err));
