@@ -174,7 +174,10 @@
       <button onclick="switchTab('scripts', this)">💬 สคริปต์เจรจาโรงงาน</button>
       <button onclick="switchTab('strategy', this)">⚖️ สต๊อก VS Dropship</button>
     </nav>
-    <a href="fish.html" target="_blank" class="shop-link">🛍️ เปิดหน้าร้าน</a>
+    <div style="display:flex; gap:8px; align-items:center;">
+      <a href="fish.html" target="_blank" class="shop-link">🛍️ เปิดหน้าร้าน</a>
+      <button onclick="handleAdminLogout()" style="background:#fee2e2; color:#991b1b; border:1px solid #fecaca; padding:8px 12px; border-radius:8px; font-size:0.85rem; font-weight:600; cursor:pointer;">🚪 ออกจากระบบ</button>
+    </div>
   </header>
 
   <main class="container">
@@ -638,7 +641,8 @@
               <div style="font-weight:700; font-size:8pt;">${o.tracking_number ? `TRACK: ${o.tracking_number}` : o.order_code}</div>
             </div>
           </div>
-        </body>
+        
+</body>
         </html>
       `);
       w.document.close();
@@ -771,11 +775,84 @@
       w.document.close();
     }
 
-    // Init
-    loadOrders();
-    renderBenchmarks();
-    renderSuppliers();
+
+    // Admin PIN Security Gate
+    const ADMIN_PIN = "8899";
+
+    function checkAuth() {
+      const isAuth = sessionStorage.getItem('pakhem_admin_auth') === 'true';
+      const gate = document.getElementById('adminAuthGate');
+      if (isAuth) {
+        if (gate) gate.style.display = 'none';
+        loadOrders();
+        renderBenchmarks();
+        renderSuppliers();
+      } else {
+        if (gate) {
+          gate.style.display = 'flex';
+          setTimeout(() => {
+            const input = document.getElementById('adminPinInput');
+            if (input) input.focus();
+          }, 200);
+        }
+      }
+    }
+
+    function handleAdminLogin(e) {
+      e.preventDefault();
+      const input = document.getElementById('adminPinInput');
+      const err = document.getElementById('pinErrorMsg');
+      if (!input) return;
+
+      if (input.value.trim() === ADMIN_PIN) {
+        sessionStorage.setItem('pakhem_admin_auth', 'true');
+        err.style.display = 'none';
+        document.getElementById('adminAuthGate').style.display = 'none';
+        showToast('🔓 เข้าสู่ระบบแอดมินสำเร็จ!');
+        loadOrders();
+        renderBenchmarks();
+        renderSuppliers();
+      } else {
+        err.style.display = 'block';
+        input.value = '';
+        input.focus();
+      }
+    }
+
+    function handleAdminLogout() {
+      if (confirm('คุณต้องการออกจากระบบจัดการหลังบ้านใช่หรือไม่?')) {
+        sessionStorage.removeItem('pakhem_admin_auth');
+        window.location.reload();
+      }
+    }
+
+    // Init with Security Check
+    checkAuth();
   </script>
+
+  <!-- Admin Security PIN Modal / Gate -->
+  <div id="adminAuthGate" style="position:fixed; top:0; left:0; width:100%; height:100%; background:linear-gradient(135deg, #0f172a 0%, #1e293b 100%); z-index:99999; display:flex; justify-content:center; align-items:center; padding:16px;">
+    <div style="background:#ffffff; border-radius:16px; padding:32px 28px; width:100%; max-width:380px; box-shadow:0 25px 50px -12px rgba(0,0,0,0.5); text-align:center;">
+      <div style="font-size:3rem; margin-bottom:12px;">🔒</div>
+      <h2 style="font-size:1.35rem; font-weight:700; color:#0f172a; margin-bottom:6px;">ระบบจัดการหลังบ้าน</h2>
+      <p style="font-size:0.85rem; color:#64748b; margin-bottom:20px;">เฉพาะเจ้าของร้าน ป้าเข็ม คัดพิเศษ เท่านั้น<br>(ข้อมูลลูกค้าและออเดอร์มีความปลอดภัยสูง)</p>
+      
+      <form onsubmit="handleAdminLogin(event)">
+        <div style="margin-bottom:16px;">
+          <input type="password" id="adminPinInput" placeholder="กรอกรหัส PIN แอดมิน..." style="width:100%; padding:14px; border:2px solid #cbd5e1; border-radius:10px; font-size:1.1rem; text-align:center; letter-spacing:4px; font-weight:700; outline:none;" required autofocus>
+        </div>
+        <div id="pinErrorMsg" style="color:#ef4444; font-size:0.85rem; margin-bottom:12px; display:none; font-weight:600;">
+          ❌ รหัส PIN ไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง
+        </div>
+        <button type="submit" style="width:100%; padding:14px; background:#c2410c; color:#fff; border:none; border-radius:10px; font-size:1rem; font-weight:700; cursor:pointer; box-shadow:0 4px 12px rgba(194,65,12,0.3);">
+          🔓 เข้าสู่ระบบหลังบ้าน
+        </button>
+      </form>
+      <div style="margin-top:20px; font-size:0.75rem; color:#94a3b8;">
+        รหัสเริ่มต้น: <b>8899</b> (เปลี่ยนได้ในโค้ด)
+      </div>
+    </div>
+  </div>
 
 </body>
 </html>
