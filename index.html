@@ -64,9 +64,9 @@
     <div class="max-w-4xl mx-auto px-4 py-3">
       <div class="flex items-center justify-between gap-3">
         <!-- Logo / Avatar -->
-        <a href="/shop" class="flex items-center gap-2 flex-shrink-0">
-          <div class="w-10 h-10 rounded-full border-2 border-white overflow-hidden bg-white shadow">
-            <img src="/static/pa-khem-avatar.png" alt="ป้าเข็ม" class="w-full h-full object-cover" onerror="this.src='https://profile.line-scdn.net/0hERy_y3n3Gn1EJgY083hlKnhjFBAzCBw1PEVTE2UuR01sRAh-e0FdS2YmQEw-EF5_LBBcG2UiREg7'">
+        <a href="#" onclick="window.scrollTo({top:0,behavior:'smooth'}); return false;" class="flex items-center gap-2 flex-shrink-0">
+          <div class="w-10 h-10 rounded-full border-2 border-white overflow-hidden bg-white shadow flex-shrink-0">
+            <img src="https://profile.line-scdn.net/0hERy_y3n3Gn1EJgY083hlKnhjFBAzCBw1PEVTE2UuR01sRAh-e0FdS2YmQEw-EF5_LBBcG2UiREg7" alt="ป้าเข็ม" class="w-full h-full object-cover">
           </div>
           <div>
             <h1 class="text-base font-bold leading-tight flex items-center gap-1">
@@ -82,14 +82,14 @@
           <input 
             type="text" 
             id="searchInput"
-            placeholder="ค้นหา เช่น แอร์, หูฟัง, กล้อง..." 
+            placeholder="ค้นหา เช่น หูฟัง, หม้อทอด, เซรั่ม..." 
             class="w-full pl-9 pr-8 py-2 rounded-full text-xs text-gray-800 bg-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-300 shadow-inner"
-            onkeyup="handleSearch(event)"
+            oninput="handleSearchDebounced(event)"
           >
           <svg class="w-4 h-4 text-gray-400 absolute left-3 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
           </svg>
-          <button id="clearBtn" class="hidden absolute right-2.5 top-2 text-gray-400 hover:text-gray-600" onclick="clearSearch()">
+          <button id="clearBtn" class="hidden absolute right-2.5 top-2 text-gray-400 hover:text-gray-600 font-bold" onclick="clearSearch()">
             ✕
           </button>
         </div>
@@ -136,7 +136,7 @@
 
   <main class="max-w-4xl mx-auto px-4 mt-3">
 
-    <!-- 3. Voucher Secret Box (ดักจับโค้ด Shopee ประจำวัน) -->
+    <!-- 3. Voucher Secret Box -->
     <div class="mb-3 bg-white rounded-2xl p-3.5 shadow-sm border border-orange-100">
       <div class="flex items-center justify-between mb-2">
         <h3 class="text-xs font-bold text-gray-800 flex items-center gap-1.5">
@@ -153,15 +153,15 @@
 
     <!-- 4. Hero Banner -->
     <div class="bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 rounded-2xl p-4 text-white shadow-sm flex items-center justify-between relative overflow-hidden">
-      <div class="z-10 max-w-[70%]">
+      <div class="z-10 max-w-[75%]">
         <span class="inline-block bg-white/20 backdrop-blur-md text-[11px] font-semibold px-2.5 py-0.5 rounded-full mb-1">
           ✨ Shopee Official Affiliate Hub
         </span>
         <h2 class="text-base sm:text-lg font-bold leading-tight" id="heroBannerTitle">
-          คลังสินค้าแนะนำพิเศษ Shopee Affiliate
+          คลังสินค้าแนะนำพิเศษ Shopee ของแท้ 100%
         </h2>
         <p class="text-xs text-orange-100 mt-0.5">
-          ตรวจประวัติราคาแล้วทุกชิ้น ของแท้ตรงปก 100% สั่งซื้อปลอดภัยผ่านแอป Shopee โดยตรง
+          คัดสรรของดีราคาคุ้มค่า ตรวจประวัติราคาแล้วทุกชิ้น ช้อปปลอดภัยผ่านแอป Shopee โดยตรง
         </p>
       </div>
       <div class="text-right z-10 flex flex-col items-end">
@@ -174,14 +174,14 @@
     <!-- Filter & Result Stats Bar -->
     <div class="flex items-center justify-between mt-4 mb-2 text-xs text-gray-500">
       <div>
-        พบสินค้าทั้งหมด <span id="productCount" class="font-bold text-orange-600">กำลังโหลด...</span>
+        แสดง <span id="productCount" class="font-bold text-orange-600">กำลังโหลด...</span>
       </div>
       <div class="flex gap-2">
-        <button class="px-2.5 py-1 rounded-md bg-white border border-gray-200 text-gray-700 font-medium active:bg-orange-50 active:text-orange-600" onclick="sortProducts('sales')">
-          🔥 ยอดขายสูงสุด
+        <button id="sortSalesBtn" class="px-2.5 py-1 rounded-md bg-orange-50 border border-orange-300 text-orange-600 font-bold" onclick="setSortMode('sales')">
+          🔥 ขายดีสุด
         </button>
-        <button class="px-2.5 py-1 rounded-md bg-white border border-gray-200 text-gray-700 font-medium active:bg-orange-50 active:text-orange-600" onclick="sortProducts('score')">
-          ⭐ AI แนะนำ
+        <button id="sortRatingBtn" class="px-2.5 py-1 rounded-md bg-white border border-gray-200 text-gray-700 font-medium" onclick="setSortMode('rating')">
+          ⭐ เรตติ้งสูงสุด
         </button>
       </div>
     </div>
@@ -189,92 +189,92 @@
     <!-- 5. Product Grid -->
     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3" id="productGrid">
       <!-- Loading Skeletons -->
-      <div class="bg-white rounded-xl p-3 shadow-sm animate-pulse h-64"></div>
-      <div class="bg-white rounded-xl p-3 shadow-sm animate-pulse h-64"></div>
-      <div class="bg-white rounded-xl p-3 shadow-sm animate-pulse h-64"></div>
-      <div class="bg-white rounded-xl p-3 shadow-sm animate-pulse h-64"></div>
+      <div class="bg-white rounded-xl p-3 shadow-sm animate-pulse h-64 border border-gray-100"></div>
+      <div class="bg-white rounded-xl p-3 shadow-sm animate-pulse h-64 border border-gray-100"></div>
+      <div class="bg-white rounded-xl p-3 shadow-sm animate-pulse h-64 border border-gray-100"></div>
+      <div class="bg-white rounded-xl p-3 shadow-sm animate-pulse h-64 border border-gray-100"></div>
+    </div>
+
+    <!-- Load More Button -->
+    <div id="loadMoreArea" class="text-center mt-6 hidden">
+      <button 
+        onclick="loadMoreProducts()" 
+        class="bg-white border-2 border-orange-500 text-orange-600 hover:bg-orange-50 font-bold px-6 py-2.5 rounded-full shadow-sm text-xs transition-all active:scale-95"
+      >
+        👇 โหลดสินค้าเพิ่มเติม (<span id="remainingCount">0</span> ชิ้น)
+      </button>
     </div>
 
     <!-- Empty State -->
-    <div id="emptyState" class="hidden text-center py-16 bg-white rounded-2xl shadow-sm mt-4">
-      <div class="w-16 h-16 mx-auto mb-3 text-gray-300">
+    <div id="emptyState" class="hidden text-center py-16 bg-white rounded-2xl shadow-sm mt-4 border border-gray-100">
+      <div class="w-16 h-16 mx-auto mb-3 text-orange-400">
         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
       </div>
-      <h3 class="text-sm font-bold text-gray-700">ไม่พบสินค้าที่ตรงกับการค้นหา</h3>
-      <p class="text-xs text-gray-500 mt-1">ลองค้นหาด้วยคำอื่น หรือทักแชทให้ป้าเข็มช่วยหาใน LINE ได้นะคะ</p>
-      <a href="https://line.me/R/ti/p/@137gsref" target="_blank" class="mt-4 inline-block bg-orange-600 text-white text-xs font-semibold px-4 py-2 rounded-full shadow hover:bg-orange-700">
-        💬 ทักให้ป้าเข็มช่วยหา
-      </a>
+      <h3 class="text-sm font-bold text-gray-800">ไม่พบสินค้าที่คุณค้นหา</h3>
+      <p class="text-xs text-gray-500 mt-1">ลองค้นหาด้วยคำอื่น หรือเลือกดูหมวดหมู่ด้านบนนะลูก 😊</p>
+      <button onclick="clearSearch()" class="mt-4 bg-orange-600 text-white text-xs font-bold px-4 py-2 rounded-full shadow">
+        ดูสินค้าทั้งหมด
+      </button>
     </div>
+
   </main>
 
-  <!-- 6. Lucky Spin Wheel Modal -->
-  <div id="luckyModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-    <div class="bg-white rounded-3xl p-5 max-w-sm w-full text-center shadow-2xl relative border-4 border-yellow-400">
-      <button onclick="closeLuckyWheel()" class="absolute top-3 right-3 text-gray-400 hover:text-gray-600 text-lg font-bold w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center">
+  <!-- 6. Lucky Wheel Modal -->
+  <div id="luckyModal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-sm w-full p-6 text-center relative shadow-2xl overflow-hidden animate-scale-up">
+      <button onclick="closeLuckyWheel()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-xl font-bold w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center">
         ✕
       </button>
 
-      <span class="bg-red-600 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">
-        🎉 ป้าเข็มแจกโชค
-      </span>
-      <h2 class="text-lg font-bold text-gray-800 mt-2">วงล้อสุ่มโค้ดส่วนลด Shopee</h2>
-      <p class="text-xs text-gray-500">หมุนรับโค้ดลดและสิทธิ์ส่งฟรีพิเศษประจำวัน!</p>
-
-      <div class="relative w-64 h-64 mx-auto my-4 flex items-center justify-center">
-        <!-- Canvas Wheel -->
-        <canvas id="wheelCanvas" width="256" height="256" class="rounded-full shadow-lg border-4 border-white"></canvas>
-        <!-- Center Pointer -->
-        <div class="absolute top-0 left-1/2 -translate-x-1/2 -mt-2 z-10">
-          <div class="w-0 h-0 border-l-[10px] border-l-transparent border-r-[10px] border-r-transparent border-t-[20px] border-t-red-600 filter drop-shadow"></div>
-        </div>
+      <div class="mb-3">
+        <span class="text-[10px] font-extrabold bg-orange-100 text-orange-600 px-3 py-1 rounded-full uppercase tracking-wider">
+          🎁 LUCKY WHEEL
+        </span>
+        <h3 class="text-lg font-bold text-gray-800 mt-1">วงล้อเสี่ยงโชค แจกโค้ด Shopee</h3>
+        <p class="text-xs text-gray-500">หมุนรับโค้ดส่วนลดและโค้ดส่งฟรีประจำวัน</p>
       </div>
 
-      <button 
-        id="spinBtn"
-        onclick="spinWheel()" 
-        class="w-full bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-300 hover:to-orange-400 text-red-900 font-extrabold text-sm py-3 rounded-2xl shadow-lg active:scale-95 transition-transform"
-      >
-        🎯 แตะเพื่อเริ่มหมุนวงล้อ!
-      </button>
+      <div class="relative w-64 h-64 mx-auto my-4 flex items-center justify-center">
+        <!-- Pointer Arrow -->
+        <div class="absolute -top-3 z-20 text-red-600 drop-shadow">
+          <svg class="w-8 h-8 filter drop-shadow" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 21l-6-9h12l-6 9z"/>
+          </svg>
+        </div>
+        <canvas id="wheelCanvas" width="250" height="250" class="rounded-full shadow-lg border-4 border-yellow-400"></canvas>
+      </div>
 
-      <!-- Reward Reveal Box -->
-      <div id="rewardBox" class="hidden mt-4 p-3 bg-orange-50 rounded-xl border border-orange-200">
-        <p class="text-xs font-bold text-orange-800" id="rewardTitle"></p>
+      <div id="rewardBox" class="hidden bg-gradient-to-r from-orange-50 to-amber-50 border border-orange-200 rounded-2xl p-3 mb-4">
+        <p class="text-xs font-bold text-orange-600" id="rewardTitle">🎉 ยินดีด้วยค่ะ!</p>
         <div class="flex items-center justify-center gap-2 mt-2">
-          <span id="rewardCode" class="font-mono font-bold text-sm bg-white px-3 py-1 rounded-lg border border-dashed border-orange-400 text-orange-600"></span>
-          <button onclick="copyRewardCode()" class="bg-orange-600 text-white text-xs px-3 py-1 rounded-lg font-bold shadow hover:bg-orange-700">
+          <span class="font-mono text-sm font-extrabold bg-white px-3 py-1 rounded-lg border border-orange-300 text-gray-800" id="rewardCode">CODE123</span>
+          <button onclick="copyRewardCode()" class="bg-orange-600 text-white text-xs font-bold px-3 py-1.5 rounded-lg shadow active:scale-95">
             คัดลอก & ช้อปเลย
           </button>
         </div>
       </div>
-    </div>
-  </div>
 
-  <!-- 7. Floating Bar on Mobile -->
-  <div class="fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-gray-200 py-2.5 px-4 shadow-lg sm:hidden">
-    <div class="flex items-center justify-between max-w-md mx-auto">
-      <div class="flex items-center gap-2">
-        <img src="/static/pa-khem-avatar.png" class="w-8 h-8 rounded-full border border-orange-500 object-cover" onerror="this.src='https://profile.line-scdn.net/0hERy_y3n3Gn1EJgY083hlKnhjFBAzCBw1PEVTE2UuR01sRAh-e0FdS2YmQEw-EF5_LBBcG2UiREg7'">
-        <div class="text-[11px] leading-tight">
-          <span class="font-bold text-gray-800">มีข้อสงสัยเรื่องสินค้า?</span><br>
-          <span class="text-green-600">● ป้าเข็มพร้อมตอบใน LINE</span>
-        </div>
-      </div>
-      <a href="https://line.me/R/ti/p/@137gsref" target="_blank" class="bg-gradient-to-r from-green-500 to-emerald-600 text-white font-bold text-xs px-4 py-2 rounded-full shadow-md active:scale-95 transition-transform flex items-center gap-1.5">
-        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.03 2 11c0 2.87 1.5 5.43 3.86 7.07-.15.86-.6 2.37-1.39 3.42 1.83-.2 3.84-.96 4.95-1.78.82.2 1.69.31 2.58.31 5.52 0 10-4.03 10-9s-4.48-9-10-9z"/></svg>
-        ทักแชทคุยสด
-      </a>
+      <button 
+        onclick="spinWheel()" 
+        id="spinBtn"
+        class="w-full bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white font-bold py-3 rounded-2xl shadow-lg active:scale-95 transition-all text-sm flex items-center justify-center gap-2"
+      >
+        <span>🎯 แตะเพื่อเริ่มหมุนวงล้อ</span>
+      </button>
     </div>
   </div>
 
   <!-- JavaScript Application Logic -->
   <script>
+    const SUPABASE_URL = "https://usqhvujqmnxqrdoovvnp.supabase.co";
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVzcWh2dWpxbW54cXJkb292dm5wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQyOTc4NjAsImV4cCI6MjA2OTg3Mzg2MH0.3kCGGAe1OoSJ_SCN_NDSdnKep1hXIMgMxR1lBd_i2eI";
+
     let allProducts = [];
     let currentCategory = 'all';
     let currentSearch = '';
     let sortMode = 'sales';
-    let vouchers = [];
+    let displayLimit = 24;
+    let searchDebounceTimer = null;
 
     const CATEGORIES = [
       { id: 'all', label: '🔥 ทั้งหมด' },
@@ -288,9 +288,15 @@
       { id: 'ยานยนต์', label: '🚗 อุปกรณ์ติดรถ' }
     ];
 
+    const DEFAULT_VOUCHERS = [
+      { badge: "Shopee Mall", title: "โค้ดลดพิเศษ 15%", discount: "ลดสูงสุด 150.-", min_spend: "ช้อปขั้นต่ำ 500.-", code: "MALL15OCT" },
+      { badge: "ส่งฟรี", title: "โค้ดส่งฟรี 0 บาท", discount: "ฟรีค่าส่งทั่วไทย", min_spend: "ไม่มีขั้นต่ำ", code: "FREESHIPPKH" },
+      { badge: "Coins คืน", title: "รับคอยน์คืน 20%", discount: "รับคืนสูงสุด 200 Coins", min_spend: "ช้อปขั้นต่ำ 300.-", code: "COIN20PKH" }
+    ];
+
     // 1. Flash Sale Countdown Timer
     function startCountdown() {
-      let seconds = 9858; // ~2.7 hours
+      let seconds = 9858;
       const timerEl = document.getElementById('countdownTimer');
       setInterval(() => {
         if (seconds > 0) seconds--;
@@ -301,55 +307,36 @@
       }, 1000);
     }
 
-    // 2. Deep App Switcher (Direct Native App Launcher)
+    // 2. Deep App Switcher (Direct Native App Launcher with External Browser parameter)
     function openShopeeItem(url) {
-      if (!url) return;
-      const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-      if (isMobile) {
-        // Universal deep-link automatically handles native app opening
-        window.location.href = url;
-      } else {
-        window.open(url, '_blank', 'noopener,noreferrer');
-      }
+      if (!url) url = "https://shopee.co.th";
+      // เพิ่ม ?openExternalBrowser=1 สำหรับ LINE Webview ให้เด้งเปิดแอป Shopee โดยตรง
+      const separator = url.includes('?') ? '&' : '?';
+      const finalUrl = url + separator + 'openExternalBrowser=1';
+      window.location.href = finalUrl;
     }
 
-    const DEFAULT_VOUCHERS = [
-      { badge: "Shopee Mall", title: "โค้ดลดพิเศษ 15%", discount: "ลดสูงสุด 150.-", min_spend: "ช้อปขั้นต่ำ 500.-", code: "MALL15OCT" },
-      { badge: "ส่งฟรี", title: "โค้ดส่งฟรี 0 บาท", discount: "ฟรีค่าส่งทั่วไทย", min_spend: "ไม่มีขั้นต่ำ", code: "FREESHIPPKH" },
-      { badge: "Coins คืน", title: "รับคอยน์คืน 20%", discount: "รับคืนสูงสุด 200 Coins", min_spend: "ช้อปขั้นต่ำ 300.-", code: "COIN20PKH" }
-    ];
-
     // 3. Render Vouchers List
-    async function fetchVouchers() {
-      try {
-        const res = await fetch('/api/vouchers');
-        if (res.ok) {
-          vouchers = await res.json();
-        } else {
-          vouchers = DEFAULT_VOUCHERS;
-        }
-        const container = document.getElementById('vouchersList');
-        container.innerHTML = vouchers.map(v => `
-          <div class="bg-gradient-to-r from-orange-50 to-amber-50 border border-dashed border-orange-300 rounded-xl p-2.5 flex items-center justify-between">
-            <div>
-              <div class="flex items-center gap-1.5">
-                <span class="text-[9px] font-bold bg-orange-600 text-white px-1.5 py-0.2 rounded">${v.badge}</span>
-                <span class="text-xs font-bold text-gray-800">${v.title}</span>
-              </div>
-              <p class="text-[10px] text-gray-500 mt-0.5">${v.discount} (${v.min_spend})</p>
+    function renderVouchers() {
+      const container = document.getElementById('vouchersList');
+      container.innerHTML = DEFAULT_VOUCHERS.map(v => `
+        <div class="bg-gradient-to-r from-orange-50 to-amber-50 border border-dashed border-orange-300 rounded-xl p-2.5 flex items-center justify-between">
+          <div>
+            <div class="flex items-center gap-1.5">
+              <span class="text-[9px] font-bold bg-orange-600 text-white px-1.5 py-0.2 rounded">${v.badge}</span>
+              <span class="text-xs font-bold text-gray-800">${v.title}</span>
             </div>
-            <button 
-              onclick="copyVoucherCode('${v.code}')"
-              id="btn-${v.code}"
-              class="bg-white border border-orange-400 text-orange-600 hover:bg-orange-600 hover:text-white text-[11px] font-bold px-2.5 py-1 rounded-lg shadow-sm transition-colors flex-shrink-0"
-            >
-              เก็บโค้ด
-            </button>
+            <p class="text-[10px] text-gray-500 mt-0.5">${v.discount} (${v.min_spend})</p>
           </div>
-        `).join('');
-      } catch (e) {
-        vouchers = DEFAULT_VOUCHERS;
-      }
+          <button 
+            onclick="copyVoucherCode('${v.code}')"
+            id="btn-${v.code}"
+            class="bg-white border border-orange-400 text-orange-600 hover:bg-orange-600 hover:text-white text-[11px] font-bold px-2.5 py-1 rounded-lg shadow-sm transition-colors flex-shrink-0"
+          >
+            เก็บโค้ด
+          </button>
+        </div>
+      `).join('');
     }
 
     function copyVoucherCode(code) {
@@ -367,10 +354,10 @@
 
     // 4. Lucky Spin Wheel Logic
     const WHEEL_PRIZES = [
-      { text: "โค้ดลด 15%", code: "MALLOCT2026", color: "#ee4d2d" },
+      { text: "โค้ดลด 15%", code: "MALL15OCT", color: "#ee4d2d" },
       { text: "ส่งฟรี 0฿", code: "FREESHIPPKH", color: "#f97316" },
-      { text: "คอยน์คืน 20%", code: "EXTRA50COIN", color: "#eab308" },
-      { text: "ส่วนลด 500฿", code: "MALLOCT2026", color: "#ef4444" },
+      { text: "คอยน์คืน 20%", code: "COIN20PKH", color: "#eab308" },
+      { text: "ส่วนลด 100฿", code: "MALL15OCT", color: "#ef4444" },
       { text: "โค้ดลับป้าเข็ม", code: "FREESHIPPKH", color: "#fb923c" },
       { text: "ส่งฟรีทั่วไทย", code: "FREESHIPPKH", color: "#f59e0b" }
     ];
@@ -443,7 +430,9 @@
           isSpinning = false;
           const wonPrize = WHEEL_PRIZES[targetIndex];
           showReward(wonPrize);
-          confetti({ particleCount: 80, spread: 70, origin: { y: 0.6 } });
+          if (typeof confetti === 'function') {
+            confetti({ particleCount: 80, spread: 70, origin: { y: 0.6 } });
+          }
         }
       }
       requestAnimationFrame(animate);
@@ -459,7 +448,7 @@
       const code = document.getElementById('rewardCode').innerText;
       navigator.clipboard.writeText(code);
       alert(`คัดลอกโค้ด ${code} เรียบร้อยแล้ว! กำลังพาไปช้อปที่ Shopee ค่ะ 💖`);
-      window.open('https://shopee.co.th', '_blank');
+      window.open('https://shopee.co.th?openExternalBrowser=1', '_blank');
     }
 
     // 5. Initialize Categories
@@ -479,47 +468,49 @@
       `).join('');
     }
 
-    const SUPABASE_URL = "https://usqhvujqmnxqrdoovvnp.supabase.co";
-    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVzcWh2dWpxbW54cXJkb292dm5wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQyOTc4NjAsImV4cCI6MjA2OTg3Mzg2MH0.3kCGGAe1OoSJ_SCN_NDSdnKep1hXIMgMxR1lBd_i2eI";
+    function filterCategory(catId) {
+      currentCategory = catId;
+      displayLimit = 24;
+      renderCategoryTabs();
+      renderProducts();
+    }
 
-    // 6. Fetch Products
+    // 6. Direct Supabase Ingestion (Fast & Robust)
     async function fetchProducts() {
       try {
-        let loaded = false;
-        try {
-          const res = await fetch('/api/products/');
-          if (res.ok) {
-            allProducts = await res.json();
-            loaded = true;
+        const url = `${SUPABASE_URL}/rest/v1/products?select=id,name,category,sales_count,rating,image_url,affiliate_url&link_status=eq.ok&order=sales_count.desc&limit=150`;
+        const res = await fetch(url, {
+          headers: {
+            "apikey": SUPABASE_KEY,
+            "Authorization": `Bearer ${SUPABASE_KEY}`
           }
-        } catch (_) {}
-
-        if (!loaded || !allProducts || allProducts.length === 0) {
-          const supaUrl = `${SUPABASE_URL}/rest/v1/products?link_status=eq.ok&order=sales_count.desc&limit=500`;
-          const sRes = await fetch(supaUrl, {
-            headers: {
-              "apikey": SUPABASE_KEY,
-              "Authorization": `Bearer ${SUPABASE_KEY}`
-            }
-          });
-          if (sRes.ok) {
-            allProducts = await sRes.json();
-          }
+        });
+        if (res.ok) {
+          allProducts = await res.json();
+          renderProducts();
         }
-        const heroTitle = document.getElementById('heroBannerTitle');
-        if (heroTitle) {
-          heroTitle.innerText = `คลังสินค้าแนะนำพิเศษ (${allProducts.length} รายการ)`;
-        }
-        renderProducts();
       } catch (err) {
-        console.error('Fetch error:', err);
+        console.error('Fetch products error:', err);
       }
+    }
+
+    function setSortMode(mode) {
+      sortMode = mode;
+      const salesBtn = document.getElementById('sortSalesBtn');
+      const ratingBtn = document.getElementById('sortRatingBtn');
+      if (mode === 'sales') {
+        salesBtn.className = "px-2.5 py-1 rounded-md bg-orange-50 border border-orange-300 text-orange-600 font-bold";
+        ratingBtn.className = "px-2.5 py-1 rounded-md bg-white border border-gray-200 text-gray-700 font-medium";
+      } else {
+        salesBtn.className = "px-2.5 py-1 rounded-md bg-white border border-gray-200 text-gray-700 font-medium";
+        ratingBtn.className = "px-2.5 py-1 rounded-md bg-orange-50 border border-orange-300 text-orange-600 font-bold";
+      }
+      renderProducts();
     }
 
     function getFilteredProducts() {
       const seenNames = new Set();
       return allProducts.filter(p => {
-        // ป้องกันสินค้าซ้ำ (Strict Anti-Duplicate Guard)
         const cleanName = (p.name || '').trim().toLowerCase();
         if (!cleanName || seenNames.has(cleanName)) return false;
         seenNames.add(cleanName);
@@ -548,13 +539,13 @@
           }
         }
 
-        const matchSearch = !currentSearch || (p.name && p.name.toLowerCase().includes(currentSearch.toLowerCase()));
+        const matchSearch = !currentSearch || cleanName.includes(currentSearch.toLowerCase()) || cat.includes(currentSearch.toLowerCase());
         return matchCategory && matchSearch;
       }).sort((a, b) => {
         if (sortMode === 'sales') {
           return (b.sales_count || 0) - (a.sales_count || 0);
         } else {
-          return (b.ai_score || 0) - (a.ai_score || 0);
+          return (Number(b.rating) || 4.9) - (Number(a.rating) || 4.9);
         }
       });
     }
@@ -566,23 +557,28 @@
       return 'https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=500&auto=format&fit=crop';
     }
 
-    // 7. Render Product Cards (with Price Truth & Deep Switcher)
+    // 7. Paginated Rendering (Smooth 60 FPS)
     function renderProducts() {
       const filtered = getFilteredProducts();
       const grid = document.getElementById('productGrid');
       const countEl = document.getElementById('productCount');
       const emptyEl = document.getElementById('emptyState');
+      const loadMoreArea = document.getElementById('loadMoreArea');
+      const remainingCountEl = document.getElementById('remainingCount');
 
       countEl.innerText = `${filtered.length} รายการ`;
 
       if (filtered.length === 0) {
         grid.innerHTML = '';
         emptyEl.classList.remove('hidden');
+        loadMoreArea.classList.add('hidden');
         return;
       }
 
       emptyEl.classList.add('hidden');
-      grid.innerHTML = filtered.map(p => {
+      const visibleProducts = filtered.slice(0, displayLimit);
+
+      grid.innerHTML = visibleProducts.map(p => {
         const img = getProductImage(p);
         const salesText = p.sales_count >= 1000 
           ? `ขายแล้ว ${(p.sales_count / 1000).toFixed(1)}k ชิ้น` 
@@ -590,7 +586,6 @@
         
         return `
           <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between border border-gray-100">
-            <!-- Product Image with Badge -->
             <div class="relative w-full pt-[100%] bg-gray-50 overflow-hidden">
               <img 
                 src="${img}" 
@@ -608,7 +603,6 @@
               </div>
             </div>
 
-            <!-- Content Area -->
             <div class="p-3 flex-1 flex flex-col justify-between">
               <div>
                 <h3 class="text-xs font-semibold text-gray-800 line-clamp-2 leading-relaxed" title="${p.name}">
@@ -623,7 +617,6 @@
                 </div>
               </div>
 
-              <!-- Direct Shopee CTA -->
               <div class="mt-3 pt-2 border-t border-gray-50">
                 <button 
                   onclick="openShopeeItem('${p.affiliate_url || 'https://shopee.co.th'}')"
@@ -637,42 +630,70 @@
           </div>
         `;
       }).join('');
-    }
 
-    function filterCategory(catId) {
-      currentCategory = catId;
-      renderCategoryTabs();
-      renderProducts();
-    }
-
-    function handleSearch(e) {
-      currentSearch = e.target.value.trim();
-      const clearBtn = document.getElementById('clearBtn');
-      if (currentSearch) {
-        clearBtn.classList.remove('hidden');
+      if (filtered.length > displayLimit) {
+        loadMoreArea.classList.remove('hidden');
+        remainingCountEl.innerText = filtered.length - displayLimit;
       } else {
-        clearBtn.classList.add('hidden');
+        loadMoreArea.classList.add('hidden');
       }
+    }
+
+    function loadMoreProducts() {
+      displayLimit += 24;
       renderProducts();
+    }
+
+    // 8. Debounced Search (Instant & Smooth)
+    function handleSearchDebounced(e) {
+      clearTimeout(searchDebounceTimer);
+      const val = e.target.value.trim();
+      searchDebounceTimer = setTimeout(async () => {
+        currentSearch = val;
+        displayLimit = 24;
+        const clearBtn = document.getElementById('clearBtn');
+        if (currentSearch) {
+          clearBtn.classList.remove('hidden');
+          // If searching, also query Supabase for deeper matches across full catalog
+          try {
+            const encoded = encodeURIComponent(`*${currentSearch}*`);
+            const searchUrl = `${SUPABASE_URL}/rest/v1/products?select=id,name,category,sales_count,rating,image_url,affiliate_url&or=(name.ilike.${encoded},category.ilike.${encoded})&link_status=eq.ok&limit=60`;
+            const sRes = await fetch(searchUrl, {
+              headers: { "apikey": SUPABASE_KEY, "Authorization": `Bearer ${SUPABASE_KEY}` }
+            });
+            if (sRes.ok) {
+              const searchResults = await sRes.json();
+              if (searchResults.length > 0) {
+                // Merge without duplicates
+                const ids = new Set(allProducts.map(p => p.id));
+                searchResults.forEach(sp => {
+                  if (!ids.has(sp.id)) allProducts.push(sp);
+                });
+              }
+            }
+          } catch (_) {}
+        } else {
+          clearBtn.classList.add('hidden');
+        }
+        renderProducts();
+      }, 300);
     }
 
     function clearSearch() {
       document.getElementById('searchInput').value = '';
       currentSearch = '';
       document.getElementById('clearBtn').classList.add('hidden');
+      displayLimit = 24;
       renderProducts();
     }
 
-    function sortProducts(mode) {
-      sortMode = mode;
-      renderProducts();
-    }
-
-    // Startup
-    renderCategoryTabs();
-    startCountdown();
-    fetchVouchers();
-    fetchProducts();
+    // Initialize Page
+    document.addEventListener('DOMContentLoaded', () => {
+      startCountdown();
+      renderVouchers();
+      renderCategoryTabs();
+      fetchProducts();
+    });
   </script>
 </body>
 </html>
