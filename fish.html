@@ -523,65 +523,7 @@
     .btn-primary:active { transform: scale(0.98); }
 
   
-    /* Customer Reviews & Social Proof */
-    .reviews-section {
-      background: #ffffff;
-      border-radius: 18px;
-      padding: 24px 20px;
-      margin-bottom: 28px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-      border: 1px solid #e2e8f0;
-    }
-    .reviews-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 14px;
-      margin-top: 18px;
-    }
-    .review-card {
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
-      border-radius: 14px;
-      padding: 16px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .review-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba(0,0,0,0.05);
-    }
-    .review-stars {
-      color: #f59e0b;
-      font-size: 0.95rem;
-      margin-bottom: 6px;
-    }
-    .review-comment {
-      font-size: 0.88rem;
-      color: #334155;
-      line-height: 1.5;
-      margin-bottom: 12px;
-    }
-    .reviewer-info {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-top: 1px dashed #cbd5e1;
-      padding-top: 10px;
-      font-size: 0.8rem;
-    }
-    .reviewer-name {
-      font-weight: 700;
-      color: #0f172a;
-    }
-    .reviewer-verified {
-      color: #059669;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 3px;
-    }
+    
 
     /* Zero-Risk Guarantee Banner */
     .guarantee-box {
@@ -801,6 +743,21 @@
     </section>
 
     <!-- Order Form Section -->
+        <!-- Zero-Risk 100% Freshness Guarantee Box -->
+    <div class="guarantee-box" style="background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%); border: 2px solid #86efac; border-radius: 16px; padding: 18px 20px; margin-bottom: 24px; display: flex; align-items: center; gap: 16px; box-shadow: 0 4px 14px rgba(16, 185, 129, 0.08);">
+      <div style="font-size: 2.3rem; flex-shrink: 0;">🛡️</div>
+      <div>
+        <h4 style="font-size: 1.05rem; font-weight: 800; color: #065f46; margin: 0 0 4px 0;">
+          การันตีความสดใหม่ 100% จากป้าเข็ม (Zero-Risk Guarantee)
+        </h4>
+        <p style="font-size: 0.85rem; color: #047857; line-height: 1.45; margin: 0;">
+          หากสินค้าได้รับความเสียหายระหว่างจัดส่ง กล่องบุบ ถุงรั่ว หรือมีกลิ่นไม่พึงประสงค์ 
+          <b>ป้าเข็มยินดีส่งสินค้าชุดใหม่ให้ฟรีทันที 100% โดยไม่ต้องส่งของเก่าคืน!</b> 
+          ให้คุณและครอบครัวทานของอร่อยได้อย่างสบายใจที่สุดค่ะ 💕
+        </p>
+      </div>
+    </div>
+
     <section class="order-box" id="order-section">
       <h3 style="font-size:1.25rem; font-weight:700; margin-bottom:14px; color:#0f172a;">
         📝 สั่งซื้อสินค้า & ข้อมูลจัดส่ง (เก็บเงินปลายทางได้)
@@ -1349,25 +1306,80 @@
     // Initialize
     renderProducts('all');
   
-    // Live Order Ticker Simulation (Data from real order flow)
-    const RECENT_ORDERS_TICKER = [
-      { name: "คุณวิภา (อ.เมือง จ.เชียงใหม่)", prod: "ปลาสลิดบางบ่อ ไซส์กลาง (1kg)", time: "2 นาทีที่แล้ว" },
-      { name: "คุณสมเกียรติ (อ.บางบัวทอง จ.นนทบุรี)", prod: "ชุดเหมาตุนสุดคุ้ม 2 กิโลกรัม 🔥", time: "4 นาทีที่แล้ว" },
-      { name: "คุณกัญญารัตน์ (เขตจตุจักร กรุงเทพฯ)", prod: "ปลาสลิดบางบ่อ ไซส์จัมโบ้ (1kg)", time: "6 นาทีที่แล้ว" },
-      { name: "คุณประพันธ์ (อ.ศรีราชา จ.ชลบุรี)", prod: "ปลากุเลาเค็มตากใบ ไซส์พรีเมียม", time: "9 นาทีที่แล้ว" },
-      { name: "คุณรุ่งนภา (อ.ปากช่อง จ.นครราชสีมา)", prod: "หมึกไข่แดดเดียว ปากน้ำปราณ (500g)", time: "12 นาทีที่แล้ว" },
-      { name: "คุณธนพล (อ.หาดใหญ่ จ.สงขลา)", prod: "ปลาช่อนแดดเดียว แม่ลาแท้ (1kg)", time: "15 นาทีที่แล้ว" }
-    ];
+    // Real Dynamic Orders Ticker (Supabase Ground-Truth - Zero Hallucination)
+    let liveRealOrders = [];
+    let realTickerIdx = 0;
 
-    let tickerIdx = 0;
-    function showNextLiveTicker() {
+    function maskCustomerName(name) {
+      if (!name || name === "ไม่ระบุ") return "คุณลูกค้า";
+      var clean = name.trim().replace(/^(คุณ|นาย|นางสาว|นาง)\s*/, "");
+      if (clean.length <= 1) return "คุณ " + clean;
+      if (clean.length <= 3) return "คุณ " + clean[0] + "***";
+      return "คุณ " + clean.substring(0, 2) + "***";
+    }
+
+    function extractProvince(addr) {
+      if (!addr) return "";
+      var m = addr.match(/(?:จ\.|จังหวัด|กรุงเทพฯ?|กทม\.?)\s*([^\s,]+)/);
+      if (m && m[1]) {
+        var p = m[1].replace(/[0-9]/g, "").trim();
+        if (p) return " (" + p + ")";
+      }
+      return "";
+    }
+
+    function formatRelativeTime(dateStr) {
+      if (!dateStr) return "เมื่อสักครู่";
+      var diffSec = Math.floor((Date.now() - new Date(dateStr).getTime()) / 1000);
+      if (diffSec < 60) return "เมื่อสักครู่";
+      var diffMin = Math.floor(diffSec / 60);
+      if (diffMin < 60) return diffMin + " นาทีที่แล้ว";
+      var diffHr = Math.floor(diffMin / 60);
+      if (diffHr < 24) return diffHr + " ชั่วโมงที่แล้ว";
+      var diffDay = Math.floor(diffHr / 24);
+      return diffDay + " วันที่แล้ว";
+    }
+
+    async function initRealOrdersTicker() {
       const ticker = document.getElementById('liveOrderTicker');
       if (!ticker) return;
 
-      const order = RECENT_ORDERS_TICKER[tickerIdx];
-      document.getElementById('tickerCustName').innerText = order.name;
-      document.getElementById('tickerProdDetail').innerText = "เพิ่งสั่งซื้อ " + order.prod;
-      document.getElementById('tickerTime').innerText = "✅ ยืนยันแล้วเมื่อ " + order.time;
+      try {
+        const res = await fetch('https://usqhvujqmnxqrdoovvnp.supabase.co/rest/v1/direct_orders?select=customer_name,package_name,created_at,address&order=created_at.desc&limit=10', {
+          headers: {
+            'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVzcWh2dWpxbW54cXJkb292dm5wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQyOTc4NjAsImV4cCI6MjA2OTg3Mzg2MH0.3kCGGAe1OoSJ_SCN_NDSdnKep1hXIMgMxR1lBd_i2eI',
+            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVzcWh2dWpxbW54cXJkb292dm5wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQyOTc4NjAsImV4cCI6MjA2OTg3Mzg2MH0.3kCGGAe1OoSJ_SCN_NDSdnKep1hXIMgMxR1lBd_i2eI'
+          }
+        });
+        if (res.ok) {
+          const data = await res.json();
+          if (Array.isArray(data) && data.length > 0) {
+            liveRealOrders = data;
+            startTickerCycle();
+          } else {
+            // ไม่มียอดออเดอร์ในระบบ ซ่อนกล่องไว้ 100% ไม่เมคข้อมูลหลอก
+            ticker.style.display = 'none';
+          }
+        } else {
+          ticker.style.display = 'none';
+        }
+      } catch (err) {
+        ticker.style.display = 'none';
+      }
+    }
+
+    function showNextRealOrder() {
+      const ticker = document.getElementById('liveOrderTicker');
+      if (!ticker || liveRealOrders.length === 0) return;
+
+      const order = liveRealOrders[realTickerIdx];
+      const maskedName = maskCustomerName(order.customer_name) + extractProvince(order.address);
+      const pkg = order.package_name || "ปลาแดดเดียว คัดพิเศษ";
+      const timeAgo = formatRelativeTime(order.created_at);
+
+      document.getElementById('tickerCustName').innerText = maskedName;
+      document.getElementById('tickerProdDetail').innerText = "สั่งซื้อ " + pkg;
+      document.getElementById('tickerTime').innerText = "✅ ยืนยันคำสั่งซื้อแล้ว " + timeAgo;
 
       ticker.classList.add('active');
 
@@ -1375,14 +1387,18 @@
         ticker.classList.remove('active');
       }, 4200);
 
-      tickerIdx = (tickerIdx + 1) % RECENT_ORDERS_TICKER.length;
+      realTickerIdx = (realTickerIdx + 1) % liveRealOrders.length;
     }
 
-    // Start ticker loop after 3.5s page load, repeat every 8.5s
-    setTimeout(() => {
-      showNextLiveTicker();
-      setInterval(showNextLiveTicker, 8500);
-    }, 3500);
+    function startTickerCycle() {
+      setTimeout(() => {
+        showNextRealOrder();
+        setInterval(showNextRealOrder, 8500);
+      }, 3000);
+    }
+
+    // Initialize only on real page load
+    initRealOrdersTicker();
 
 </script>
 
