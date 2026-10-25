@@ -2,38 +2,57 @@
 <html lang="th">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="format-detection" content="telephone=no">
   <meta name="referrer" content="no-referrer">
-  <title>ป้าเข็ม ขายของ | คลังสินค้า Shopee คัดพิเศษของแท้ 100%</title>
+  <title>ป้าเข็ม ขายของ | Shopee Official Affiliate Hub</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="pa-khem-avatar.png">
+
+  <!-- Google Fonts: Kanit & Prompt -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Canvas Confetti -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
   <script>
     tailwind.config = {
       theme: {
         extend: {
           fontFamily: {
-            sans: ['Kanit', 'sans-serif'],
+            sans: ['Prompt', 'sans-serif'],
+            kanit: ['Kanit', 'sans-serif'],
           },
           colors: {
             shopee: {
               DEFAULT: '#ee4d2d',
-              dark: '#d03e1e',
-              light: '#f05d40',
-              bg: '#f5f5f5',
+              dark: '#d03b1f',
+              light: '#ff5722',
+              bg: '#f5f5f5'
             }
           }
         }
       }
     }
   </script>
+
   <style>
     body {
-      background-color: #f5f5f5;
-      font-family: 'Kanit', sans-serif;
+      background-color: #f8fafc;
+      font-family: 'Prompt', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       -webkit-tap-highlight-color: transparent;
+    }
+    .hide-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .hide-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
     }
     .line-clamp-2 {
       display: -webkit-box;
@@ -41,117 +60,102 @@
       -webkit-box-orient: vertical;
       overflow: hidden;
     }
-    .no-scrollbar::-webkit-scrollbar {
-      display: none;
-    }
-    .no-scrollbar {
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-    }
-    @keyframes pulse-fast {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.9; transform: scale(1.05); }
-    }
-    .animate-pulse-fast {
-      animation: pulse-fast 1.5s infinite;
-    }
   </style>
 </head>
-<body class="text-gray-800 pb-24">
+<body class="text-gray-800 pb-16 antialiased selection:bg-orange-500 selection:text-white">
 
-  <!-- 1. Header & Search Bar -->
-  <header class="sticky top-0 z-50 bg-gradient-to-r from-orange-600 to-red-500 text-white shadow-md">
-    <div class="max-w-4xl mx-auto px-4 py-3">
+  <!-- 1. Top Announcement Bar -->
+  <div class="bg-gradient-to-r from-red-600 via-orange-600 to-amber-600 text-white text-[11px] sm:text-xs py-1.5 px-4 text-center font-medium shadow-sm flex items-center justify-center gap-2">
+    <span class="animate-pulse">🔥</span>
+    <span>ดีล Shopee แนะนำพิเศษโดย <b>ป้าเข็ม</b> ของแท้ 100% คัดสรรราคาคุ้มค่า</span>
+    <span class="hidden sm:inline bg-white/20 px-2 py-0.5 rounded-full text-[10px]">อัปเดตตลอด 24 ชม.</span>
+  </div>
+
+  <!-- 2. Sticky Header & Search Bar -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm">
+    <div class="max-w-4xl mx-auto px-3 sm:px-4 py-2.5">
       <div class="flex items-center justify-between gap-3">
+        
         <!-- Logo / Avatar -->
-        <a href="#" onclick="window.scrollTo({top:0,behavior:'smooth'}); return false;" class="flex items-center gap-2 flex-shrink-0">
-          <div class="w-10 h-10 rounded-full border-2 border-white overflow-hidden bg-white shadow flex-shrink-0">
-            <img src="https://profile.line-scdn.net/0hERy_y3n3Gn1EJgY083hlKnhjFBAzCBw1PEVTE2UuR01sRAh-e0FdS2YmQEw-EF5_LBBcG2UiREg7" alt="ป้าเข็ม" class="w-full h-full object-cover">
+        <a href="#" onclick="clearSearch(); return false;" class="flex items-center gap-2.5 shrink-0 group">
+          <div class="w-10 h-10 rounded-full overflow-hidden border-2 border-orange-500 shadow-sm bg-orange-100 shrink-0 relative">
+            <img 
+              src="pa-khem-avatar.png" 
+              alt="ป้าเข็ม" 
+              class="w-full h-full object-cover"
+              onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=ป้าเข็ม&background=ee4d2d&color=fff&size=128&bold=true';"
+            >
           </div>
-          <div>
-            <h1 class="text-base font-bold leading-tight flex items-center gap-1">
-              ป้าเข็ม ขายของ
-              <span class="bg-yellow-400 text-red-900 text-[10px] font-bold px-1.5 py-0.5 rounded-full uppercase">Mall</span>
-            </h1>
-            <p class="text-[11px] text-orange-100">ของแท้ 100% คัดพิเศษ</p>
+          <div class="flex flex-col">
+            <span class="font-kanit font-extrabold text-sm sm:text-base text-gray-900 leading-tight group-hover:text-orange-600 transition-colors flex items-center gap-1">
+              ป้าเข็ม ขายของ <span class="text-[10px] bg-red-100 text-red-600 font-bold px-1.5 py-0.2 rounded-full">Mall</span>
+            </span>
+            <span class="text-[10px] text-gray-500 font-normal">
+              ผู้ช่วยค้นหาดีล Shopee แท้ 100%
+            </span>
           </div>
         </a>
 
-        <!-- Search Input -->
-        <div class="flex-1 relative">
-          <input 
-            type="text" 
-            id="searchInput"
-            placeholder="ค้นหา เช่น หูฟัง, หม้อทอด, เซรั่ม..." 
-            class="w-full pl-9 pr-8 py-2 rounded-full text-xs text-gray-800 bg-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-300 shadow-inner"
-            oninput="handleSearchDebounced(event)"
+        <!-- Action Buttons -->
+        <div class="flex items-center gap-2">
+          <!-- Lucky Wheel Trigger -->
+          <button 
+            onclick="openLuckyWheel()" 
+            class="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white text-xs font-semibold px-2.5 py-1.5 rounded-xl shadow-sm flex items-center gap-1.5 active:scale-95 transition-all"
+            title="หมุนวงล้อแจกโค้ด"
           >
-          <svg class="w-4 h-4 text-gray-400 absolute left-3 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-          </svg>
-          <button id="clearBtn" class="hidden absolute right-2.5 top-2 text-gray-400 hover:text-gray-600 font-bold" onclick="clearSearch()">
-            ✕
+            <span class="text-sm">🎯</span>
+            <span class="hidden sm:inline">สุ่มโค้ดลับ</span>
           </button>
-        </div>
 
-        <!-- Chat LINE -->
-        <a href="https://line.me/R/ti/p/@137gsref" target="_blank" class="flex flex-col items-center flex-shrink-0 text-white hover:opacity-90">
-          <div class="relative">
-            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 2C6.48 2 2 6.03 2 11c0 2.87 1.5 5.43 3.86 7.07-.15.86-.6 2.37-1.39 3.42 1.83-.2 3.84-.96 4.95-1.78.82.2 1.69.31 2.58.31 5.52 0 10-4.03 10-9s-4.48-9-10-9z"/>
-            </svg>
-            <span class="absolute -top-1 -right-1 w-2.5 h-2.5 bg-green-400 rounded-full border border-white"></span>
-          </div>
-          <span class="text-[10px] font-medium">คุย LINE</span>
-        </a>
+          <!-- LINE OA Link -->
+          <a 
+            href="https://line.me/R/ti/p/@137gsref" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            class="bg-[#06C755] hover:bg-[#05b34c] text-white text-xs font-semibold px-2.5 py-1.5 rounded-xl shadow-sm flex items-center gap-1 active:scale-95 transition-all"
+          >
+            <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 5.92 2 10.75c0 2.96 1.7 5.58 4.29 7.15-.19.68-.7 2.47-.8 2.85-.13.48.18.47.38.34.16-.1 2.21-1.51 3.12-2.13.98.27 2.02.42 3.01.42 5.52 0 10-3.92 10-8.75S17.52 2 12 2z"/></svg>
+            <span class="hidden sm:inline">ทักแชท</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Search Input Box -->
+      <div class="mt-2.5 relative">
+        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+        </div>
+        <input 
+          type="text" 
+          id="searchInput" 
+          oninput="handleSearchDebounced(event)" 
+          placeholder="ค้นหาชื่อสินค้า เช่น หูฟัง, หม้อทอด, เซรั่ม, พัดลม..." 
+          class="w-full pl-9 pr-9 py-2 bg-gray-100 hover:bg-gray-100/80 focus:bg-white text-xs sm:text-sm rounded-xl border border-transparent focus:border-orange-500 focus:ring-2 focus:ring-orange-200 outline-none transition-all placeholder-gray-400"
+          autocomplete="off"
+        >
+        <button 
+          id="clearBtn" 
+          onclick="clearSearch()" 
+          class="hidden absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 text-sm"
+        >
+          ✕
+        </button>
       </div>
     </div>
 
     <!-- Category Tabs Carousel -->
-    <div class="bg-white/10 backdrop-blur-sm border-t border-white/10">
-      <div class="max-w-4xl mx-auto px-2 py-1.5 flex gap-2 overflow-x-auto no-scrollbar" id="categoryTabs">
+    <div class="bg-gradient-to-r from-orange-600 via-orange-500 to-amber-600 py-1.5 px-3">
+      <div class="max-w-4xl mx-auto flex items-center gap-1.5 overflow-x-auto hide-scrollbar" id="categoryTabs">
         <!-- Injected via JS -->
       </div>
     </div>
   </header>
 
-  <!-- 2. Flash Sale Countdown & Lucky Wheel Bar -->
-  <div class="bg-gradient-to-r from-red-600 to-orange-500 text-white py-2 px-4 shadow-sm">
-    <div class="max-w-4xl mx-auto flex items-center justify-between text-xs">
-      <div class="flex items-center gap-2">
-        <span class="bg-yellow-300 text-red-900 font-extrabold px-2 py-0.5 rounded text-[10px] uppercase tracking-wide">
-          ⚡ FLASH DEALS
-        </span>
-        <span class="font-medium">เหลือเวลา:</span>
-        <span id="countdownTimer" class="font-mono font-bold text-yellow-200">02:45:18</span>
-      </div>
-      <button 
-        onclick="openLuckyWheel()" 
-        class="bg-yellow-400 hover:bg-yellow-300 text-red-900 font-bold px-3 py-1 rounded-full shadow flex items-center gap-1 animate-pulse-fast text-[11px]"
-      >
-        🎁 หมุนวงล้อแจกโค้ด
-      </button>
-    </div>
-  </div>
+  <!-- Main Content Container -->
+  <main class="max-w-4xl mx-auto px-3 sm:px-4 pt-3.5">
 
-  <main class="max-w-4xl mx-auto px-4 mt-3">
-
-    <!-- 3. Voucher Secret Box -->
-    <div class="mb-3 bg-white rounded-2xl p-3.5 shadow-sm border border-orange-100">
-      <div class="flex items-center justify-between mb-2">
-        <h3 class="text-xs font-bold text-gray-800 flex items-center gap-1.5">
-          <span class="text-orange-500">🎫</span> โค้ดลดพิเศษเฉพาะลูกค้าป้าเข็ม
-        </h3>
-        <span class="text-[10px] text-green-600 font-semibold bg-green-50 px-2 py-0.5 rounded-full">
-          ● อัปเดตสดวันนี้
-        </span>
-      </div>
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-2" id="vouchersList">
-        <!-- Injected via JS -->
-      </div>
-    </div>
-
-    <!-- 4. Hero Banner -->
+    <!-- Hero Banner -->
     <div class="bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 rounded-2xl p-4 text-white shadow-sm flex items-center justify-between relative overflow-hidden">
       <div class="z-10 max-w-[75%]">
         <span class="inline-block bg-white/20 backdrop-blur-md text-[11px] font-semibold px-2.5 py-0.5 rounded-full mb-1">
@@ -161,32 +165,45 @@
           คลังสินค้าแนะนำพิเศษ Shopee ของแท้ 100%
         </h2>
         <p class="text-xs text-orange-100 mt-0.5">
-          คัดสรรของดีราคาคุ้มค่า ตรวจประวัติราคาแล้วทุกชิ้น ช้อปปลอดภัยผ่านแอป Shopee โดยตรง
+          ตรวจเช็คลิงก์แท้และโปรโมชั่นแล้วทุกชิ้น ช้อปปลอดภัยผ่านแอป Shopee โดยตรง
         </p>
       </div>
       <div class="text-right z-10 flex flex-col items-end">
-        <span class="text-3xl font-extrabold tracking-tight">4.9★</span>
+        <span class="text-3xl font-extrabold tracking-tight font-kanit">4.9★</span>
         <span class="text-[10px] text-yellow-200">คะแนนรีวิวเฉลี่ย</span>
       </div>
       <div class="absolute -right-6 -bottom-6 w-32 h-32 bg-white/10 rounded-full blur-xl"></div>
     </div>
 
     <!-- Filter & Result Stats Bar -->
-    <div class="flex items-center justify-between mt-4 mb-2 text-xs text-gray-500">
-      <div>
-        แสดง <span id="productCount" class="font-bold text-orange-600">กำลังโหลด...</span>
+    <div class="flex items-center justify-between mt-3.5 mb-2 text-xs text-gray-500">
+      <div class="flex items-center gap-1.5">
+        <span>แสดง</span>
+        <span id="productCount" class="font-bold text-orange-600 bg-orange-50 px-2 py-0.5 rounded-md border border-orange-200">กำลังโหลด...</span>
+        <span id="catalogSyncBadge" class="hidden text-[10px] text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200 font-semibold">✓ ซิงค์ครบ 1,997 ชิ้น</span>
       </div>
-      <div class="flex gap-2">
-        <button id="sortSalesBtn" class="px-2.5 py-1 rounded-md bg-orange-50 border border-orange-300 text-orange-600 font-bold" onclick="setSortMode('sales')">
+      <div class="flex gap-1.5">
+        <button id="sortSalesBtn" class="px-2.5 py-1 rounded-lg bg-orange-50 border border-orange-300 text-orange-600 font-bold transition-all text-xs" onclick="setSortMode('sales')">
           🔥 ขายดีสุด
         </button>
-        <button id="sortRatingBtn" class="px-2.5 py-1 rounded-md bg-white border border-gray-200 text-gray-700 font-medium" onclick="setSortMode('rating')">
-          ⭐ เรตติ้งสูงสุด
+        <button id="sortRatingBtn" class="px-2.5 py-1 rounded-lg bg-white border border-gray-200 text-gray-700 font-medium transition-all text-xs" onclick="setSortMode('rating')">
+          ⭐ เรตติ้งสูง
         </button>
       </div>
     </div>
 
-    <!-- 5. Product Grid -->
+    <!-- Active Search Filter Alert -->
+    <div id="searchAlert" class="hidden bg-orange-50 border border-orange-200 rounded-xl p-2.5 mb-3 flex items-center justify-between text-xs text-orange-800">
+      <div class="flex items-center gap-1.5">
+        <span>🔍 ผลค้นหาคำว่า:</span>
+        <b id="searchAlertKeyword" class="text-orange-600"></b>
+      </div>
+      <button onclick="clearSearch()" class="text-[11px] bg-white border border-orange-300 text-orange-700 px-2 py-0.5 rounded-md hover:bg-orange-100 font-medium">
+        ✕ ล้างการค้นหา
+      </button>
+    </div>
+
+    <!-- Product Grid -->
     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3" id="productGrid">
       <!-- Loading Skeletons -->
       <div class="bg-white rounded-xl p-3 shadow-sm animate-pulse h-64 border border-gray-100"></div>
@@ -199,9 +216,10 @@
     <div id="loadMoreArea" class="text-center mt-6 hidden">
       <button 
         onclick="loadMoreProducts()" 
-        class="bg-white border-2 border-orange-500 text-orange-600 hover:bg-orange-50 font-bold px-6 py-2.5 rounded-full shadow-sm text-xs transition-all active:scale-95"
+        class="bg-white border-2 border-orange-500 text-orange-600 hover:bg-orange-50 font-bold px-6 py-2.5 rounded-full shadow-sm text-xs transition-all active:scale-95 flex items-center gap-1.5 mx-auto"
       >
-        👇 โหลดสินค้าเพิ่มเติม (<span id="remainingCount">0</span> ชิ้น)
+        <span>👇 ดูสินค้าเพิ่มเติม</span>
+        <span class="bg-orange-100 text-orange-700 px-2 py-0.2 rounded-full text-[10px] font-extrabold" id="remainingCount">+0</span>
       </button>
     </div>
 
@@ -212,16 +230,16 @@
       </div>
       <h3 class="text-sm font-bold text-gray-800">ไม่พบสินค้าที่คุณค้นหา</h3>
       <p class="text-xs text-gray-500 mt-1">ลองค้นหาด้วยคำอื่น หรือเลือกดูหมวดหมู่ด้านบนนะลูก 😊</p>
-      <button onclick="clearSearch()" class="mt-4 bg-orange-600 text-white text-xs font-bold px-4 py-2 rounded-full shadow">
+      <button onclick="clearSearch()" class="mt-4 bg-orange-600 text-white text-xs font-bold px-4 py-2 rounded-full shadow hover:bg-orange-700">
         ดูสินค้าทั้งหมด
       </button>
     </div>
 
   </main>
 
-  <!-- 6. Lucky Wheel Modal -->
+  <!-- Lucky Wheel Modal -->
   <div id="luckyModal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="bg-white rounded-3xl max-w-sm w-full p-6 text-center relative shadow-2xl overflow-hidden animate-scale-up">
+    <div class="bg-white rounded-3xl max-w-sm w-full p-6 text-center relative shadow-2xl overflow-hidden">
       <button onclick="closeLuckyWheel()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-xl font-bold w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center">
         ✕
       </button>
@@ -230,12 +248,11 @@
         <span class="text-[10px] font-extrabold bg-orange-100 text-orange-600 px-3 py-1 rounded-full uppercase tracking-wider">
           🎁 LUCKY WHEEL
         </span>
-        <h3 class="text-lg font-bold text-gray-800 mt-1">วงล้อเสี่ยงโชค แจกโค้ด Shopee</h3>
+        <h3 class="text-lg font-bold text-gray-800 mt-1 font-kanit">วงล้อเสี่ยงโชค แจกโค้ด Shopee</h3>
         <p class="text-xs text-gray-500">หมุนรับโค้ดส่วนลดและโค้ดส่งฟรีประจำวัน</p>
       </div>
 
       <div class="relative w-64 h-64 mx-auto my-4 flex items-center justify-center">
-        <!-- Pointer Arrow -->
         <div class="absolute -top-3 z-20 text-red-600 drop-shadow">
           <svg class="w-8 h-8 filter drop-shadow" fill="currentColor" viewBox="0 0 24 24">
             <path d="M12 21l-6-9h12l-6 9z"/>
@@ -257,7 +274,7 @@
       <button 
         onclick="spinWheel()" 
         id="spinBtn"
-        class="w-full bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white font-bold py-3 rounded-2xl shadow-lg active:scale-95 transition-all text-sm flex items-center justify-center gap-2"
+        class="w-full bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white font-bold py-3 rounded-2xl shadow-lg active:scale-95 transition-all text-sm flex items-center justify-center gap-2 font-kanit"
       >
         <span>🎯 แตะเพื่อเริ่มหมุนวงล้อ</span>
       </button>
@@ -275,6 +292,7 @@
     let sortMode = 'sales';
     let displayLimit = 24;
     let searchDebounceTimer = null;
+    let isFullCatalogLoaded = false;
 
     const CATEGORIES = [
       { id: 'all', label: '🔥 ทั้งหมด' },
@@ -288,71 +306,296 @@
       { id: 'ยานยนต์', label: '🚗 อุปกรณ์ติดรถ' }
     ];
 
-    const DEFAULT_VOUCHERS = [
-      { badge: "Shopee Mall", title: "โค้ดลดพิเศษ 15%", discount: "ลดสูงสุด 150.-", min_spend: "ช้อปขั้นต่ำ 500.-", code: "MALL15OCT" },
-      { badge: "ส่งฟรี", title: "โค้ดส่งฟรี 0 บาท", discount: "ฟรีค่าส่งทั่วไทย", min_spend: "ไม่มีขั้นต่ำ", code: "FREESHIPPKH" },
-      { badge: "Coins คืน", title: "รับคอยน์คืน 20%", discount: "รับคืนสูงสุด 200 Coins", min_spend: "ช้อปขั้นต่ำ 300.-", code: "COIN20PKH" }
-    ];
-
-    // 1. Flash Sale Countdown Timer
-    function startCountdown() {
-      let seconds = 9858;
-      const timerEl = document.getElementById('countdownTimer');
-      setInterval(() => {
-        if (seconds > 0) seconds--;
-        const h = String(Math.floor(seconds / 3600)).padStart(2, '0');
-        const m = String(Math.floor((seconds % 3600) / 60)).padStart(2, '0');
-        const s = String(seconds % 60).padStart(2, '0');
-        timerEl.innerText = `${h}:${m}:${s}`;
-      }, 1000);
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
     }
 
-    // 2. Deep App Switcher (Direct Native App Launcher with External Browser parameter)
-    function openShopeeItem(url) {
-      if (!url) url = "https://shopee.co.th";
-      // เพิ่ม ?openExternalBrowser=1 สำหรับ LINE Webview ให้เด้งเปิดแอป Shopee โดยตรง
-      const separator = url.includes('?') ? '&' : '?';
-      const finalUrl = url + separator + 'openExternalBrowser=1';
-      window.location.href = finalUrl;
+    function getSafeShopeeUrl(p) {
+      const raw = (p.affiliate_url || '').trim();
+      if (raw && !raw.includes('/test') && (raw.startsWith('https://s.shopee.co.th/') || raw.startsWith('https://shopee.co.th/'))) {
+        const sep = raw.includes('?') ? '&' : '?';
+        return raw + sep + 'openExternalBrowser=1';
+      }
+      return 'https://shopee.co.th/search?keyword=' + encodeURIComponent(p.name || 'ป้าเข็ม') + '&openExternalBrowser=1';
     }
 
-    // 3. Render Vouchers List
-    function renderVouchers() {
-      const container = document.getElementById('vouchersList');
-      container.innerHTML = DEFAULT_VOUCHERS.map(v => `
-        <div class="bg-gradient-to-r from-orange-50 to-amber-50 border border-dashed border-orange-300 rounded-xl p-2.5 flex items-center justify-between">
-          <div>
-            <div class="flex items-center gap-1.5">
-              <span class="text-[9px] font-bold bg-orange-600 text-white px-1.5 py-0.2 rounded">${v.badge}</span>
-              <span class="text-xs font-bold text-gray-800">${v.title}</span>
-            </div>
-            <p class="text-[10px] text-gray-500 mt-0.5">${v.discount} (${v.min_spend})</p>
-          </div>
-          <button 
-            onclick="copyVoucherCode('${v.code}')"
-            id="btn-${v.code}"
-            class="bg-white border border-orange-400 text-orange-600 hover:bg-orange-600 hover:text-white text-[11px] font-bold px-2.5 py-1 rounded-lg shadow-sm transition-colors flex-shrink-0"
-          >
-            เก็บโค้ด
-          </button>
-        </div>
+    // 1. Initialize Categories
+    function renderCategoryTabs() {
+      const container = document.getElementById('categoryTabs');
+      container.innerHTML = CATEGORIES.map(c => `
+        <button 
+          onclick="filterCategory('${c.id}')"
+          class="px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap transition-all ${
+            currentCategory === c.id 
+              ? 'bg-white text-orange-600 font-bold shadow-sm scale-105' 
+              : 'text-orange-100 hover:bg-white/20'
+          }"
+        >
+          ${c.label}
+        </button>
       `).join('');
     }
 
-    function copyVoucherCode(code) {
-      navigator.clipboard.writeText(code);
-      const btn = document.getElementById(`btn-${code}`);
-      if (btn) {
-        btn.innerText = 'คัดลอกแล้ว!';
-        btn.classList.add('bg-green-600', 'text-white', 'border-green-600');
-        setTimeout(() => {
-          btn.innerText = 'เก็บโค้ด';
-          btn.classList.remove('bg-green-600', 'text-white', 'border-green-600');
-        }, 2000);
+    function filterCategory(catId) {
+      currentCategory = catId;
+      displayLimit = 24;
+      renderCategoryTabs();
+      renderProducts();
+    }
+
+    // 2. Multi-Phase Supabase Ingestion (Instant 0.2s First Contentful Paint + Full Hydration)
+    async function fetchProducts() {
+      try {
+        // Phase 1: Load Top 200 items immediately for instant UI
+        const urlFast = `${SUPABASE_URL}/rest/v1/products?select=id,name,category,sales_count,rating,image_url,affiliate_url&link_status=eq.ok&order=sales_count.desc&limit=200`;
+        const resFast = await fetch(urlFast, {
+          headers: { "apikey": SUPABASE_KEY, "Authorization": `Bearer ${SUPABASE_KEY}` }
+        });
+        if (resFast.ok) {
+          allProducts = await resFast.json();
+          renderProducts();
+        }
+
+        // Phase 2: Background Hydrate full 1,903+ items silently
+        setTimeout(async () => {
+          try {
+            const urlFull1 = `${SUPABASE_URL}/rest/v1/products?select=id,name,category,sales_count,rating,image_url,affiliate_url&link_status=eq.ok&order=sales_count.desc&limit=1000`;
+            const urlFull2 = `${SUPABASE_URL}/rest/v1/products?select=id,name,category,sales_count,rating,image_url,affiliate_url&link_status=eq.ok&order=sales_count.desc&offset=1000&limit=1000`;
+
+            const [r1, r2] = await Promise.all([
+              fetch(urlFull1, { headers: { "apikey": SUPABASE_KEY, "Authorization": `Bearer ${SUPABASE_KEY}` } }),
+              fetch(urlFull2, { headers: { "apikey": SUPABASE_KEY, "Authorization": `Bearer ${SUPABASE_KEY}` } })
+            ]);
+
+            if (r1.ok && r2.ok) {
+              const b1 = await r1.json();
+              const b2 = await r2.json();
+              const fullCatalog = [...b1, ...b2];
+              
+              // Merge deduplicated
+              const seen = new Set();
+              const merged = [];
+              for (const p of fullCatalog) {
+                if (p.id && !seen.has(p.id)) {
+                  seen.add(p.id);
+                  merged.push(p);
+                }
+              }
+              allProducts = merged;
+              isFullCatalogLoaded = true;
+              const badge = document.getElementById('catalogSyncBadge');
+              if (badge) badge.classList.remove('hidden');
+              renderProducts();
+            }
+          } catch (_) {}
+        }, 300);
+
+      } catch (err) {
+        console.error('Fetch products error:', err);
       }
     }
 
-    // 4. Lucky Spin Wheel Logic
+    function setSortMode(mode) {
+      sortMode = mode;
+      const salesBtn = document.getElementById('sortSalesBtn');
+      const ratingBtn = document.getElementById('sortRatingBtn');
+      if (mode === 'sales') {
+        salesBtn.className = "px-2.5 py-1 rounded-lg bg-orange-50 border border-orange-300 text-orange-600 font-bold transition-all text-xs";
+        ratingBtn.className = "px-2.5 py-1 rounded-lg bg-white border border-gray-200 text-gray-700 font-medium transition-all text-xs";
+      } else {
+        salesBtn.className = "px-2.5 py-1 rounded-lg bg-white border border-gray-200 text-gray-700 font-medium transition-all text-xs";
+        ratingBtn.className = "px-2.5 py-1 rounded-lg bg-orange-50 border border-orange-300 text-orange-600 font-bold transition-all text-xs";
+      }
+      renderProducts();
+    }
+
+    function getFilteredProducts() {
+      const seenNames = new Set();
+      const term = (currentSearch || '').trim().toLowerCase();
+
+      return allProducts.filter(p => {
+        const cleanName = (p.name || '').trim().toLowerCase();
+        if (!cleanName || seenNames.has(cleanName)) return false;
+        seenNames.add(cleanName);
+
+        const cat = (p.category || '').toLowerCase();
+
+        // If user is searching, search globally across all categories!
+        if (term) {
+          return cleanName.includes(term) || cat.includes(term);
+        }
+
+        // Otherwise filter by category tab
+        if (currentCategory === 'all') return true;
+
+        if (currentCategory === 'ของใช้ในบ้าน') {
+          return cat.includes('ของใช้') || cat.includes('บ้าน') || /ที่นอน|หมอน|โซฟา|ปลั๊ก|สวิตช์|ถุงสูญญากาศ|โคมไฟ|กริ่ง/i.test(cleanName);
+        } else if (currentCategory === 'เครื่องใช้ไฟฟ้า') {
+          return cat.includes('ไฟฟ้า') || /ทีวี|tv|แอร์|ตู้เย็น|พัดลม|เครื่องฟอก|เครื่องดูดฝุ่น|เตารีด|เครื่องทำน้ำอุ่น/i.test(cleanName);
+        } else if (currentCategory === 'สัตว์เลี้ยง') {
+          return cat.includes('สัตว์') || /แมว|สุนัข|หมา/i.test(cleanName);
+        } else if (currentCategory === 'เครื่องครัว') {
+          return cat.includes('ครัว') || /หม้อ|เตา|กระทะ|ปั่น|กาแฟ|แก้ว|กระติก/i.test(cleanName);
+        } else if (currentCategory === 'ไอที') {
+          return cat.includes('ไอที') || /หูฟัง|wifi|zigbee|บลูทูธ|กล้อง|คีย์บอร์ด|ถ่าน|rf/i.test(cleanName);
+        } else if (currentCategory === 'สุขภาพ') {
+          return cat.includes('สุขภาพ') || /นวด|ที่นอน/i.test(cleanName);
+        } else if (currentCategory === 'ความงาม') {
+          return cat.includes('ความงาม') || /ครีม|เซรั่ม|มาส์ก|ย้อมผม/i.test(cleanName);
+        } else if (currentCategory === 'ยานยนต์') {
+          return cat.includes('ยานยนต์') || /รถ|ฉีดน้ำ|จักรยาน/i.test(cleanName);
+        } else {
+          return cat.includes(currentCategory);
+        }
+      }).sort((a, b) => {
+        if (sortMode === 'sales') {
+          return (b.sales_count || 0) - (a.sales_count || 0);
+        } else {
+          return (Number(b.rating) || 4.9) - (Number(a.rating) || 4.9);
+        }
+      });
+    }
+
+    function getProductImage(p) {
+      if (p.image_url && p.image_url.trim().length > 10) {
+        return p.image_url.trim();
+      }
+      return 'https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=500&auto=format&fit=crop';
+    }
+
+    // 3. Paginated Rendering (Smooth 60 FPS)
+    function renderProducts() {
+      const filtered = getFilteredProducts();
+      const grid = document.getElementById('productGrid');
+      const countEl = document.getElementById('productCount');
+      const emptyEl = document.getElementById('emptyState');
+      const loadMoreArea = document.getElementById('loadMoreArea');
+      const remainingCountEl = document.getElementById('remainingCount');
+      const searchAlert = document.getElementById('searchAlert');
+      const searchAlertKeyword = document.getElementById('searchAlertKeyword');
+
+      countEl.innerText = `${filtered.length.toLocaleString('th-TH')} รายการ`;
+
+      if (currentSearch) {
+        searchAlert.classList.remove('hidden');
+        searchAlertKeyword.innerText = `"${currentSearch}" (${filtered.length} รายการ)`;
+      } else {
+        searchAlert.classList.add('hidden');
+      }
+
+      if (filtered.length === 0) {
+        grid.innerHTML = '';
+        emptyEl.classList.remove('hidden');
+        loadMoreArea.classList.add('hidden');
+        return;
+      }
+
+      emptyEl.classList.add('hidden');
+      const visibleProducts = filtered.slice(0, displayLimit);
+
+      grid.innerHTML = visibleProducts.map(p => {
+        const img = getProductImage(p);
+        const safeUrl = getSafeShopeeUrl(p);
+        const safeName = escapeHtml(p.name);
+        const salesText = p.sales_count >= 1000 
+          ? `ขายแล้ว ${(p.sales_count / 1000).toFixed(1)}k ชิ้น` 
+          : `ขายแล้ว ${p.sales_count || 0} ชิ้น`;
+        
+        return `
+          <div class="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col justify-between border border-gray-100">
+            <a href="${safeUrl}" target="_blank" rel="noopener noreferrer" class="block relative w-full pt-[100%] bg-gray-50 overflow-hidden cursor-pointer">
+              <img 
+                src="${img}" 
+                alt="${safeName}" 
+                loading="lazy"
+                decoding="async"
+                referrerpolicy="no-referrer"
+                class="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=500&auto=format&fit=crop'"
+              >
+              <div class="absolute top-2 left-2 bg-red-600 text-white text-[9px] font-bold px-1.5 py-0.5 rounded shadow">
+                ของแท้ 100%
+              </div>
+              <div class="absolute bottom-1 right-1 bg-green-600/90 text-white text-[8px] font-semibold px-1 rounded backdrop-blur-sm">
+                ✓ Shopee Mall
+              </div>
+            </a>
+
+            <div class="p-3 flex-1 flex flex-col justify-between">
+              <div>
+                <a href="${safeUrl}" target="_blank" rel="noopener noreferrer" class="text-xs font-semibold text-gray-800 line-clamp-2 leading-relaxed hover:text-orange-600 transition-colors" title="${safeName}">
+                  ${safeName}
+                </a>
+                <div class="flex items-center gap-1.5 mt-2 text-[10px] text-gray-500">
+                  <span class="flex items-center text-amber-500 font-bold">
+                    ★ ${p.rating ? Number(p.rating).toFixed(1) : '4.9'}
+                  </span>
+                  <span>•</span>
+                  <span>${salesText}</span>
+                </div>
+              </div>
+
+              <div class="mt-3 pt-2 border-t border-gray-50">
+                <a 
+                  href="${safeUrl}" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  class="w-full bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-semibold text-xs py-2 rounded-lg flex items-center justify-center gap-1 shadow-sm active:scale-95 transition-all text-center no-underline"
+                >
+                  <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
+                  สั่งซื้อที่ Shopee
+                </a>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      if (filtered.length > displayLimit) {
+        loadMoreArea.classList.remove('hidden');
+        remainingCountEl.innerText = `+${filtered.length - displayLimit}`;
+      } else {
+        loadMoreArea.classList.add('hidden');
+      }
+    }
+
+    function loadMoreProducts() {
+      displayLimit += 24;
+      renderProducts();
+    }
+
+    // 4. Instant Client-Side Search (0ms latency!)
+    function handleSearchDebounced(e) {
+      clearTimeout(searchDebounceTimer);
+      const val = e.target.value.trim();
+      searchDebounceTimer = setTimeout(() => {
+        currentSearch = val;
+        displayLimit = 24;
+        const clearBtn = document.getElementById('clearBtn');
+        if (currentSearch) {
+          clearBtn.classList.remove('hidden');
+        } else {
+          clearBtn.classList.add('hidden');
+        }
+        renderProducts();
+      }, 150);
+    }
+
+    function clearSearch() {
+      document.getElementById('searchInput').value = '';
+      currentSearch = '';
+      document.getElementById('clearBtn').classList.add('hidden');
+      displayLimit = 24;
+      renderProducts();
+    }
+
+    // 5. Lucky Spin Wheel Logic
     const WHEEL_PRIZES = [
       { text: "โค้ดลด 15%", code: "MALL15OCT", color: "#ee4d2d" },
       { text: "ส่งฟรี 0฿", code: "FREESHIPPKH", color: "#f97316" },
@@ -415,7 +658,7 @@
       const finalAngle = spinRounds * 2 * Math.PI + (targetIndex * segAngle);
 
       let startTime = null;
-      const duration = 3500;
+      const duration = 3000;
 
       function animate(time) {
         if (!startTime) startTime = time;
@@ -431,7 +674,7 @@
           const wonPrize = WHEEL_PRIZES[targetIndex];
           showReward(wonPrize);
           if (typeof confetti === 'function') {
-            confetti({ particleCount: 80, spread: 70, origin: { y: 0.6 } });
+            confetti({ particleCount: 70, spread: 60, origin: { y: 0.6 } });
           }
         }
       }
@@ -446,251 +689,15 @@
 
     function copyRewardCode() {
       const code = document.getElementById('rewardCode').innerText;
-      navigator.clipboard.writeText(code);
-      alert(`คัดลอกโค้ด ${code} เรียบร้อยแล้ว! กำลังพาไปช้อปที่ Shopee ค่ะ 💖`);
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(code).catch(() => {});
+      }
+      alert(`คัดลอกโค้ด ${code} เรียบร้อยแล้วค่ะ! กำลังเปิด Shopee... 💖`);
       window.open('https://shopee.co.th?openExternalBrowser=1', '_blank');
-    }
-
-    // 5. Initialize Categories
-    function renderCategoryTabs() {
-      const container = document.getElementById('categoryTabs');
-      container.innerHTML = CATEGORIES.map(c => `
-        <button 
-          onclick="filterCategory('${c.id}')"
-          class="px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap transition-colors ${
-            currentCategory === c.id 
-              ? 'bg-white text-orange-600 font-bold shadow-sm' 
-              : 'text-orange-100 hover:bg-white/20'
-          }"
-        >
-          ${c.label}
-        </button>
-      `).join('');
-    }
-
-    function filterCategory(catId) {
-      currentCategory = catId;
-      displayLimit = 24;
-      renderCategoryTabs();
-      renderProducts();
-    }
-
-    // 6. Direct Supabase Ingestion (Fast & Robust)
-    async function fetchProducts() {
-      try {
-        const url = `${SUPABASE_URL}/rest/v1/products?select=id,name,category,sales_count,rating,image_url,affiliate_url&link_status=eq.ok&order=sales_count.desc&limit=150`;
-        const res = await fetch(url, {
-          headers: {
-            "apikey": SUPABASE_KEY,
-            "Authorization": `Bearer ${SUPABASE_KEY}`
-          }
-        });
-        if (res.ok) {
-          allProducts = await res.json();
-          renderProducts();
-        }
-      } catch (err) {
-        console.error('Fetch products error:', err);
-      }
-    }
-
-    function setSortMode(mode) {
-      sortMode = mode;
-      const salesBtn = document.getElementById('sortSalesBtn');
-      const ratingBtn = document.getElementById('sortRatingBtn');
-      if (mode === 'sales') {
-        salesBtn.className = "px-2.5 py-1 rounded-md bg-orange-50 border border-orange-300 text-orange-600 font-bold";
-        ratingBtn.className = "px-2.5 py-1 rounded-md bg-white border border-gray-200 text-gray-700 font-medium";
-      } else {
-        salesBtn.className = "px-2.5 py-1 rounded-md bg-white border border-gray-200 text-gray-700 font-medium";
-        ratingBtn.className = "px-2.5 py-1 rounded-md bg-orange-50 border border-orange-300 text-orange-600 font-bold";
-      }
-      renderProducts();
-    }
-
-    function getFilteredProducts() {
-      const seenNames = new Set();
-      return allProducts.filter(p => {
-        const cleanName = (p.name || '').trim().toLowerCase();
-        if (!cleanName || seenNames.has(cleanName)) return false;
-        seenNames.add(cleanName);
-
-        const cat = (p.category || '').toLowerCase();
-        let matchCategory = currentCategory === 'all';
-        if (!matchCategory) {
-          if (currentCategory === 'ของใช้ในบ้าน') {
-            matchCategory = cat.includes('ของใช้') || cat.includes('บ้าน') || /ที่นอน|หมอน|โซฟา|ปลั๊ก|สวิตช์|ถุงสูญญากาศ|โคมไฟ|กริ่ง/i.test(cleanName);
-          } else if (currentCategory === 'เครื่องใช้ไฟฟ้า') {
-            matchCategory = cat.includes('ไฟฟ้า') || /ทีวี|tv|แอร์|ตู้เย็น|พัดลม|เครื่องฟอก|เครื่องดูดฝุ่น|เตารีด|เครื่องทำน้ำอุ่น/i.test(cleanName);
-          } else if (currentCategory === 'สัตว์เลี้ยง') {
-            matchCategory = cat.includes('สัตว์') || /แมว|สุนัข|หมา/i.test(cleanName);
-          } else if (currentCategory === 'เครื่องครัว') {
-            matchCategory = cat.includes('ครัว') || /หม้อ|เตา|กระทะ|ปั่น|กาแฟ|แก้ว|กระติก/i.test(cleanName);
-          } else if (currentCategory === 'ไอที') {
-            matchCategory = cat.includes('ไอที') || /หูฟัง|wifi|zigbee|บลูทูธ|กล้อง|คีย์บอร์ด|ถ่าน|rf/i.test(cleanName);
-          } else if (currentCategory === 'สุขภาพ') {
-            matchCategory = cat.includes('สุขภาพ') || /นวด|ที่นอน/i.test(cleanName);
-          } else if (currentCategory === 'ความงาม') {
-            matchCategory = cat.includes('ความงาม') || /ครีม|เซรั่ม|มาส์ก|ย้อมผม/i.test(cleanName);
-          } else if (currentCategory === 'ยานยนต์') {
-            matchCategory = cat.includes('ยานยนต์') || /รถ|ฉีดน้ำ|จักรยาน/i.test(cleanName);
-          } else {
-            matchCategory = cat.includes(currentCategory);
-          }
-        }
-
-        const matchSearch = !currentSearch || cleanName.includes(currentSearch.toLowerCase()) || cat.includes(currentSearch.toLowerCase());
-        return matchCategory && matchSearch;
-      }).sort((a, b) => {
-        if (sortMode === 'sales') {
-          return (b.sales_count || 0) - (a.sales_count || 0);
-        } else {
-          return (Number(b.rating) || 4.9) - (Number(a.rating) || 4.9);
-        }
-      });
-    }
-
-    function getProductImage(p) {
-      if (p.image_url && p.image_url.trim().length > 10) {
-        return p.image_url.trim();
-      }
-      return 'https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=500&auto=format&fit=crop';
-    }
-
-    // 7. Paginated Rendering (Smooth 60 FPS)
-    function renderProducts() {
-      const filtered = getFilteredProducts();
-      const grid = document.getElementById('productGrid');
-      const countEl = document.getElementById('productCount');
-      const emptyEl = document.getElementById('emptyState');
-      const loadMoreArea = document.getElementById('loadMoreArea');
-      const remainingCountEl = document.getElementById('remainingCount');
-
-      countEl.innerText = `${filtered.length} รายการ`;
-
-      if (filtered.length === 0) {
-        grid.innerHTML = '';
-        emptyEl.classList.remove('hidden');
-        loadMoreArea.classList.add('hidden');
-        return;
-      }
-
-      emptyEl.classList.add('hidden');
-      const visibleProducts = filtered.slice(0, displayLimit);
-
-      grid.innerHTML = visibleProducts.map(p => {
-        const img = getProductImage(p);
-        const salesText = p.sales_count >= 1000 
-          ? `ขายแล้ว ${(p.sales_count / 1000).toFixed(1)}k ชิ้น` 
-          : `ขายแล้ว ${p.sales_count || 0} ชิ้น`;
-        
-        return `
-          <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between border border-gray-100">
-            <div class="relative w-full pt-[100%] bg-gray-50 overflow-hidden">
-              <img 
-                src="${img}" 
-                alt="${p.name}" 
-                loading="lazy"
-                referrerpolicy="no-referrer"
-                class="absolute inset-0 w-full h-full object-cover transition-transform duration-300 hover:scale-105"
-                onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=500&auto=format&fit=crop'"
-              >
-              <div class="absolute top-2 left-2 bg-red-600 text-white text-[9px] font-bold px-1.5 py-0.5 rounded shadow">
-                ของแท้ 100%
-              </div>
-              <div class="absolute bottom-1 right-1 bg-green-600/90 text-white text-[8px] font-semibold px-1 rounded backdrop-blur-sm">
-                ✓ โปรแท้
-              </div>
-            </div>
-
-            <div class="p-3 flex-1 flex flex-col justify-between">
-              <div>
-                <h3 class="text-xs font-semibold text-gray-800 line-clamp-2 leading-relaxed" title="${p.name}">
-                  ${p.name}
-                </h3>
-                <div class="flex items-center gap-1.5 mt-2 text-[10px] text-gray-500">
-                  <span class="flex items-center text-amber-500 font-bold">
-                    ★ ${p.rating ? Number(p.rating).toFixed(1) : '4.9'}
-                  </span>
-                  <span>•</span>
-                  <span>${salesText}</span>
-                </div>
-              </div>
-
-              <div class="mt-3 pt-2 border-t border-gray-50">
-                <button 
-                  onclick="openShopeeItem('${p.affiliate_url || 'https://shopee.co.th'}')"
-                  class="w-full bg-gradient-to-r from-orange-500 to-red-500 text-white font-semibold text-xs py-2 rounded-lg flex items-center justify-center gap-1 shadow-sm active:scale-95 transition-transform"
-                >
-                  <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
-                  สั่งซื้อที่ Shopee
-                </button>
-              </div>
-            </div>
-          </div>
-        `;
-      }).join('');
-
-      if (filtered.length > displayLimit) {
-        loadMoreArea.classList.remove('hidden');
-        remainingCountEl.innerText = filtered.length - displayLimit;
-      } else {
-        loadMoreArea.classList.add('hidden');
-      }
-    }
-
-    function loadMoreProducts() {
-      displayLimit += 24;
-      renderProducts();
-    }
-
-    // 8. Debounced Search (Instant & Smooth)
-    function handleSearchDebounced(e) {
-      clearTimeout(searchDebounceTimer);
-      const val = e.target.value.trim();
-      searchDebounceTimer = setTimeout(async () => {
-        currentSearch = val;
-        displayLimit = 24;
-        const clearBtn = document.getElementById('clearBtn');
-        if (currentSearch) {
-          clearBtn.classList.remove('hidden');
-          // If searching, also query Supabase for deeper matches across full catalog
-          try {
-            const encoded = encodeURIComponent(`*${currentSearch}*`);
-            const searchUrl = `${SUPABASE_URL}/rest/v1/products?select=id,name,category,sales_count,rating,image_url,affiliate_url&or=(name.ilike.${encoded},category.ilike.${encoded})&link_status=eq.ok&limit=60`;
-            const sRes = await fetch(searchUrl, {
-              headers: { "apikey": SUPABASE_KEY, "Authorization": `Bearer ${SUPABASE_KEY}` }
-            });
-            if (sRes.ok) {
-              const searchResults = await sRes.json();
-              if (searchResults.length > 0) {
-                // Merge without duplicates
-                const ids = new Set(allProducts.map(p => p.id));
-                searchResults.forEach(sp => {
-                  if (!ids.has(sp.id)) allProducts.push(sp);
-                });
-              }
-            }
-          } catch (_) {}
-        } else {
-          clearBtn.classList.add('hidden');
-        }
-        renderProducts();
-      }, 300);
-    }
-
-    function clearSearch() {
-      document.getElementById('searchInput').value = '';
-      currentSearch = '';
-      document.getElementById('clearBtn').classList.add('hidden');
-      displayLimit = 24;
-      renderProducts();
     }
 
     // Initialize Page
     document.addEventListener('DOMContentLoaded', () => {
-      startCountdown();
-      renderVouchers();
       renderCategoryTabs();
       fetchProducts();
     });
