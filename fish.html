@@ -760,8 +760,12 @@
       document.getElementById('pay-transfer').classList.toggle('active', method === 'TRANSFER');
     }
 
+        let isSubmitting = false;
+
     async function submitOrder(e) {
       e.preventDefault();
+      if (isSubmitting) return;
+      isSubmitting = true;
       
       const name = document.getElementById('custName').value.trim();
       const phone = document.getElementById('custPhone').value.trim();
@@ -771,6 +775,7 @@
 
       if (!name || !phone || !address) {
         alert('กรุณากรอกข้อมูล ชื่อ, เบอร์โทร และที่อยู่จัดส่งให้ครบถ้วนนะคะ 💕');
+        isSubmitting = false;
         return;
       }
 
@@ -786,6 +791,7 @@
       const payload = {
         action: 'order_fish',
         order_id: orderId,
+        skip_db: true,
         name: name,
         phone: phone,
         address: address,
@@ -796,61 +802,66 @@
         note: note
       };
 
-      // 1. Supabase Direct Insert (Full CORS * Enabled)
-      const supaUrl = 'https://usqhvujqmnxqrdoovvnp.supabase.co/rest/v1/direct_orders';
-      const supaKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVzcWh2dWpxbW54cXJkb292dm5wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQyOTc4NjAsImV4cCI6MjA2OTg3Mzg2MH0.3kCGGAe1OoSJ_SCN_NDSdnKep1hXIMgMxR1lBd_i2eI';
-      
-      const supaPromise = fetch(supaUrl, {
-        method: 'POST',
-        headers: {
-          'apikey': supaKey,
-          'Authorization': 'Bearer ' + supaKey,
-          'Content-Type': 'application/json',
-          'Prefer': 'return=minimal'
-        },
-        body: JSON.stringify({
-          order_code: orderId,
-          product_name: p.name,
-          package_code: p.sku,
-          package_name: p.name,
-          price: p.price,
-          customer_name: name,
-          phone: phone,
-          address: address,
-          payment_method: currentPayment,
-          status: 'PENDING',
-          note: note || null,
-          created_at: now.toISOString()
-        })
-      }).catch(err => console.log('Supa error:', err));
+      try {
+        // 1. Supabase Direct Insert (Single Ground Truth Insert)
+        const supaUrl = 'https://usqhvujqmnxqrdoovvnp.supabase.co/rest/v1/direct_orders';
+        const supaKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVzcWh2dWpxbW54cXJkb292dm5wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQyOTc4NjAsImV4cCI6MjA2OTg3Mzg2MH0.3kCGGAe1OoSJ_SCN_NDSdnKep1hXIMgMxR1lBd_i2eI';
+        
+        const supaPromise = fetch(supaUrl, {
+          method: 'POST',
+          headers: {
+            'apikey': supaKey,
+            'Authorization': 'Bearer ' + supaKey,
+            'Content-Type': 'application/json',
+            'Prefer': 'return=minimal'
+          },
+          body: JSON.stringify({
+            order_code: orderId,
+            product_name: p.name,
+            package_code: p.sku,
+            package_name: p.name,
+            price: p.price,
+            customer_name: name,
+            phone: phone,
+            address: address,
+            payment_method: currentPayment,
+            status: 'PENDING',
+            note: note || null,
+            created_at: now.toISOString()
+          })
+        }).catch(err => console.log('Supa error:', err));
 
-      // 2. Google Apps Script Webhook (Telegram Push Alert)
-      const gasUrl = 'https://script.google.com/macros/s/AKfycbwYZZYui21pdZiC7HF8yte_ILMwoUEmZOoZaixJPsE69WH80qVN2Durai-zNyAeoaP5vg/exec';
-      const gasPromise = fetch(gasUrl, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify(payload)
-      }).catch(err => console.log('GAS error:', err));
+        // 2. Google Apps Script Webhook (Telegram Push Alert only)
+        const gasUrl = 'https://script.google.com/macros/s/AKfycbwYZZYui21pdZiC7HF8yte_ILMwoUEmZOoZaixJPsE69WH80qVN2Durai-zNyAeoaP5vg/exec';
+        const gasPromise = fetch(gasUrl, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(payload)
+        }).catch(err => console.log('GAS error:', err));
 
-      // Wait max 800ms
-      await Promise.race([
-        Promise.all([supaPromise, gasPromise]),
-        new Promise(resolve => setTimeout(resolve, 800))
-      ]);
+        // Wait max 800ms
+        await Promise.race([
+          Promise.all([supaPromise, gasPromise]),
+          new Promise(resolve => setTimeout(resolve, 800))
+        ]);
 
-      // 3. Show Success Modal
-      document.getElementById('modalOrderId').innerText = orderId;
-      document.getElementById('modalSummary').innerHTML = `
-        <div><b>สินค้า:</b> ${p.name}</div>
-        <div><b>ยอดชำระ:</b> ${p.price.toLocaleString()} บาท (${currentPayment === 'COD' ? '🚚 เก็บเงินปลายทาง' : '💳 โอนเงิน'})</div>
-        <div><b>ผู้รับ:</b> คุณ${name} (${phone})</div>
-      `;
-      document.getElementById('successModal').style.display = 'flex';
-      document.getElementById('orderForm').reset();
-
-      btn.disabled = false;
-      btn.innerHTML = `<span>ยืนยันการสั่งซื้อ (${p.price.toLocaleString()} บาท)</span> <span>👉</span>`;
+        // 3. Show Success Modal
+        document.getElementById('modalOrderId').innerText = orderId;
+        document.getElementById('modalSummary').innerHTML = `
+          <div><b>สินค้า:</b> ${p.name}</div>
+          <div><b>ยอดชำระ:</b> ${p.price.toLocaleString()} บาท (${currentPayment === 'COD' ? '🚚 เก็บเงินปลายทาง' : '💳 โอนเงิน'})</div>
+          <div><b>ผู้รับ:</b> คุณ${name} (${phone})</div>
+        `;
+        document.getElementById('successModal').style.display = 'flex';
+        document.getElementById('orderForm').reset();
+      } catch (err) {
+        console.error('Submit order error:', err);
+      } finally {
+        isSubmitting = false;
+        btn.disabled = false;
+        btn.innerHTML = `<span>ยืนยันการสั่งซื้อ (${p.price.toLocaleString()} บาท)</span> <span>👉</span>`;
+      }
     }
 
     function closeModal() {
