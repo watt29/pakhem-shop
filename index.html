@@ -352,8 +352,8 @@
     // 2. Multi-Phase Supabase Ingestion (Instant 0.2s First Contentful Paint + Full Hydration)
     async function fetchProducts() {
       try {
-        // Phase 1: Load Top 200 items immediately for instant UI
-        const urlFast = `${SUPABASE_URL}/rest/v1/products?select=id,name,category,sales_count,rating,image_url,affiliate_url&link_status=eq.ok&order=sales_count.desc&limit=200`;
+        // Phase 1: Load Top items with verified authentic images immediately for instant visual UI
+        const urlFast = `${SUPABASE_URL}/rest/v1/products?select=id,name,category,sales_count,rating,image_url,affiliate_url&link_status=eq.ok&image_url=not.is.null&order=sales_count.desc&limit=300`;
         const resFast = await fetch(urlFast, {
           headers: { "apikey": SUPABASE_KEY, "Authorization": `Bearer ${SUPABASE_KEY}` }
         });
@@ -362,7 +362,7 @@
           renderProducts();
         }
 
-        // Phase 2: Background Hydrate full 1,903+ items silently
+        // Phase 2: Background Hydrate full catalog silently
         setTimeout(async () => {
           try {
             const urlFull1 = `${SUPABASE_URL}/rest/v1/products?select=id,name,category,sales_count,rating,image_url,affiliate_url&link_status=eq.ok&order=sales_count.desc&limit=1000`;
@@ -454,6 +454,9 @@
           return cat.includes(currentCategory);
         }
       }).sort((a, b) => {
+        const aHasImg = (a.image_url && a.image_url.trim().length > 10) ? 1 : 0;
+        const bHasImg = (b.image_url && b.image_url.trim().length > 10) ? 1 : 0;
+        if (aHasImg !== bHasImg) return bHasImg - aHasImg; // Items with real images always first!
         if (sortMode === 'sales') {
           return (b.sales_count || 0) - (a.sales_count || 0);
         } else {
@@ -462,11 +465,13 @@
       });
     }
 
+    const PLACEHOLDER_IMG = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 400 400'><rect width='100%' height='100%' fill='%23FFF5F2'/><circle cx='200' cy='175' r='55' fill='%23FFE3DC'/><path d='M185 165c0-8.28 6.72-15 15-15s15 6.72 15 15v10h-30v-10zm-10 10v35c0 5.52 4.48 10 10 10h30c5.52 0 10-4.48 10-10v-35h-50z' fill='%23EE4D2D'/><text x='50%' y='275' font-family='Prompt, sans-serif' font-size='15' font-weight='bold' fill='%23EE4D2D' text-anchor='middle'>Shopee ของแท้ 100%</text><text x='50%' y='300' font-family='Prompt, sans-serif' font-size='12' fill='%23888888' text-anchor='middle'>ดูรูปภาพเพิ่มเติมในแอป Shopee</text></svg>";
+
     function getProductImage(p) {
       if (p.image_url && p.image_url.trim().length > 10) {
         return p.image_url.trim();
       }
-      return 'https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=500&auto=format&fit=crop';
+      return PLACEHOLDER_IMG;
     }
 
     // 3. Paginated Rendering (Smooth 60 FPS)
@@ -517,7 +522,7 @@
                 decoding="async"
                 referrerpolicy="no-referrer"
                 class="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=500&auto=format&fit=crop'"
+                onerror="this.onerror=null; this.src=PLACEHOLDER_IMG;"
               >
               <div class="absolute top-2 left-2 bg-red-600 text-white text-[9px] font-bold px-1.5 py-0.5 rounded shadow">
                 ของแท้ 100%
