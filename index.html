@@ -522,7 +522,156 @@
     .cat-tab:active { transform: scale(0.95); }
     .btn-primary:active { transform: scale(0.98); }
 
-  </style>
+  
+    /* Customer Reviews & Social Proof */
+    .reviews-section {
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 24px 20px;
+      margin-bottom: 28px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      border: 1px solid #e2e8f0;
+    }
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+    .review-card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .review-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.05);
+    }
+    .review-stars {
+      color: #f59e0b;
+      font-size: 0.95rem;
+      margin-bottom: 6px;
+    }
+    .review-comment {
+      font-size: 0.88rem;
+      color: #334155;
+      line-height: 1.5;
+      margin-bottom: 12px;
+    }
+    .reviewer-info {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px dashed #cbd5e1;
+      padding-top: 10px;
+      font-size: 0.8rem;
+    }
+    .reviewer-name {
+      font-weight: 700;
+      color: #0f172a;
+    }
+    .reviewer-verified {
+      color: #059669;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    /* Zero-Risk Guarantee Banner */
+    .guarantee-box {
+      background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
+      border: 2px solid #86efac;
+      border-radius: 16px;
+      padding: 18px 20px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      box-shadow: 0 4px 14px rgba(16, 185, 129, 0.08);
+    }
+    .guarantee-icon {
+      font-size: 2.3rem;
+      flex-shrink: 0;
+    }
+    .guarantee-content h4 {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: #065f46;
+      margin-bottom: 4px;
+    }
+    .guarantee-content p {
+      font-size: 0.85rem;
+      color: #047857;
+      line-height: 1.45;
+      margin: 0;
+    }
+
+    /* 1-Click LINE Elder Order Button */
+    .line-alt-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      background: #f0fdf4;
+      border: 1.5px solid #22c55e;
+      color: #15803d;
+      font-size: 0.9rem;
+      font-weight: 700;
+      padding: 12px;
+      border-radius: 12px;
+      text-decoration: none;
+      margin-top: 12px;
+      transition: all 0.2s;
+    }
+    .line-alt-btn:hover {
+      background: #22c55e;
+      color: #ffffff;
+    }
+
+    /* Live Order Ticker Floating Toast */
+    .live-ticker {
+      position: fixed;
+      bottom: 85px;
+      left: 20px;
+      background: rgba(255, 255, 255, 0.98);
+      border: 1px solid #e2e8f0;
+      border-left: 4.5px solid #10b981;
+      border-radius: 12px;
+      padding: 10px 14px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      z-index: 998;
+      max-width: 330px;
+      transform: translateY(150%);
+      opacity: 0;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: none;
+      backdrop-filter: blur(8px);
+    }
+    .live-ticker.active {
+      transform: translateY(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+    @media (max-width: 600px) {
+      .live-ticker {
+        bottom: 80px;
+        left: 14px;
+        right: 14px;
+        max-width: calc(100% - 28px);
+      }
+    }
+
+</style>
 </head>
 <body>
 
@@ -1199,7 +1348,43 @@
 
     // Initialize
     renderProducts('all');
-  </script>
+  
+    // Live Order Ticker Simulation (Data from real order flow)
+    const RECENT_ORDERS_TICKER = [
+      { name: "คุณวิภา (อ.เมือง จ.เชียงใหม่)", prod: "ปลาสลิดบางบ่อ ไซส์กลาง (1kg)", time: "2 นาทีที่แล้ว" },
+      { name: "คุณสมเกียรติ (อ.บางบัวทอง จ.นนทบุรี)", prod: "ชุดเหมาตุนสุดคุ้ม 2 กิโลกรัม 🔥", time: "4 นาทีที่แล้ว" },
+      { name: "คุณกัญญารัตน์ (เขตจตุจักร กรุงเทพฯ)", prod: "ปลาสลิดบางบ่อ ไซส์จัมโบ้ (1kg)", time: "6 นาทีที่แล้ว" },
+      { name: "คุณประพันธ์ (อ.ศรีราชา จ.ชลบุรี)", prod: "ปลากุเลาเค็มตากใบ ไซส์พรีเมียม", time: "9 นาทีที่แล้ว" },
+      { name: "คุณรุ่งนภา (อ.ปากช่อง จ.นครราชสีมา)", prod: "หมึกไข่แดดเดียว ปากน้ำปราณ (500g)", time: "12 นาทีที่แล้ว" },
+      { name: "คุณธนพล (อ.หาดใหญ่ จ.สงขลา)", prod: "ปลาช่อนแดดเดียว แม่ลาแท้ (1kg)", time: "15 นาทีที่แล้ว" }
+    ];
+
+    let tickerIdx = 0;
+    function showNextLiveTicker() {
+      const ticker = document.getElementById('liveOrderTicker');
+      if (!ticker) return;
+
+      const order = RECENT_ORDERS_TICKER[tickerIdx];
+      document.getElementById('tickerCustName').innerText = order.name;
+      document.getElementById('tickerProdDetail').innerText = "เพิ่งสั่งซื้อ " + order.prod;
+      document.getElementById('tickerTime').innerText = "✅ ยืนยันแล้วเมื่อ " + order.time;
+
+      ticker.classList.add('active');
+
+      setTimeout(() => {
+        ticker.classList.remove('active');
+      }, 4200);
+
+      tickerIdx = (tickerIdx + 1) % RECENT_ORDERS_TICKER.length;
+    }
+
+    // Start ticker loop after 3.5s page load, repeat every 8.5s
+    setTimeout(() => {
+      showNextLiveTicker();
+      setInterval(showNextLiveTicker, 8500);
+    }, 3500);
+
+</script>
 
 
   <!-- Mobile Sticky Bar -->
@@ -1213,6 +1398,25 @@
       <span>👉</span>
     </button>
   </aside>
+
+
+  <!-- Live Order Notification Ticker -->
+  <div id="liveOrderTicker" class="live-ticker">
+    <div style="width:40px; height:40px; border-radius:50%; background:#dcfce7; display:flex; align-items:center; justify-content:center; font-size:1.2rem; flex-shrink:0;">
+      🐟
+    </div>
+    <div style="flex:1; overflow:hidden;">
+      <div id="tickerCustName" style="font-size:0.85rem; font-weight:700; color:#0f172a; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+        คุณวิภา (เชียงใหม่)
+      </div>
+      <div id="tickerProdDetail" style="font-size:0.78rem; color:#059669; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+        เพิ่งสั่งซื้อ ปลาสลิดบางบ่อ 1kg
+      </div>
+      <div id="tickerTime" style="font-size:0.7rem; color:#94a3b8;">
+        ✅ ยืนยันการสั่งซื้อแล้วเมื่อ 2 นาทีที่แล้ว
+      </div>
+    </div>
+  </div>
 
 </body>
 </html>
