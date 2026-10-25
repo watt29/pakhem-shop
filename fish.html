@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ปลาสลิดแดดเดียว ไซส์จัมโบ้ 6 ตัวโล ป้าเข็ม คัดพิเศษ | สด สะอาด ซีลสูญญากาศ</title>
+  <title>ปลาสลิดบางบ่อแท้ ไซส์จัมโบ้ 6 ตัวโล | รสมือแม่ ปลอบประโลมชีวิตที่เหนื่อยล้า</title>
   <meta name="description" content="ปลาสลิดแดดเดียวบางบ่อแท้ ไซส์จัมโบ้ 6 ตัว/กิโลกรัม ป้าเข็ม คัดพิเศษ เนื้อแน่นหนา เค็มกำลังดี ปลอดสารเคมี ซีลสูญญากาศ PA/PE มาตรฐานญี่ปุ่น ส่งตรงถึงบ้าน เก็บเงินปลายทางได้">
   <!-- Rich OpenGraph & Social Sharing Meta Tags -->
   <meta property="og:type" content="website">
@@ -82,6 +82,61 @@
       ]
     }
   }
+
+    function selectEmotion(type) {
+      document.querySelectorAll('.emotion-btn').forEach(btn => btn.classList.remove('active'));
+      const resBox = document.getElementById('emotionResultBox');
+      if (type === 'tired') {
+        event.currentTarget.classList.add('active');
+        resBox.innerHTML = `
+          <div style="display:flex; align-items:flex-start; gap:12px;">
+            <span style="font-size:1.8rem;">🍲</span>
+            <div>
+              <strong style="font-size:1rem; color:#b45309; display:block; margin-bottom:4px;">เมนูฮีลใจ: "ปลาสลิดทอดกรอบคู่น้ำปลาพริกมะนาวสด"</strong>
+              <span>หลังจากเหนื่อยกับงานมาทั้งวัน แค่ทอดปลาสลิด 1 ตัวให้หนังกรอบเนื้อนุ่มฟู หั่นพริกขี้หนูบีบมะนาว ราดข้าวสวยร้อนๆ ความหอมจะช่วยชาร์จพลังใจให้คุณทันทีค่ะ</span>
+              <div style="margin-top:10px;">
+                <a href="#order-section" onclick="selectProduct('SKU-SLID-MD-500G')" style="display:inline-block; text-decoration:none; background:#ea580c; color:#fff; border:none; padding:8px 16px; border-radius:99px; font-size:0.85rem; font-weight:700; cursor:pointer;">
+                  👉 เลือกชุด 500g (3 ตัวใหญ่ 250.-)
+                </a>
+              </div>
+            </div>
+          </div>
+        `;
+      } else if (type === 'home') {
+        event.currentTarget.classList.add('active');
+        resBox.innerHTML = `
+          <div style="display:flex; align-items:flex-start; gap:12px;">
+            <span style="font-size:1.8rem;">🏡</span>
+            <div>
+              <strong style="font-size:1rem; color:#b45309; display:block; margin-bottom:4px;">เมนูอบอุ่น: "ต้มยำปลาสลิดใบมะขามอ่อน & ข้าวต้มกุ๊ยร้อนๆ"</strong>
+              <span>รสชาติวัยเด็กที่คุ้นเคย กลิ่นหอมของน้ำซุปร้อนๆ ซดคล่องคอกับเนื้อปลาสลิดมันแทรก รสมือแม่ที่คิดถึง ทานพร้อมหน้าอิ่มฟินทั้งบ้าน</span>
+              <div style="margin-top:10px;">
+                <a href="#order-section" onclick="selectProduct('SKU-SLID-MD-1KG')" style="display:inline-block; text-decoration:none; background:#ea580c; color:#fff; border:none; padding:8px 16px; border-radius:99px; font-size:0.85rem; font-weight:700; cursor:pointer;">
+                  👉 เลือกชุดยอดฮิต 1 กก. (6 ตัวใหญ่ 490.- ส่งฟรี)
+                </a>
+              </div>
+            </div>
+          </div>
+        `;
+      } else if (type === 'love') {
+        event.currentTarget.classList.add('active');
+        resBox.innerHTML = `
+          <div style="display:flex; align-items:flex-start; gap:12px;">
+            <span style="font-size:1.8rem;">🎁</span>
+            <div>
+              <strong style="font-size:1rem; color:#b45309; display:block; margin-bottom:4px;">ของฝากแทนใจ: "ของดีบางบ่อแท้ ส่งตรงถึงคนที่คุณรัก"</strong>
+              <span>ส่งมอบความห่วงใยให้พ่อแม่หรือผู้ใหญ่ ปลอดสารฟอร์มาลีน 100% โซเดียมต่ำดีต่อสุขภาพ จัดส่งด้วยรถห้องเย็น Inter Express ถึงหน้าบ้านท่านอย่างสดใหม่</span>
+              <div style="margin-top:10px;">
+                <a href="#order-section" onclick="selectProduct('SKU-SLID-MD-2KG')" style="display:inline-block; text-decoration:none; background:#ea580c; color:#fff; border:none; padding:8px 16px; border-radius:99px; font-size:0.85rem; font-weight:700; cursor:pointer;">
+                  👉 เลือกชุดตุนสุดคุ้ม 2 กก. (12 ตัวใหญ่ 920.- ส่งฟรีรถเย็น)
+                </a>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+    }
+
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -711,16 +766,58 @@
 
   <main class="container">
     
-    <!-- Hero Banner -->
+        <!-- Hero Banner -->
     <div class="hero-banner">
-      <span class="hero-badge">🌟 ปลาสลิดบางบ่อแท้ ไซส์จัมโบ้ 6 ตัว/กก. คัดพิเศษ 100%</span>
-      <h1 class="hero-title">ปลาสลิดแดดเดียว ไซส์ใหญ่ 6 ตัวโล<br>เนื้อแน่น หนาเป็นลอน เค็มกำลังดี</h1>
+      <span class="hero-badge">🌿 Aroma of Comfort — ปลาสลิดบางบ่อแท้ ไซส์จัมโบ้ 6 ตัว/กก.</span>
+      <h1 class="hero-title">ปลอบประโลมชีวิตที่เหนื่อยล้า...<br>ด้วยปลาสลิดรสมือแม่ในวันที่โลกใจร้าย</h1>
       <p class="hero-desc">
-        คัดเฉพาะปลาสลิดบางบ่อไซส์ใหญ่พิเศษ 6 ตัว/กิโลกรัม ตัดหัวควักไส้สะอาด ตากในมุ้งโซล่าร์โดมไร้ฝุ่นแมลงวัน ซีลสูญญากาศถุงหนา PA/PE มาตรฐานญี่ปุ่น ส่งตรงถึงหน้าบ้านทั่วไทย
+        ปลาสลิดบางบ่อแท้คัดไซส์ใหญ่พิเศษ 6 ตัวโล ตัดหัวควักไส้สะอาด หมักเกลือธรรมชาติสูตรโบราณเพียง 3% เค็มพอดีไม่ไตพัง ตากในโดมพลังงานแสงอาทิตย์ สะอาดไร้ฝุ่นแมลงวัน 100% ซีลสูญญากาศมาตรฐานญี่ปุ่น ล็อคความสดส่งตรงถึงบ้านคุณ
       </p>
     </div>
 
-    <!-- 4 Trust USPs -->
+
+    <!-- NUANOSE Style Emotion Selector -->
+    <section class="emotion-picker-card">
+      <div class="emotion-header">
+        <span class="emotion-pill">🌿 ให้รสชาติบำบัดใจ</span>
+        <h3>วันนี้คุณรู้สึกอย่างไร? ให้ปลาสลิดช่วยดูแลนะ</h3>
+        <p>เลือกอารมณ์ของคุณ แล้วดูเมนูที่เหมาะกับคุณที่สุดวันนี้</p>
+      </div>
+      <div class="emotion-grid">
+        <button type="button" class="emotion-btn" onclick="selectEmotion('tired')">
+          <span class="emoji">😫</span>
+          <strong>หมดแรงจากงาน / สิ้นเดือน</strong>
+          <small>ชุด 500g ทอดคลายเครียด</small>
+        </button>
+        <button type="button" class="emotion-btn active" onclick="selectEmotion('home')">
+          <span class="emoji">🏡</span>
+          <strong>คิดถึงกับข้าวแม่ / อิ่มทั้งบ้าน</strong>
+          <small>ชุด 1kg ส่งฟรีทั่วไทย</small>
+        </button>
+        <button type="button" class="emotion-btn" onclick="selectEmotion('love')">
+          <span class="emoji">🎁</span>
+          <strong>ส่งความห่วงใยให้คนที่รัก</strong>
+          <small>ชุด 2kg ส่งฟรีรถเย็น</small>
+        </button>
+      </div>
+      <div class="emotion-result-box" id="emotionResultBox">
+        <div style="display:flex; align-items:flex-start; gap:12px;">
+          <span style="font-size:1.8rem;">🏡</span>
+          <div>
+            <strong style="font-size:1rem; color:#b45309; display:block; margin-bottom:4px;">เมนูอบอุ่น: "ต้มยำปลาสลิดใบมะขามอ่อน & ข้าวต้มกุ๊ยร้อนๆ"</strong>
+            <span>รสชาติวัยเด็กที่คุ้นเคย กลิ่นหอมของน้ำซุปร้อนๆ ซดคล่องคอกับเนื้อปลาสลิดมันแทรก รสมือแม่ที่คิดถึง ทานพร้อมหน้าอิ่มฟินทั้งบ้าน</span>
+            <div style="margin-top:10px;">
+              <a href="#order-section" onclick="selectProduct('SKU-SLID-MD-1KG')" style="display:inline-block; text-decoration:none; background:#ea580c; color:#fff; border:none; padding:8px 16px; border-radius:99px; font-size:0.85rem; font-weight:700; cursor:pointer;">
+                👉 เลือกชุดยอดฮิต 1 กก. (6 ตัวใหญ่ 490.- ส่งฟรี)
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+<!-- 4 Trust USPs -->
     <div class="usp-grid">
       <div class="usp-card">
         <span class="usp-icon">🌿</span>
@@ -1001,14 +1098,14 @@
 
   <script>
     // 11 Master Products across 7 popular categories
-    const PRODUCTS = [
+        const PRODUCTS = [
       {
         sku: 'SKU-SLID-MD-1KG',
         category: '1kg',
-        name: 'ปลาสลิดแดดเดียว ไซส์จัมโบ้ 6 ตัวโล (ชุดยอดฮิต 1 กก.)',
+        name: 'ชุด "ยอดฮิต อบอุ่นทั้งครอบครัว" (1 กก. / 6 ตัวใหญ่)',
         badge: 'ขายดีอันดับ 1 🔥 (จัดส่งฟรี)',
         badgeClass: 'hot',
-        desc: 'ปลาสลิดบางบ่อแท้ คัดไซส์ใหญ่พิเศษ 6 ตัว/กิโลกรัม ตัวใหญ่เนื้อแน่นหนาเป็นลอน ตัดหัวควักไส้สะอาด ทอดแล้วกรอบนอกนุ่มฟู เค็มน้อย หมักเกลือธรรมชาติ 100%',
+        desc: 'ปลาสลิดบางบ่อแท้ ไซส์จัมโบ้ 6 ตัวโล ตัวใหญ่เนื้อแน่นเป็นลอน มันแทรก กรอบนอกนุ่มใน สูตรโบราณเค็มพอดี 3% รสมือแม่ที่ทุกคนคิดถึง ทานพร้อมหน้าอิ่มฟินทั้งบ้าน',
         pieces: '6 ตัวใหญ่ / กิโลกรัม',
         weight: '1,000 กรัม (1 กก.)',
         price: 490,
@@ -1017,10 +1114,10 @@
       {
         sku: 'SKU-SLID-MD-500G',
         category: '500g',
-        name: 'ปลาสลิดแดดเดียว ไซส์จัมโบ้ (ชุดทดลอง 500 กรัม)',
-        badge: 'แพ็คพอดีมื้อ ✨ (ค่าส่ง 40.-)',
+        name: 'ชุด "รอดตายสิ้นเดือน & คลายเหนื่อยล้า" (500 กรัม / 3 ตัวใหญ่)',
+        badge: '🏙️ ฮีลใจชาวคอนโด (ค่าส่ง 40.-)',
         badgeClass: '',
-        desc: 'ขนาดครึ่งกิโลกรัม (3 ตัวใหญ่) เหมาะสำหรับทานในครัวเรือน ซีลสูญญากาศถุงหนา PA/PE มาตรฐานญี่ปุ่น ล็อคความสด ตุนในช่องฟรีซได้นาน 1–2 ปี',
+        desc: 'ทอด 1 ตัว คู่น้ำปลาพริกมะนาว หรือแกล้มมาม่าต้มยำ ปลอบประโลมวันที่เหนื่อยล้าได้ทันที ทอดง่าย ไร้กวนใจ ซีลสูญญากาศมาตรฐานญี่ปุ่น เก็บฟรีซ 1-2 ปี',
         pieces: '3 ตัวใหญ่ / แพ็ค',
         weight: '500 กรัม',
         price: 250,
@@ -1029,11 +1126,11 @@
       {
         sku: 'SKU-SLID-MD-2KG',
         category: '2kg',
-        name: 'ปลาสลิดแดดเดียว ไซส์จัมโบ้ (ชุดตุนสุดคุ้ม 2 กก.)',
-        badge: 'สุดคุ้มประหยัด 💰 (🔥 ส่งฟรีรถเย็น)',
-        badgeClass: 'royal',
-        desc: 'บรรจุถุงละ 1 กิโลกรัม (ถุงละ 6 ตัวใหญ่) แยก 2 ถุง คุ้มค่าที่สุด ประหยัดค่าส่ง เฉลี่ยเพียงกิโลละ 460.- จัดส่งฟรีรถเย็นควบคุมอุณหภูมิถึงหน้าบ้าน',
-        pieces: '12 ตัวใหญ่ (บรรจุ 1 กก. x 2 ถุง)',
+        name: 'ชุด "ส่งความห่วงใย & ตุนสู้ชีวิต" (2 กก. / 12 ตัวใหญ่)',
+        badge: '❄️ ของฝากผู้ใหญ่ (ส่งฟรีรถเย็น)',
+        badgeClass: '',
+        desc: 'ส่งให้พ่อแม่ต่างจังหวัด หรือตุนติดตู้เย็นไว้ทั้งปี มั่นใจในสุขภาพ ไร้ฟอร์มาลีนและสารกันเสีย 100% จัดส่งด้วยรถควบคุมความเย็น Inter Express ถึงหน้าบ้าน',
+        pieces: '12 ตัวใหญ่ (2 กก.)',
         weight: '2,000 กรัม (2 กก.)',
         price: 920,
         origPrice: 1100
