@@ -2020,6 +2020,12 @@
     // Initialize
     renderProducts('all');
     updateOrderPricingDisplay();
+    try {
+      const initSku = new URLSearchParams(window.location.search).get('sku');
+      if (initSku && PRODUCTS.some(p => p.sku === initSku)) {
+        selectProduct(initSku);
+      }
+    } catch (e) {}
   
     // Real Dynamic Orders Ticker (Supabase Ground-Truth - Zero Hallucination)
     let liveRealOrders = [];
