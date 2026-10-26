@@ -1072,8 +1072,8 @@
           <!-- COD Notice & Delivery Estimate Box -->
           <div id="codNoticeBox" style="display:none; margin-top:10px; background:#fffbeb; border:1.5px solid #fcd34d; border-radius:10px; padding:11px 14px; font-size:0.84rem; color:#92400e; line-height:1.5;">
             <div><b>🚚 เงื่อนไขเก็บเงินปลายทาง (COD +20 บาท):</b></div>
-            <div id="codDeliveryEtaText" style="margin-top:3px;">• กำลังคำนวณวันจัดส่งถึงหน้าบ้าน...</div>
-            <div>• ❄️ เนื่องจากเป็นปลาสลิดแพ็กเจลความเย็นสดใหม่ <b>รบกวนสแตนด์บายรับสายพนักงานขนส่งและเตรียมเงินสดให้พอดี</b> ในวันที่ของไปถึงด้วยนะคะ (เปลี่ยนเป็น <b>"💳 โอนเงิน"</b> เพื่อรับสิทธิ์ส่งฟรี 0 บาท ประหยัดทันที 20.- ค่ะ!)</div>
+            <div id="codDeliveryEtaText" style="margin-top:3px;">• ⏱️ <b>จัดส่งด่วนภายใน 1–2 วันถึงหน้าบ้าน</b> (ตัดรอบส่งทุกวัน 12:00 น.)</div>
+            <div>• ❄️ เนื่องจากเป็นปลาสลิดแพ็กเจลความเย็นสดใหม่ <b>รบกวนสแตนด์บายรับสายพนักงานขนส่งและเตรียมเงินสดให้พอดี</b> เมื่อพัสดุไปถึงด้วยนะคะ (เปลี่ยนเป็น <b>"💳 โอนเงิน"</b> เพื่อรับสิทธิ์ส่งฟรี 0 บาท ประหยัดทันที 20.- ค่ะ!)</div>
           </div>
           <!-- 2KG Transfer-Only Protection Notice -->
           <div id="cod2kgLockNotice" style="display:none; margin-top:10px; background:#eff6ff; border:1.5px solid #93c5fd; border-radius:10px; padding:11px 14px; font-size:0.84rem; color:#1e40af; line-height:1.5;">
@@ -1243,19 +1243,7 @@
     }
 
     function computeThaiDeliveryEta() {
-      const days = ['อาทิตย์', 'จันทร์', 'อังคาร', 'พุธ', 'พฤหัสบดี', 'ศุกร์', 'เสาร์'];
-      const months = ['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'];
-      const now = new Date();
-      const shipDate = new Date(now);
-      if (now.getHours() >= 12) {
-        shipDate.setDate(shipDate.getDate() + 1);
-      }
-      const fmt = d => `วัน${days[d.getDay()]}ที่ ${d.getDate()} ${months[d.getMonth()]}`;
-      const bkk1 = new Date(shipDate); bkk1.setDate(bkk1.getDate() + 1);
-      const bkk2 = new Date(shipDate); bkk2.setDate(bkk2.getDate() + 2);
-      const up1 = new Date(shipDate); up1.setDate(up1.getDate() + 2);
-      const up2 = new Date(shipDate); up2.setDate(up2.getDate() + 3);
-      return `• 🕒 จัดส่งรอบ ${fmt(shipDate)} | 🏙️ กทม.-ภาคกลาง ถึงประมาณ <b>${fmt(bkk1)} – ${fmt(bkk2)}</b> | 🚚 ตจว. ถึงประมาณ <b>${fmt(up1)} – ${fmt(up2)}</b>`;
+      return `• ⏱️ <b>ระยะเวลาจัดส่ง:</b> รอรับสินค้าภายใน <b>1–2 วัน</b> ถึงหน้าบ้าน (ตัดรอบจัดส่งทุกวัน 12:00 น.)`;
     }
 
     function updateOrderPricingDisplay() {
