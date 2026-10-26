@@ -1060,14 +1060,24 @@
         </div>
 
         <div class="form-group">
-          <label>วิธีชำระเงิน *</label>
+          <label>วิธีชำระเงิน (โอนเงินส่งด่วนเก็บความเย็นฟรี 0 บาททุกชุด!) *</label>
           <div class="pay-methods">
-            <div class="pay-opt active" id="pay-cod" onclick="selectPayment('COD')">
-              🚚 เก็บเงินปลายทาง (COD)
-            </div>
             <div class="pay-opt" id="pay-transfer" onclick="selectPayment('TRANSFER')">
-              💳 โอนเงิน / ทักไลน์
+              💳 โอนเงิน / แนบสลิป<br><small style="font-weight:700; font-size:0.76rem; color:#047857;">🌟 แนะนำ: ส่งฟรี 0 บาท!</small>
             </div>
+            <div class="pay-opt active" id="pay-cod" onclick="selectPayment('COD')">
+              🚚 เก็บเงินปลายทาง (COD)<br><small id="codSubLabel" style="font-weight:600; font-size:0.75rem; color:#64748b;">ค่าบริการ COD +20 บาท</small>
+            </div>
+          </div>
+          <!-- COD Notice & Delivery Estimate Box -->
+          <div id="codNoticeBox" style="margin-top:10px; background:#fffbeb; border:1.5px solid #fcd34d; border-radius:10px; padding:11px 14px; font-size:0.84rem; color:#92400e; line-height:1.5;">
+            <div><b>🚚 เงื่อนไขเก็บเงินปลายทาง (COD +20 บาท):</b></div>
+            <div id="codDeliveryEtaText" style="margin-top:3px;">• กำลังคำนวณวันจัดส่งถึงหน้าบ้าน...</div>
+            <div>• ❄️ เนื่องจากเป็นปลาสลิดแพ็กเจลความเย็นสดใหม่ <b>รบกวนสแตนด์บายรับสายพนักงานขนส่งและเตรียมเงินสดให้พอดี</b> ในวันที่ของไปถึงด้วยนะคะ (เปลี่ยนเป็น <b>"💳 โอนเงิน"</b> เพื่อรับสิทธิ์ส่งฟรี 0 บาท ประหยัดทันที 20.- ค่ะ!)</div>
+          </div>
+          <!-- 2KG Transfer-Only Protection Notice -->
+          <div id="cod2kgLockNotice" style="display:none; margin-top:10px; background:#eff6ff; border:1.5px solid #93c5fd; border-radius:10px; padding:11px 14px; font-size:0.84rem; color:#1e40af; line-height:1.5;">
+            🛡️ <b>ชุดครอบครัวใหญ่ 2 กิโลกรัม (1,090.- ส่งฟรีรถควบคุมความเย็น)</b> ขอสงวนสิทธิ์รับเฉพาะ <b>โอนชำระล่วงหน้า</b> เพื่อป้องกันพัสดุอาหารแช่แข็งยอดสูงตกค้างและรับประกันความสดใหม่ 100% ถึงมือคุณลูกค้าค่ะ 💕
           </div>
         </div>
 
@@ -1220,16 +1230,80 @@
       return (p.sku === 'SKU-SLID-MD-2KG') ? 0 : 100;
     }
 
+    function getCodServiceFee(p) {
+      if (!p) return 0;
+      if (currentPayment !== 'COD') return 0;
+      if (p.sku === 'SKU-SLID-MD-2KG') return 0;
+      return 20;
+    }
+
     function getOrderTotalPay(p) {
       if (!p) return 0;
-      return p.price + (p.shippingFee || 0) + getColdTruckUpgradeFee(p);
+      return p.price + (p.shippingFee || 0) + getColdTruckUpgradeFee(p) + getCodServiceFee(p);
+    }
+
+    function computeThaiDeliveryEta() {
+      const days = ['อาทิตย์', 'จันทร์', 'อังคาร', 'พุธ', 'พฤหัสบดี', 'ศุกร์', 'เสาร์'];
+      const months = ['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'];
+      const now = new Date();
+      const shipDate = new Date(now);
+      if (now.getHours() >= 12) {
+        shipDate.setDate(shipDate.getDate() + 1);
+      }
+      const fmt = d => `วัน${days[d.getDay()]}ที่ ${d.getDate()} ${months[d.getMonth()]}`;
+      const bkk1 = new Date(shipDate); bkk1.setDate(bkk1.getDate() + 1);
+      const bkk2 = new Date(shipDate); bkk2.setDate(bkk2.getDate() + 2);
+      const up1 = new Date(shipDate); up1.setDate(up1.getDate() + 2);
+      const up2 = new Date(shipDate); up2.setDate(up2.getDate() + 3);
+      return `• 🕒 จัดส่งรอบ ${fmt(shipDate)} | 🏙️ กทม.-ภาคกลาง ถึงประมาณ <b>${fmt(bkk1)} – ${fmt(bkk2)}</b> | 🚚 ตจว. ถึงประมาณ <b>${fmt(up1)} – ${fmt(up2)}</b>`;
     }
 
     function updateOrderPricingDisplay() {
       const p = PRODUCTS.find(x => x.sku === currentSelectedSku) || PRODUCTS[0];
       if (!p) return;
+
+      // กฎป้องกันความเสี่ยงชุดใหญ่ 2 กก. (1,090.-): รับเฉพาะโอนเงินล่วงหน้า
+      const is2kg = (p.sku === 'SKU-SLID-MD-2KG');
+      const codBtn = document.getElementById('pay-cod');
+      const codSubLabel = document.getElementById('codSubLabel');
+      const codNoticeBox = document.getElementById('codNoticeBox');
+      const cod2kgLockNotice = document.getElementById('cod2kgLockNotice');
+
+      if (is2kg && currentPayment === 'COD') {
+        currentPayment = 'TRANSFER';
+      }
+
+      if (codBtn) {
+        codBtn.classList.toggle('active', currentPayment === 'COD');
+        codBtn.style.opacity = is2kg ? '0.45' : '1';
+        codBtn.style.cursor = is2kg ? 'not-allowed' : 'pointer';
+      }
+      const transferBtn = document.getElementById('pay-transfer');
+      if (transferBtn) {
+        transferBtn.classList.toggle('active', currentPayment === 'TRANSFER');
+      }
+      if (codSubLabel) {
+        codSubLabel.innerText = is2kg ? 'งดรับ COD สำหรับชุด 2 กก.' : 'ค่าบริการ COD +20 บาท';
+      }
+      if (codNoticeBox) {
+        codNoticeBox.style.display = (!is2kg && currentPayment === 'COD') ? 'block' : 'none';
+      }
+      if (cod2kgLockNotice) {
+        cod2kgLockNotice.style.display = is2kg ? 'block' : 'none';
+      }
+      const etaEl = document.getElementById('codDeliveryEtaText');
+      if (etaEl) {
+        etaEl.innerHTML = computeThaiDeliveryEta();
+      }
+
       const totalPay = getOrderTotalPay(p);
       const coldFee = getColdTruckUpgradeFee(p);
+      const codFee = getCodServiceFee(p);
+
+      const transferBox = document.getElementById('transferDetailsBox');
+      if (transferBox) {
+        transferBox.style.display = (currentPayment === 'TRANSFER') ? 'block' : 'none';
+      }
 
       const foilSub = document.getElementById('shipFoilSub');
       const coldSub = document.getElementById('shipColdSub');
@@ -1244,11 +1318,16 @@
       if (currentShippingMode === 'COLD_TRUCK') {
         shipText = (p.sku === 'SKU-SLID-MD-2KG')
           ? '❄️ ส่งฟรีรถห้องเย็นควบคุมอุณหภูมิ (SCG/Inter)'
-          : `❄️ อัปเกรดส่งรถห้องเย็น +${coldFee}.- (รวม ${totalPay.toLocaleString()}.-)`;
+          : `❄️ อัปเกรดส่งรถห้องเย็น +${coldFee}.-`;
       } else {
         shipText = (p.sku === 'SKU-SLID-MD-2KG')
           ? '🧊 ส่งฟรี! (แพ็กฟอยล์เจลไอซ์ / รถห้องเย็น)'
-          : (p.shippingFee ? `📦 ค่าส่งด่วนแพ็กฟอยล์+เจลไอซ์ +${p.shippingFee}.- (รวม ${totalPay.toLocaleString()}.-)` : '🔥 ส่งด่วนแพ็กฟอยล์+เจลไอซ์ ฟรีทั่วไทย');
+          : '🔥 ส่งด่วนแพ็กฟอยล์+เจลไอซ์ ฟรีทั่วไทย';
+      }
+      if (codFee > 0) {
+        shipText += ` | 🚚 COD +${codFee}.-`;
+      } else {
+        shipText += ' | 💳 โอนเงินส่งฟรี 0.-';
       }
 
       document.getElementById('displaySelectedName').innerText = p.name;
@@ -1260,7 +1339,7 @@
 
       // Update Sticky Bar
       document.getElementById('stickyProdName').innerText = p.name;
-      document.getElementById('stickyPriceText').innerText = `${totalPay.toLocaleString()} บาท` + (p.shippingFee || coldFee ? ' (รวมส่ง)' : ' (ส่งฟรี)');
+      document.getElementById('stickyPriceText').innerText = `${totalPay.toLocaleString()} บาท` + (codFee || coldFee ? ` (รวมค่าบริการ)` : ' (ส่งฟรี)');
     }
 
     function selectShippingMode(mode) {
@@ -1346,19 +1425,14 @@
     }
 
     function selectPayment(method) {
-      currentPayment = method;
-      document.getElementById('pay-cod').classList.toggle('active', method === 'COD');
-      document.getElementById('pay-transfer').classList.toggle('active', method === 'TRANSFER');
-      
-      const transferBox = document.getElementById('transferDetailsBox');
-      if (transferBox) {
-        transferBox.style.display = (method === 'TRANSFER') ? 'block' : 'none';
-        if (method === 'TRANSFER') {
-          const p = PRODUCTS.find(x => x.sku === currentSelectedSku) || PRODUCTS[0];
-          const totalPay = getOrderTotalPay(p);
-          document.getElementById('transferExactAmount').innerText = totalPay.toLocaleString() + ' บาท';
-        }
+      const p = PRODUCTS.find(x => x.sku === currentSelectedSku) || PRODUCTS[0];
+      if (method === 'COD' && p && p.sku === 'SKU-SLID-MD-2KG') {
+        alert('🛡️ สำหรับชุดครอบครัวใหญ่ 2 กิโลกรัม (1,090.- ส่งฟรีรถควบคุมความเย็น) ทางร้านขอสงวนสิทธิ์รับเฉพาะ "โอนชำระล่วงหน้า" เพื่อป้องกันพัสดุอาหารแช่แข็งยอดสูงตกค้างและรับประกันความสดใหม่ 100% ค่ะ 💕\n\n(หากต้องการเก็บเงินปลายทาง COD สามารถเลือกชุด 500 กรัม หรือ 1 กิโลกรัม ได้เลยนะคะ)');
+        currentPayment = 'TRANSFER';
+      } else {
+        currentPayment = method;
       }
+      updateOrderPricingDisplay();
     }
 
     
