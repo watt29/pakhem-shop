@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ระบบพิมพ์สติกเกอร์ฉลากหน้าถุง — ปลาสลิดแดดเดียว ป้าเข็ม คัดพิเศษ</title>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Prompt', sans-serif; }
+    body { background: #f1f5f9; color: #0f172a; padding: 24px; }
+
+    .toolbar {
+      max-width: 900px;
+      margin: 0 auto 22px auto;
+      background: #ffffff;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 16px;
+      padding: 18px 22px;
+      box-shadow: 0 4px 16px rgba(15, 23, 42, 0.06);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+    .toolbar h1 { font-size: 1.15rem; font-weight: 800; color: #9a3412; }
+    .toolbar p { font-size: 0.82rem; color: #475569; }
+    .controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; width: 100%; margin-top: 8px; padding-top: 12px; border-top: 1px dashed #e2e8f0; }
+    .control-item { display: flex; flex-direction: column; gap: 4px; font-size: 0.78rem; font-weight: 600; color: #334155; }
+    .control-item select, .control-item input {
+      padding: 7px 11px;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      background: #fff;
+    }
+    .btn-print {
+      background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%);
+      color: #fff;
+      border: none;
+      padding: 11px 22px;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(234, 88, 12, 0.3);
+      margin-left: auto;
+    }
+    .btn-print:hover { opacity: 0.95; }
+
+    /* A4 Sheet Layout */
+    .sheet {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 0 auto;
+      background: #ffffff;
+      padding: 10mm;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6mm;
+      align-content: start;
+    }
+
+    /* Individual Sticker Label Card */
+    .label-card {
+      border: 2px solid #b45309;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #fffbeb;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      page-break-inside: avoid;
+    }
+    .label-header {
+      background: linear-gradient(135deg, #9a3412 0%, #d97706 100%);
+      color: #ffffff;
+      padding: 8px 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #f59e0b;
+    }
+    .brand-title { font-size: 1.05rem; font-weight: 800; line-height: 1.15; letter-spacing: 0.2px; }
+    .brand-sub { font-size: 0.68rem; color: #fef3c7; font-weight: 500; margin-top: 2px; }
+    .size-badge {
+      background: #fef3c7;
+      color: #92400e;
+      font-size: 0.68rem;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 99px;
+      text-align: center;
+      border: 1px solid #f59e0b;
+      white-space: nowrap;
+    }
+
+    .label-body {
+      padding: 8px 11px;
+      font-size: 0.67rem;
+      line-height: 1.42;
+      color: #1e293b;
+      background: #ffffff;
+      flex: 1;
+    }
+    .slogan-bar {
+      background: #fff7ed;
+      border: 1px solid #fed7aa;
+      color: #9a3412;
+      font-weight: 700;
+      font-size: 0.68rem;
+      text-align: center;
+      padding: 3px 6px;
+      border-radius: 6px;
+      margin-bottom: 6px;
+    }
+    .ing-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 5px;
+      font-size: 0.65rem;
+    }
+    .ing-table td {
+      padding: 2px 4px;
+      border-bottom: 1px dashed #e2e8f0;
+    }
+    .ing-table td:last-child {
+      text-align: right;
+      font-weight: 700;
+      color: #9a3412;
+    }
+    .info-list {
+      font-size: 0.63rem;
+      color: #334155;
+      line-height: 1.38;
+      margin-bottom: 6px;
+    }
+    .info-list b { color: #0f172a; }
+
+    .meta-row {
+      display: grid;
+      grid-template-columns: 1fr 70px;
+      gap: 8px;
+      align-items: center;
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 6px 8px;
+    }
+    .meta-fields {
+      font-size: 0.65rem;
+      line-height: 1.5;
+      color: #0f172a;
+    }
+    .weight-highlight {
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: #b91c1c;
+      background: #fee2e2;
+      padding: 1px 6px;
+      border-radius: 4px;
+      display: inline-block;
+      margin-bottom: 2px;
+    }
+    .qr-box {
+      text-align: center;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 3px;
+    }
+    .qr-box img { width: 56px; height: 56px; display: block; margin: 0 auto; }
+    .qr-box span { display: block; font-size: 0.52rem; font-weight: 700; color: #059669; margin-top: 1px; line-height: 1.1; }
+
+    .label-footer {
+      background: #0f172a;
+      color: #f8fafc;
+      padding: 4px 10px;
+      font-size: 0.58rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    @media print {
+      body { background: #fff; padding: 0; }
+      .toolbar { display: none !important; }
+      .sheet { box-shadow: none; width: 100%; padding: 6mm; margin: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="toolbar">
+    <div>
+      <h1>🏷️ ระบบพิมพ์สติกเกอร์ฉลากแปะหน้าถุงซีลสูญญากาศ — ปลาสลิดแดดเดียว ป้าเข็ม</h1>
+      <p>ออกแบบตามมาตรฐานฉลากอาหารแช่แข็ง (ระบุส่วนประกอบ 97%/3%, ข้อมูลผู้แพ้อาหาร, อุณหภูมิเก็บรักษา ≤ -18°C และ QR สแกนสั่งซ้ำ)</p>
+    </div>
+    <button class="btn-print" onclick="window.print()">🖨️ สั่งพิมพ์สติกเกอร์ / บันทึก PDF</button>
+
+    <div class="controls">
+      <div class="control-item">
+        <label>ขนาดน้ำหนักสุทธิบนฉลาก:</label>
+        <select id="weightSelect" onchange="renderStickers()">
+          <option value="1,000 กรัม (1 กก. / 6 ตัวใหญ่)" selected>ชุดขายดี 1,000 กรัม (1 กก. / 6 ตัวใหญ่)</option>
+          <option value="500 กรัม (3 ตัวใหญ่)">ชุดพอดีมื้อ 500 กรัม (3 ตัวใหญ่)</option>
+          <option value="[ ] 500 กรัม (3 ตัว)   [ ] 1,000 กรัม (6 ตัว)">แบบมีช่องติ๊กเลือกได้ ([ ] 500g / [ ] 1,000g)</option>
+        </select>
+      </div>
+      <div class="control-item">
+        <label>วันที่ผลิต (MFG):</label>
+        <input type="text" id="mfgInput" onchange="renderStickers()">
+      </div>
+      <div class="control-item">
+        <label>ควรบริโภคก่อน (BBF ช่องฟรีซ -18°C):</label>
+        <input type="text" id="bbfInput" onchange="renderStickers()">
+      </div>
+      <div class="control-item">
+        <label>จำนวนดวงต่อแผ่น A4:</label>
+        <select id="countSelect" onchange="renderStickers()">
+          <option value="6" selected>6 ดวง / แผ่น A4 (ขนาดมาตรฐานแปะหน้าถุง)</option>
+          <option value="4">4 ดวง / แผ่น A4 (ขนาดใหญ่พิเศษ)</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="sheet" id="stickerSheet"></div>
+
+  <script>
+    function fmtThaiDate(d) {
+      const months = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+      return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear() + 543}`;
+    }
+
+    function initDates() {
+      const now = new Date();
+      const bbf = new Date();
+      bbf.setMonth(bbf.getMonth() + 6);
+      document.getElementById('mfgInput').value = fmtThaiDate(now);
+      document.getElementById('bbfInput').value = fmtThaiDate(bbf);
+      renderStickers();
+    }
+
+    function renderStickers() {
+      const weightText = document.getElementById('weightSelect').value;
+      const mfgText = document.getElementById('mfgInput').value;
+      const bbfText = document.getElementById('bbfInput').value;
+      const count = parseInt(document.getElementById('countSelect').value, 10) || 6;
+      const qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=160x160&margin=2&data=' + encodeURIComponent('https://watt29.github.io/pakhem-shop/fish.html');
+
+      let html = '';
+      for (let i = 0; i < count; i++) {
+        html += `
+          <div class="label-card">
+            <div class="label-header">
+              <div>
+                <div class="brand-title">ปลาสลิดแดดเดียว ป้าเข็ม</div>
+                <div class="brand-sub">Dried Gourami Fish • สุพรรณบุรีแท้ คัดพิเศษ</div>
+              </div>
+              <div class="size-badge">ไซส์จัมโบ้<br>6 ตัว/โล</div>
+            </div>
+
+            <div class="label-body">
+              <div class="slogan-bar">✨ คัดสรรคุณภาพ สะอาด ปลอดภัย เนื้อล้วนหนาฟู เค็มน้อยกลมกล่อม ✨</div>
+
+              <table class="ing-table">
+                <tr>
+                  <td><b>ส่วนประกอบสำคัญ:</b> เนื้อปลาสลิดแดดเดียวสุพรรณบุรีแท้</td>
+                  <td>97%</td>
+                </tr>
+                <tr>
+                  <td>เกลือสมุทรธรรมชาติเสริมไอโอดีน (สูตรเค็มน้อย)</td>
+                  <td>3%</td>
+                </tr>
+                <tr>
+                  <td>วัตถุกันเสีย / ฟอร์มาลีน / ผงชูรส</td>
+                  <td style="color:#059669;">0% (ไม่เจือปน)</td>
+                </tr>
+              </table>
+
+              <div class="info-list">
+                • <b>ข้อมูลสำหรับผู้แพ้อาหาร:</b> มีปลา (Contains Fish)<br>
+                • <b>มาตรฐานการผลิต:</b> ตากแดดในโรงอบโดมปิด (&gt;37°C) 1 วัน แช่แข็งเฉียบพลัน (≤-18°C) อย่างน้อย 12 ชม. และซีลสูญญากาศ PA/PE<br>
+                • <b>วิธีการบริโภค:</b> พักให้คลายเย็น ทอดด้วยไฟกลางค่อนอ่อนจนเหลืองกรอบ (ปรุงสุกก่อนบริโภค)<br>
+                • <b>วิธีเก็บรักษา:</b> ช่องแช่แข็ง <b>≤ -18°C</b> เก็บได้นาน 6–12 เดือน | ช่องธรรมดา <b>0–4°C</b> เก็บได้ 7–10 วัน
+              </div>
+
+              <div class="meta-row">
+                <div class="meta-fields">
+                  <div class="weight-highlight">น้ำหนักสุทธิ: ${weightText}</div>
+                  <div><b>วันที่ผลิต (MFG):</b> ${mfgText}</div>
+                  <div><b>ควรบริโภคก่อน (BBF):</b> ${bbfText}</div>
+                </div>
+                <div class="qr-box">
+                  <img src="${qrUrl}" alt="QR สั่งซื้อปลาสลิดป้าเข็ม">
+                  <span>สแกนสั่งซ้ำ<br>ส่งฟรีถึงบ้าน!</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="label-footer">
+              <span>📲 สั่งซื้อ/สอบถาม LINE: @137gsref</span>
+              <span>🌐 watt29.github.io/pakhem-shop/fish.html</span>
+            </div>
+          </div>
+        `;
+      }
+      document.getElementById('stickerSheet').innerHTML = html;
+    }
+
+    initDates();
+  </script>
+</body>
+</html>
