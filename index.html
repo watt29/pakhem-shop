@@ -1062,15 +1062,15 @@
         <div class="form-group">
           <label>วิธีชำระเงิน (โอนเงินส่งด่วนเก็บความเย็นฟรี 0 บาททุกชุด!) *</label>
           <div class="pay-methods">
-            <div class="pay-opt" id="pay-transfer" onclick="selectPayment('TRANSFER')">
+            <div class="pay-opt active" id="pay-transfer" onclick="selectPayment('TRANSFER')">
               💳 โอนเงิน / แนบสลิป<br><small style="font-weight:700; font-size:0.76rem; color:#047857;">🌟 แนะนำ: ส่งฟรี 0 บาท!</small>
             </div>
-            <div class="pay-opt active" id="pay-cod" onclick="selectPayment('COD')">
+            <div class="pay-opt" id="pay-cod" onclick="selectPayment('COD')">
               🚚 เก็บเงินปลายทาง (COD)<br><small id="codSubLabel" style="font-weight:600; font-size:0.75rem; color:#64748b;">ค่าบริการ COD +20 บาท</small>
             </div>
           </div>
           <!-- COD Notice & Delivery Estimate Box -->
-          <div id="codNoticeBox" style="margin-top:10px; background:#fffbeb; border:1.5px solid #fcd34d; border-radius:10px; padding:11px 14px; font-size:0.84rem; color:#92400e; line-height:1.5;">
+          <div id="codNoticeBox" style="display:none; margin-top:10px; background:#fffbeb; border:1.5px solid #fcd34d; border-radius:10px; padding:11px 14px; font-size:0.84rem; color:#92400e; line-height:1.5;">
             <div><b>🚚 เงื่อนไขเก็บเงินปลายทาง (COD +20 บาท):</b></div>
             <div id="codDeliveryEtaText" style="margin-top:3px;">• กำลังคำนวณวันจัดส่งถึงหน้าบ้าน...</div>
             <div>• ❄️ เนื่องจากเป็นปลาสลิดแพ็กเจลความเย็นสดใหม่ <b>รบกวนสแตนด์บายรับสายพนักงานขนส่งและเตรียมเงินสดให้พอดี</b> ในวันที่ของไปถึงด้วยนะคะ (เปลี่ยนเป็น <b>"💳 โอนเงิน"</b> เพื่อรับสิทธิ์ส่งฟรี 0 บาท ประหยัดทันที 20.- ค่ะ!)</div>
@@ -1221,7 +1221,7 @@
     ];
 
     let currentSelectedSku = 'SKU-SLID-MD-1KG';
-    let currentPayment = 'COD';
+    let currentPayment = 'TRANSFER';
     let currentShippingMode = 'FOIL_ICE'; // 'FOIL_ICE' (แพ็กฟอยล์+เจลไอซ์) หรือ 'COLD_TRUCK' (รถห้องเย็น SCG/Inter)
 
     function getColdTruckUpgradeFee(p) {
@@ -1809,8 +1809,10 @@
         document.getElementById('modalSummary').innerHTML = `
           <div><b>สินค้า:</b> ${p.name}</div>
           <div><b>การจัดส่ง:</b> ${shipLabel}</div>
-          <div><b>ยอดชำระสุทธิ:</b> ${totalPay.toLocaleString()} บาท (${currentPayment === 'COD' ? '🚚 เก็บเงินปลายทาง' : '💳 โอนเงิน'})</div>
+          <div><b>ยอดชำระสุทธิ:</b> ${totalPay.toLocaleString()} บาท (${currentPayment === 'COD' ? '🚚 เก็บเงินปลายทาง COD +20.-' : '💳 โอนเงินส่งฟรี 0.-'})</div>
           <div><b>ผู้รับ:</b> คุณ${name} (${phone})</div>
+          <div style="margin-top:6px; font-size:0.82rem; color:#047857;">${computeThaiDeliveryEta()}</div>
+          ${currentPayment === 'COD' ? `<div style="margin-top:8px; padding:8px 10px; border-radius:8px; background:#fffbeb; border:1px solid #fcd34d; color:#92400e; font-size:0.82rem;">❄️ <b>สำหรับออเดอร์ COD:</b> แอดมินจะติดต่อทวนออเดอร์ก่อนจัดส่ง รบกวนคุณลูกค้าเตรียมเงินสด <b>${totalPay.toLocaleString()} บาท</b> และสแตนด์บายรับสายพนักงานขนส่งในวันที่แจ้งด้วยนะคะ 🙏</div>` : ''}
           ${saved ? '' : `<div style="margin-top:10px; padding:10px; border-radius:10px; background:#fef3c7; color:#92400e; font-size:0.85rem;">
             ⚠️ ระบบเครือข่ายขัดข้องชั่วคราว ออเดอร์ถูกเก็บไว้ในเครื่องและจะส่งซ้ำอัตโนมัติ<br>
             เพื่อความชัวร์ กรุณาแคปหน้าจอนี้แล้วทัก LINE <b>@137gsref</b> แจ้งรหัส <b>${orderId}</b> ค่ะ</div>`}
