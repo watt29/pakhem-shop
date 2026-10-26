@@ -473,8 +473,9 @@
             </td>
             <td>
               <div style="display:flex; gap:4px; align-items:center;">
-                <input type="text" id="track-${o.id}" class="tracking-input" placeholder="เลขรถเย็น..." value="${o.tracking_number || ''}" onkeydown="if(event.key==='Enter') saveTracking(${o.id})">
-                <button onclick="saveTracking(${o.id})" class="tracking-save-btn" title="บันทึกเลขพัสดุ">💾</button>
+                <input type="text" id="track-${o.id}" class="tracking-input" placeholder="กรอกเลขพัสดุ..." value="${o.tracking_number || ''}" onkeydown="if(event.key==='Enter') saveTracking(${o.id})">
+                <button onclick="saveTracking(${o.id})" class="tracking-save-btn" title="บันทึกเลขพัสดุ + ปรับสถานะเป็นส่งแล้ว">💾</button>
+                <button onclick="copyTrackingNotice(${o.id})" class="tracking-save-btn" title="คัดลอกข้อความแจ้งเลขพัสดุส่งให้ลูกค้า">📋</button>
               </div>
             </td>
             <td>
@@ -521,6 +522,7 @@
     async function saveTracking(orderId) {
       const input = document.getElementById('track-' + orderId);
       const tracking = input ? input.value.trim() : '';
+      const payload = tracking ? { tracking_number: tracking, status: 'SHIPPED' } : { tracking_number: tracking };
       try {
         const res = await fetch(`${SUPA_URL}/direct_orders?id=eq.${orderId}`, {
           method: 'PATCH',
@@ -530,18 +532,48 @@
             'Content-Type': 'application/json',
             'Prefer': 'return=minimal'
           },
-          body: JSON.stringify({ tracking_number: tracking })
+          body: JSON.stringify(payload)
         });
         if (res.ok) {
-          showToast(`บันทึกเลขพัสดุ ${tracking || '-'} เรียบร้อย!`);
           const target = cachedOrders.find(x => x.id === orderId);
-          if (target) target.tracking_number = tracking;
+          if (target) {
+            target.tracking_number = tracking;
+            if (tracking) target.status = 'SHIPPED';
+          }
+          if (tracking) {
+            copyTrackingNotice(orderId, true);
+            loadOrders();
+          } else {
+            showToast('ล้างเลขพัสดุเรียบร้อย!');
+          }
         } else {
           alert('ไม่สามารถบันทึกเลขพัสดุได้');
         }
       } catch (e) {
         alert('เกิดข้อผิดพลาด: ' + e.message);
       }
+    }
+
+    function copyTrackingNotice(orderId, fromSave = false) {
+      const o = cachedOrders.find(x => x.id === orderId);
+      if (!o) return;
+      const input = document.getElementById('track-' + orderId);
+      const trk = (input && input.value.trim()) || o.tracking_number || '-';
+      const msg =
+        `🚚 แจ้งเลขพัสดุจัดส่งปลาสลิดแดดเดียว ป้าเข็ม คัดพิเศษ ค่ะ ✨\n` +
+        `━━━━━━━━━━━━━━━━━━\n` +
+        `🔖 รหัสคำสั่งซื้อ: ${o.order_code}\n` +
+        `👤 คุณลูกค้า: ${o.customer_name}\n` +
+        `📦 รายการ: ${o.package_name || o.product_name}\n` +
+        `🔢 เลขพัสดุ: ${trk}\n` +
+        `━━━━━━━━━━━━━━━━━━\n` +
+        `❄️ แพ็กซองฟอยล์เก็บความเย็น + เจลไอซ์ ส่งออกให้เรียบร้อยแล้วค่ะ เมื่อได้รับสินค้าแล้วแนะนำให้นำเข้าช่องฟรีซ (≤ -18°C) ทันทีนะคะ ขอบพระคุณที่อุดหนุนป้าเข็มค่ะ 🙏🐟`;
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(msg).catch(() => {});
+      }
+      showToast(fromSave
+        ? `✅ บันทึกเลขพัสดุ ${trk} (ปรับสถานะส่งแล้ว) + คัดลอกข้อความแจ้งลูกค้าแล้ว!`
+        : `📋 คัดลอกข้อความแจ้งเลขพัสดุ ${trk} เรียบร้อย! กดวางส่งในแชทได้เลย`);
     }
 
     function printShippingSlip(orderId) {
