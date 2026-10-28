@@ -1141,25 +1141,51 @@
           </div>
         </div>
 
-                <!-- USDT (BEP-20) Payment Details Box -->
+                <!-- Crypto (USDT & BTC) Payment Details Box -->
         <div id="usdtDetailsBox" style="display:none; background:#fffbeb; border:1.5px dashed #f59e0b; border-radius:12px; padding:16px; margin-top:12px;">
-          <div style="font-weight:700; color:#b45309; margin-bottom:8px; display:flex; align-items:center; gap:6px;">
-            <span>🟡 ชำระด้วยเหรียญดิจิทัล USDT (BNB Smart Chain / BEP-20)</span>
-          </div>
-          <div style="background:#ffffff; border-radius:8px; padding:12px 14px; font-size:0.92rem; margin-bottom:12px; border:1px solid #fde68a; line-height:1.65;">
-            <div><b>สินทรัพย์:</b> <span style="color:#059669; font-weight:700;">USDT (Tether)</span></div>
-            <div><b>เครือข่าย (Network):</b> <span style="color:#d97706; font-weight:800; background:#fef3c7; padding:2px 6px; border-radius:4px;">BNB Smart Chain (BEP-20)</span> <span style="font-size:0.8rem; color:#64748b;">(ค่าโอนถูกมาก)</span></div>
-            <div style="display:flex; align-items:center; flex-wrap:wrap; gap:8px; margin-top:4px;">
-              <span><b>Wallet Address:</b> <span id="usdtWalletAddress" style="font-family:monospace; font-size:0.92rem; color:#0f172a; font-weight:700; word-break:break-all;">0x54Debd9f5fA08053B9a37bC3B09Ba5024Ec9dd0b</span></span>
-              <button type="button" onclick="navigator.clipboard.writeText('0x54Debd9f5fA08053B9a37bC3B09Ba5024Ec9dd0b'); this.innerText='✅ คัดลอกแล้ว!'; setTimeout(()=>this.innerText='📋 คัดลอกเลขกระเป๋า', 2200);" style="background:#fef3c7; color:#b45309; border:1px solid #fcd34d; border-radius:6px; padding:2px 8px; font-size:0.78rem; font-weight:700; cursor:pointer;">📋 คัดลอกเลขกระเป๋า</button>
+          <div style="font-weight:700; color:#b45309; margin-bottom:10px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px;">
+            <span>🪙 ชำระด้วยเหรียญดิจิทัล (Crypto)</span>
+            <div style="display:flex; gap:6px;">
+              <button type="button" id="tab-usdt" onclick="switchCryptoTab('USDT')" style="background:#fef3c7; color:#b45309; border:1.5px solid #f59e0b; border-radius:6px; padding:3px 10px; font-size:0.8rem; font-weight:700; cursor:pointer;">🟡 USDT (BEP-20)</button>
+              <button type="button" id="tab-btc" onclick="switchCryptoTab('BTC')" style="background:#ffffff; color:#64748b; border:1.5px solid #cbd5e1; border-radius:6px; padding:3px 10px; font-size:0.8rem; font-weight:700; cursor:pointer;">🟠 Bitcoin (BTC)</button>
             </div>
-            <div style="margin-top:8px; font-size:0.92rem; color:#b45309;">ยอดชำระ: <b id="usdtExactAmount" style="font-size:1.15rem; color:#d97706;">16 USDT</b> <span style="font-size:0.82rem; color:#475569;">(ส่งด่วนฟรีถึงหน้าบ้าน)</span></div>
           </div>
-          <div style="text-align:center; margin-top:10px;">
-            <img src="usdt_qr_bep20.png" alt="USDT BEP-20 QR Code" style="max-width:200px; width:100%; border-radius:8px; border:1px solid #cbd5e1; box-shadow:0 2px 6px rgba(0,0,0,0.08);">
-            <div style="font-size:0.8rem; color:#64748b; margin-top:6px;">สแกนเพื่อโอน USDT ผ่านแอปกระเป๋าคริปโต (เลือก Network: BEP-20)</div>
+
+          <!-- USDT Sub-Box -->
+          <div id="cryptoUsdtSubBox">
+            <div style="background:#ffffff; border-radius:8px; padding:12px 14px; font-size:0.92rem; margin-bottom:12px; border:1px solid #fde68a; line-height:1.65;">
+              <div><b>สินทรัพย์:</b> <span style="color:#059669; font-weight:700;">USDT (Tether)</span></div>
+              <div><b>เครือข่าย (Network):</b> <span style="color:#d97706; font-weight:800; background:#fef3c7; padding:2px 6px; border-radius:4px;">BNB Smart Chain (BEP-20)</span> <span style="font-size:0.8rem; color:#64748b;">(ค่าโอนถูกมาก)</span></div>
+              <div style="display:flex; align-items:center; flex-wrap:wrap; gap:8px; margin-top:4px;">
+                <span><b>Wallet Address:</b> <span id="usdtWalletAddress" style="font-family:monospace; font-size:0.92rem; color:#0f172a; font-weight:700; word-break:break-all;">0x54Debd9f5fA08053B9a37bC3B09Ba5024Ec9dd0b</span></span>
+                <button type="button" onclick="navigator.clipboard.writeText('0x54Debd9f5fA08053B9a37bC3B09Ba5024Ec9dd0b'); this.innerText='✅ คัดลอกแล้ว!'; setTimeout(()=>this.innerText='📋 คัดลอกเลขกระเป๋า', 2200);" style="background:#fef3c7; color:#b45309; border:1px solid #fcd34d; border-radius:6px; padding:2px 8px; font-size:0.78rem; font-weight:700; cursor:pointer;">📋 คัดลอกเลขกระเป๋า</button>
+              </div>
+              <div style="margin-top:8px; font-size:0.92rem; color:#b45309;">ยอดชำระ: <b id="usdtExactAmount" style="font-size:1.15rem; color:#d97706;">16 USDT</b> <span style="font-size:0.82rem; color:#475569;">(ส่งด่วนฟรีถึงหน้าบ้าน)</span></div>
+            </div>
+            <div style="text-align:center; margin-top:10px;">
+              <img src="usdt_qr_bep20.png" alt="USDT BEP-20 QR Code" style="max-width:200px; width:100%; border-radius:8px; border:1px solid #cbd5e1; box-shadow:0 2px 6px rgba(0,0,0,0.08);">
+              <div style="font-size:0.8rem; color:#64748b; margin-top:6px;">สแกนเพื่อโอน USDT ผ่านแอปกระเป๋าคริปโต (เลือก Network: BEP-20)</div>
+            </div>
           </div>
-          <div style="margin-top:12px;">
+
+          <!-- BTC Sub-Box -->
+          <div id="cryptoBtcSubBox" style="display:none;">
+            <div style="background:#ffffff; border-radius:8px; padding:12px 14px; font-size:0.92rem; margin-bottom:12px; border:1px solid #fde68a; line-height:1.65;">
+              <div><b>สินทรัพย์:</b> <span style="color:#d97706; font-weight:700;">Bitcoin (BTC)</span></div>
+              <div><b>เครือข่าย (Network):</b> <span style="color:#b45309; font-weight:800; background:#fef3c7; padding:2px 6px; border-radius:4px;">Bitcoin (Native SegWit)</span> <span style="font-size:0.8rem; color:#64748b;">(Bech32 bc1q...)</span></div>
+              <div style="display:flex; align-items:center; flex-wrap:wrap; gap:8px; margin-top:4px;">
+                <span><b>BTC Address:</b> <span id="btcWalletAddress" style="font-family:monospace; font-size:0.88rem; color:#0f172a; font-weight:700; word-break:break-all;">bc1qm5029706v00m2sdxl2kw2f9s2exwqg2smajv9v</span></span>
+                <button type="button" onclick="navigator.clipboard.writeText('bc1qm5029706v00m2sdxl2kw2f9s2exwqg2smajv9v'); this.innerText='✅ คัดลอกแล้ว!'; setTimeout(()=>this.innerText='📋 คัดลอกเลขกระเป๋า', 2200);" style="background:#fef3c7; color:#b45309; border:1px solid #fcd34d; border-radius:6px; padding:2px 8px; font-size:0.78rem; font-weight:700; cursor:pointer;">📋 คัดลอกเลขกระเป๋า</button>
+              </div>
+              <div style="margin-top:8px; font-size:0.92rem; color:#b45309;">ยอดชำระเทียบเคียง: <b id="btcExactAmount" style="font-size:1.15rem; color:#d97706;">0.00023 BTC</b> <span style="font-size:0.82rem; color:#475569;">(ส่งด่วนฟรีถึงหน้าบ้าน)</span></div>
+            </div>
+            <div style="text-align:center; margin-top:10px;">
+              <img src="btc_qr.png" alt="Bitcoin BTC QR Code" style="max-width:200px; width:100%; border-radius:8px; border:1px solid #cbd5e1; box-shadow:0 2px 6px rgba(0,0,0,0.08);">
+              <div style="font-size:0.8rem; color:#64748b; margin-top:6px;">สแกนเพื่อโอน Bitcoin ผ่านแอปกระเป๋า BTC หรือ CEX</div>
+            </div>
+          </div>
+
+          <div style="margin-top:14px;">
             <label style="font-size:0.88rem; font-weight:600; color:#b45309; display:block; margin-bottom:4px;">
               📸 แนบภาพหลักฐานการโอน หรือระบุ TxID:
             </label>
@@ -1390,6 +1416,11 @@
           let uAmt = (p.sku === 'SKU-SLID-MD-2KG') ? 31 : (p.sku === 'SKU-SLID-MD-1KG' ? 16 : 11);
           if (currentShippingMode === 'COLD_TRUCK' && p.sku !== 'SKU-SLID-MD-2KG') uAmt += 3;
           usdtAmountEl.innerText = `${uAmt} USDT`;
+          const btcAmountEl = document.getElementById('btcExactAmount');
+          if (btcAmountEl) {
+            let bAmt = (p.sku === 'SKU-SLID-MD-2KG') ? '0.00045' : (p.sku === 'SKU-SLID-MD-1KG' ? '0.00023' : '0.00016');
+            btcAmountEl.innerText = `${bAmt} BTC`;
+          }
         }
       }
 
@@ -1510,6 +1541,28 @@
       if (orderSec) {
         orderSec.scrollIntoView({ behavior: 'smooth' });
       }
+    }
+
+    
+    let currentCryptoMode = 'USDT';
+    function switchCryptoTab(mode) {
+      currentCryptoMode = mode;
+      const tabUsdt = document.getElementById('tab-usdt');
+      const tabBtc = document.getElementById('tab-btc');
+      const boxUsdt = document.getElementById('cryptoUsdtSubBox');
+      const boxBtc = document.getElementById('cryptoBtcSubBox');
+      if (tabUsdt) {
+        tabUsdt.style.background = (mode === 'USDT') ? '#fef3c7' : '#ffffff';
+        tabUsdt.style.color = (mode === 'USDT') ? '#b45309' : '#64748b';
+        tabUsdt.style.border = (mode === 'USDT') ? '1.5px solid #f59e0b' : '1.5px solid #cbd5e1';
+      }
+      if (tabBtc) {
+        tabBtc.style.background = (mode === 'BTC') ? '#fef3c7' : '#ffffff';
+        tabBtc.style.color = (mode === 'BTC') ? '#b45309' : '#64748b';
+        tabBtc.style.border = (mode === 'BTC') ? '1.5px solid #f59e0b' : '1.5px solid #cbd5e1';
+      }
+      if (boxUsdt) boxUsdt.style.display = (mode === 'USDT') ? 'block' : 'none';
+      if (boxBtc) boxBtc.style.display = (mode === 'BTC') ? 'block' : 'none';
     }
 
     function selectPayment(method) {
