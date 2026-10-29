@@ -4640,6 +4640,22 @@
 
             startTickerCycle();
 
+            const boardEl = document.getElementById('liveOrderBoardList');
+            if (boardEl) {
+              boardEl.innerHTML = data.slice(0, 5).map(o => {
+                const nm = (o.masked_name || 'คุณลูกค้า') + (o.province ? ' (' + o.province + ')' : '');
+                const pkg = o.package_name || 'ปลาสลิดแดดเดียว คัดพิเศษ';
+                const t = formatRelativeTime(o.created_at);
+                return `<div style="display:flex; align-items:center; justify-content:space-between; gap:10px; background:#ffffff; border:1px solid #d1fae5; border-radius:10px; padding:9px 12px; font-size:0.84rem;">
+                  <div style="display:flex; align-items:center; gap:8px;">
+                    <span style="background:#dcfce7; color:#047857; font-weight:800; padding:3px 8px; border-radius:99px; font-size:0.74rem;">✅ สั่งซื้อจริง</span>
+                    <span><b style="color:#0f172a;">${nm}</b> • <span style="color:#047857; font-weight:600;">${pkg}</span></span>
+                  </div>
+                  <span style="font-size:0.75rem; color:#64748b; white-space:nowrap;">${t}</span>
+                </div>`;
+              }).join('');
+            }
+
           } else {
 
             // ไม่มียอดออเดอร์ในระบบ ซ่อนกล่องไว้ 100% ไม่เมคข้อมูลหลอก
@@ -4722,11 +4738,12 @@
 
 
 
-    // Initialize only on real page load
-
-    initRealOrdersTicker();
-
-
+    // Initialize on DOM ready so #liveOrderTicker and #liveOrderBoardList are guaranteed to exist
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initRealOrdersTicker);
+    } else {
+      setTimeout(initRealOrdersTicker, 50);
+    }
 
 </script>
 
