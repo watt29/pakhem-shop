@@ -2815,6 +2815,64 @@
       }, { enableHighAccuracy: true, timeout: 10000 });
     }
 
+
+    // โหลดข้อมูลชื่อ-เบอร์โทร-ที่อยู่เดิม และอ่านค่าหมุดแผนที่จาก LINE (?map_addr=...&pkg=...&pay=...)
+    window.addEventListener('DOMContentLoaded', function() {
+      try {
+        const savedName = localStorage.getItem('pakhem_cust_name');
+        const savedPhone = localStorage.getItem('pakhem_cust_phone');
+        const savedAddr = localStorage.getItem('pakhem_cust_addr');
+        if (savedName && document.getElementById('custName') && !document.getElementById('custName').value) {
+          document.getElementById('custName').value = savedName;
+        }
+        if (savedPhone && document.getElementById('custPhone') && !document.getElementById('custPhone').value) {
+          document.getElementById('custPhone').value = savedPhone;
+        }
+        if (savedAddr && document.getElementById('custAddress') && !document.getElementById('custAddress').value) {
+          document.getElementById('custAddress').value = savedAddr;
+        }
+        ['custName', 'custPhone', 'custAddress'].forEach(function(id, idx) {
+          const el = document.getElementById(id);
+          const key = ['pakhem_cust_name', 'pakhem_cust_phone', 'pakhem_cust_addr'][idx];
+          if (el) {
+            el.addEventListener('change', function() {
+              try { localStorage.setItem(key, el.value.trim()); } catch(e) {}
+            });
+          }
+        });
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const paramPkg = urlParams.get('pkg');
+        if (paramPkg && typeof selectProduct === 'function') {
+          setTimeout(function() { selectProduct(paramPkg); }, 150);
+        }
+        const paramPay = urlParams.get('pay');
+        if (paramPay === 'COD' && typeof selectPayment === 'function') {
+          setTimeout(function() { selectPayment('COD'); }, 200);
+        } else if (paramPay === 'COLD_TRUCK' && typeof selectShippingMode === 'function') {
+          setTimeout(function() { selectShippingMode('COLD_TRUCK'); }, 200);
+        }
+        const mapAddr = urlParams.get('map_addr');
+        if (mapAddr) {
+          lastAutoAreaText = mapAddr.trim();
+          const addrBox = document.getElementById('custAddress');
+          if (addrBox) addrBox.value = lastAutoAreaText;
+          const hintEl = document.getElementById('zipAutoResultHint');
+          if (hintEl) {
+            hintEl.style.display = 'block';
+            hintEl.innerText = '📍 ดึงที่อยู่จากหมุดแผนที่ LINE แล้ว: ' + lastAutoAreaText + ' (กรอกเพิ่มแค่ บ้านเลขที่ ช่องที่ 1 และ เบอร์โทร ได้เลยค่ะ!)';
+          }
+          setTimeout(function() {
+            const houseEl = document.getElementById('quickHouseNo');
+            if (houseEl) {
+              houseEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              houseEl.focus();
+            }
+          }, 350);
+        }
+      } catch (e) {}
+    });
+
     let currentSelectedSku = 'SKU-SLID-MD-1KG';
 
     let currentPayment = 'TRANSFER';
