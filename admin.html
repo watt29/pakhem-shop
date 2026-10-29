@@ -176,7 +176,7 @@
       <button onclick="switchTab('strategy', this)">⚖️ สต๊อก VS Dropship</button>
     </nav>
     <div style="display:flex; gap:8px; align-items:center;">
-      <a href="fish_label_print.html" target="_blank" class="shop-link" style="background:#d97706;">🏷️ พิมพ์สติกเกอร์ติดถุง</a>
+      <a href="fish_label_print.html" target="_blank" class="shop-link" style="background:#d97706;">📦 พิมพ์ใบแนบในกล่อง / สติกเกอร์</a>
       <a href="fish.html" target="_blank" class="shop-link">🛍️ เปิดหน้าร้าน</a>
       <button onclick="handleAdminLogout()" style="background:#fee2e2; color:#991b1b; border:1px solid #fecaca; padding:8px 12px; border-radius:8px; font-size:0.85rem; font-weight:600; cursor:pointer;">🚪 ออกจากระบบ</button>
     </div>
@@ -227,7 +227,31 @@
               </tr>
             </thead>
             <tbody id="ordersTbody">
-              <tr><td colspan="9" style="text-align:center; padding:20px; color:var(--text-muted);">กำลังโหลดข้อมูลจากฐานข้อมูล…</td></tr>
+              <tr><td colspan="10" style="text-align:center; padding:20px; color:var(--text-muted);">กำลังโหลดข้อมูลจากฐานข้อมูล…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-header">
+          <h2>💬 ลูกค้าทักแชท / คอมเมนต์สนใจล่าสุด (รอแจ้งชื่อ-ที่อยู่ / ปิดการขาย)</h2>
+          <button onclick="loadLeads()" class="btn-action">🔄 รีเฟรชรายชื่อ</button>
+        </div>
+        <div style="overflow-x:auto;">
+          <table>
+            <thead>
+              <tr>
+                <th>เวลาที่ทัก</th>
+                <th>ช่องทาง</th>
+                <th>ชื่อลูกค้า</th>
+                <th>ข้อความ / ความสนใจ</th>
+                <th>สถานะบอท</th>
+                <th>เปิดดูแชท / โพสต์</th>
+              </tr>
+            </thead>
+            <tbody id="leadsTbody">
+              <tr><td colspan="6" style="text-align:center; padding:20px; color:var(--text-muted);">กำลังโหลดรายชื่อลูกค้าที่ทักแชท…</td></tr>
             </tbody>
           </table>
         </div>
@@ -431,10 +455,23 @@
       const tbody = document.getElementById('ordersTbody');
       tbody.innerHTML = '<tr><td colspan="10" style="text-align:center; padding:20px;">กำลังโหลดข้อมูลล่าสุด…</td></tr>';
       try {
-        const res = await fetch(`${SUPA_URL}/direct_orders?order=id.desc&limit=100`, {
-          headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY }
+        const res = await fetch(`${SUPA_URL}/rpc/get_admin_orders`, {
+          method: 'POST',
+          headers: {
+            'apikey': SUPA_KEY,
+            'Authorization': 'Bearer ' + SUPA_KEY,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ pin: ADMIN_PIN })
         });
-        const orders = await res.json();
+        const data = await res.json();
+        if (!Array.isArray(data)) {
+          throw new Error(data.message || 'ไม่สามารถดึงข้อมูลออเดอร์ได้');
+        }
+        const orders = data.map(o => ({
+          ...o,
+          status: (o.status || 'PENDING').toUpperCase()
+        }));
         cachedOrders = orders;
         
         document.getElementById('statOrderCount').innerText = orders.length;
@@ -450,6 +487,7 @@
 
         tbody.innerHTML = orders.map(o => {
           const statusClass = (o.status || 'PENDING').toLowerCase();
+          const isCod = (o.payment_method || '').toUpperCase().includes('COD');
           return `
           <tr>
             <td><b>${o.order_code}</b></td>
@@ -457,7 +495,7 @@
             <td><b>${o.product_name || o.package_name || '-'}</b></td>
             <td><b style="color:var(--primary);">${parseFloat(o.price).toLocaleString()} ฿</b></td>
             <td>
-              <span class="badge ${o.payment_method === 'COD' ? 'pending' : 'confirmed'}">${o.payment_method}</span>
+              <span class="badge ${isCod ? 'pending' : 'confirmed'}">${o.payment_method}</span>
               ${o.slip_url ? `<br><button onclick="viewSlipImage('${o.slip_url}', '${o.order_code}', ${o.id})" class="btn-action" style="background:#ecfdf5; color:#065f46; border-color:#a7f3d0; font-size:0.75rem; padding:2px 6px; margin-top:4px;">🧾 สลิป</button>` : ''}
             </td>
             <td><b>${o.customer_name}</b><br><small style="color:var(--text-muted);">📞 ${o.phone}</small></td>
@@ -466,7 +504,7 @@
               <select class="status-select ${statusClass}" onchange="updateOrderStatus(${o.id}, this.value, this)">
                 <option value="PENDING" ${o.status === 'PENDING' ? 'selected' : ''}>🟡 รอจัดส่ง (Pending)</option>
                 <option value="CONFIRMED" ${o.status === 'CONFIRMED' ? 'selected' : ''}>🔵 ยืนยันแล้ว (Confirmed)</option>
-                <option value="SHIPPED" ${o.status === 'SHIPPED' ? 'selected' : ''}>🚚 ส่งรถเย็นแล้ว (Shipped)</option>
+                <option value="SHIPPED" ${o.status === 'SHIPPED' ? 'selected' : ''}>🚚 จัดส่งแล้ว (Shipped)</option>
                 <option value="DELIVERED" ${o.status === 'DELIVERED' ? 'selected' : ''}>🟢 สำเร็จ (Delivered)</option>
                 <option value="CANCELLED" ${o.status === 'CANCELLED' ? 'selected' : ''}>⚪ ยกเลิก (Cancelled)</option>
               </select>
@@ -487,26 +525,63 @@
       } catch (e) {
         tbody.innerHTML = `<tr><td colspan="10" style="text-align:center; color:red; padding:20px;">โหลดข้อมูลไม่สำเร็จ: ${e.message}</td></tr>`;
       }
+      loadLeads();
+    }
+
+    async function loadLeads() {
+      const tbody = document.getElementById('leadsTbody');
+      if (!tbody) return;
+      try {
+        const res = await fetch(`${SUPA_URL}/rpc/get_admin_leads`, {
+          method: 'POST',
+          headers: {
+            'apikey': SUPA_KEY,
+            'Authorization': 'Bearer ' + SUPA_KEY,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ pin: ADMIN_PIN })
+        });
+        const leads = await res.json();
+        if (!Array.isArray(leads) || leads.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:16px; color:var(--text-muted);">ยังไม่มีรายการทักแชท/คอมเมนต์</td></tr>';
+          return;
+        }
+        const filtered = leads.filter(l => l.sender_name !== 'ครัวแม่บ้าน ชี้เป้าของอร่อย' && l.sender_name !== 'ป้าเข็ม ขายของ' && l.sender_name !== 'ป้าเข็ม ชี้เป้า');
+        tbody.innerHTML = filtered.slice(0, 25).map(l => {
+          const isInbox = (l.platform || '').includes('Messenger') || (l.comment_id || '').startsWith('INBOX_');
+          const linkUrl = (l.post_id && l.post_id.startsWith('http')) ? l.post_id : `https://www.facebook.com/${l.post_id || ''}`;
+          return `
+            <tr>
+              <td><small style="color:var(--text-muted);">${new Date(l.created_at).toLocaleString('th-TH')}</small></td>
+              <td><span class="badge ${isInbox ? 'confirmed' : 'pending'}">${isInbox ? '💌 แชทเพจ' : '💬 คอมเมนต์'}</span></td>
+              <td><b>${l.sender_name || '-'}</b>${l.phone ? `<br><small>📞 ${l.phone}</small>` : ''}</td>
+              <td>${l.message || '-'}</td>
+              <td><span class="badge confirmed">${l.private_replied ? '✅ บอทตอบแล้ว' : '⏳ รอตอบ'}</span></td>
+              <td><a href="${linkUrl}" target="_blank" class="btn-action" style="font-size:0.75rem;">🔗 เปิดดูแชท/โพสต์</a></td>
+            </tr>
+          `;
+        }).join('');
+      } catch (e) {
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; color:red; padding:16px;">โหลดรายชื่อไม่สำเร็จ: ${e.message}</td></tr>`;
+      }
     }
 
     async function updateOrderStatus(orderId, newStatus, selectEl) {
       try {
-        const res = await fetch(`${SUPA_URL}/direct_orders?id=eq.${orderId}`, {
-          method: 'PATCH',
+        const res = await fetch(`${SUPA_URL}/rpc/update_admin_order`, {
+          method: 'POST',
           headers: {
             'apikey': SUPA_KEY,
             'Authorization': 'Bearer ' + SUPA_KEY,
-            'Content-Type': 'application/json',
-            'Prefer': 'return=minimal'
+            'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ status: newStatus })
+          body: JSON.stringify({ pin: ADMIN_PIN, p_id: orderId, p_status: newStatus })
         });
         if (res.ok) {
           showToast(`อัปเดตสถานะเป็น "${newStatus}" สำเร็จ!`);
           if (selectEl) {
             selectEl.className = 'status-select ' + newStatus.toLowerCase();
           }
-          // Update stat counters locally
           const target = cachedOrders.find(x => x.id === orderId);
           if (target) target.status = newStatus;
           const pendingCount = cachedOrders.filter(o => o.status === 'PENDING').length;
@@ -522,17 +597,16 @@
     async function saveTracking(orderId) {
       const input = document.getElementById('track-' + orderId);
       const tracking = input ? input.value.trim() : '';
-      const payload = tracking ? { tracking_number: tracking, status: 'SHIPPED' } : { tracking_number: tracking };
+      const newStatus = tracking ? 'SHIPPED' : null;
       try {
-        const res = await fetch(`${SUPA_URL}/direct_orders?id=eq.${orderId}`, {
-          method: 'PATCH',
+        const res = await fetch(`${SUPA_URL}/rpc/update_admin_order`, {
+          method: 'POST',
           headers: {
             'apikey': SUPA_KEY,
             'Authorization': 'Bearer ' + SUPA_KEY,
-            'Content-Type': 'application/json',
-            'Prefer': 'return=minimal'
+            'Content-Type': 'application/json'
           },
-          body: JSON.stringify(payload)
+          body: JSON.stringify({ pin: ADMIN_PIN, p_id: orderId, p_status: newStatus, p_tracking: tracking })
         });
         if (res.ok) {
           const target = cachedOrders.find(x => x.id === orderId);
@@ -599,7 +673,7 @@
       const w = window.open('', '_blank', 'width=520,height=650');
       const now = new Date();
       const printDate = now.toLocaleDateString('th-TH') + ' ' + now.toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' });
-      const isCod = (o.payment_method || '').toUpperCase() === 'COD';
+      const isCod = (o.payment_method || '').toUpperCase().includes('COD');
 
       w.document.write(`
         <!DOCTYPE html>
@@ -644,7 +718,7 @@
               <div class="section">
                 <div class="section-title">ผู้ส่ง (Sender):</div>
                 <div style="font-size:9pt; font-weight:600;">🐟 ร้านปลาสลิดแดดเดียวสุพรรณบุรีแท้ ป้าเข็ม คัดพิเศษ</div>
-                <div style="font-size:8pt; color:#444;">LINE OA: @137gsref | watt29.github.io/pakhem-shop/fish.html</div>
+                <div style="font-size:8pt; color:#222;">ต.เสาธง อ.บางปะหัน จ.พระนครศรีอยุธยา 13220 | โทรผู้ส่ง: 093-532-5959</div><div style="font-size:7.5pt; color:#555;">LINE OA: @137gsref | watt29.github.io/pakhem-shop/</div>
               </div>
 
               <div class="section">
@@ -918,7 +992,7 @@
 
       let slipsHtml = '';
       pendingOrders.forEach((o, idx) => {
-        const isCod = (o.payment_method || '').toUpperCase() === 'COD';
+        const isCod = (o.payment_method || '').toUpperCase().includes('COD');
         const barcodeVal = o.tracking_number || o.order_code;
         const svgId = `barcode-svg-${idx}`;
 
@@ -936,7 +1010,7 @@
               <div class="section">
                 <div class="section-title">ผู้ส่ง (Sender):</div>
                 <div style="font-size:9pt; font-weight:600;">🐟 ร้านปลาสลิดแดดเดียวสุพรรณบุรีแท้ ป้าเข็ม คัดพิเศษ</div>
-                <div style="font-size:8pt; color:#444;">LINE OA: @137gsref | watt29.github.io/pakhem-shop/fish.html</div>
+                <div style="font-size:8pt; color:#222;">ต.เสาธง อ.บางปะหัน จ.พระนครศรีอยุธยา 13220 | โทรผู้ส่ง: 093-532-5959</div><div style="font-size:7.5pt; color:#555;">LINE OA: @137gsref | watt29.github.io/pakhem-shop/</div>
               </div>
 
               <div class="section">
