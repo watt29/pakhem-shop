@@ -289,12 +289,17 @@
       </div>
 
       <section class="panel" style="background:#f8fafc;">
-        <div class="panel-header" style="margin-bottom:12px;">
-          <h2>➕ บันทึกรายจ่าย / ต้นทุนใหม่ลงสมุดบัญชี</h2>
+        <div class="panel-header" style="margin-bottom:10px; flex-wrap:wrap; gap:8px;">
+          <h2>➕ บันทึกรายจ่าย / ต้นทุนใหม่ (ซิงค์เข้า Telegram @pakhem_fish_bot อัตโนมัติ)</h2>
           <div style="display:flex; gap:8px; flex-wrap:wrap;">
-            <a href="https://docs.google.com/spreadsheets/d/1gpuHGAJwt-Vq9WKfwjnCySWz_DqtTzKI91Eg_RNCLIE/edit" target="_blank" class="btn-action" style="background:#059669; color:#fff; border-color:#059669; font-weight:600;">📊 เปิด Google Sheets บัญชีสด</a>
-            <a href="https://drive.google.com/drive/folders/1nY59jT4e90X2hHq-m1fSH8FCXQVLAOds" target="_blank" class="btn-action" style="background:#0284c7; color:#fff; border-color:#0284c7; font-weight:600;">📁 เปิด Google Drive เอกสารบัญชี</a>
+            <button type="button" onclick="sendAccountingSummaryToTelegram()" class="btn-action" style="background:#0088cc; color:#fff; border-color:#0088cc; font-weight:600;">📲 ส่งสรุปงบเข้า Telegram ทันที</button>
+            <a href="https://t.me/pakhem_fish_bot" target="_blank" class="btn-action" style="background:#0f172a; color:#fff; border-color:#0f172a; font-weight:600;">🤖 เปิดบอท Telegram (@pakhem_fish_bot)</a>
+            <a href="https://docs.google.com/spreadsheets/d/1gpuHGAJwt-Vq9WKfwjnCySWz_DqtTzKI91Eg_RNCLIE/edit" target="_blank" class="btn-action" style="background:#059669; color:#fff; border-color:#059669; font-weight:600;">📊 เปิด Google Sheets</a>
+            <a href="https://drive.google.com/drive/folders/1nY59jT4e90X2hHq-m1fSH8FCXQVLAOds" target="_blank" class="btn-action" style="background:#0284c7; color:#fff; border-color:#0284c7; font-weight:600;">📁 เปิด Google Drive</a>
           </div>
+        </div>
+        <div style="background:#eff6ff; border:1px solid #bfdbfe; border-radius:8px; padding:8px 12px; margin-bottom:12px; font-size:0.82rem; color:#1e3a8a;">
+          🤖 <b>เชื่อมต่อ Telegram 2 ทางอัตโนมัติ:</b> พิมพ์บันทึกรายจ่ายในแชท Telegram <a href="https://t.me/pakhem_fish_bot" target="_blank" style="color:#0284c7; font-weight:700;">@pakhem_fish_bot</a> ได้เลย (เช่น พิมพ์ <code>ค่าปลา 3000</code>, <code>ค่าแอด 200</code>, <code>ค่าถุงซีล 500</code>) รายการจะวิ่งเข้าตารางนี้ทันที หรือกรอกในฟอร์มด้านล่างก็จะเด้งแจ้งเตือนเข้า Telegram ทันทีค่ะ!
         </div>
         <form onsubmit="handleAddExpense(event)" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:10px; align-items:end;">
           <div>
@@ -963,6 +968,43 @@
     }
 
 
+
+    const GAS_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbxHAfBm0V67wkiXb1dlAFNbG3NQudcN35zuQ3xjFo0FRHY2ja8TB3-Xj0l_xOWxeF404Q/exec';
+
+    function notifyTelegramAccounting(messageText) {
+      fetch(GAS_WEBHOOK_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({
+          action: 'notify_accounting',
+          message: messageText
+        })
+      }).catch(() => {});
+    }
+
+    function sendAccountingSummaryToTelegram() {
+      const inc = document.getElementById('accStatIncome').innerText;
+      const rec = document.getElementById('accStatReceivable').innerText;
+      const cogs = document.getElementById('accStatCogs').innerText;
+      const opex = document.getElementById('accStatOpex').innerText;
+      const capex = document.getElementById('accStatCapex').innerText;
+      const net = document.getElementById('accStatNetProfit').innerText;
+      const msg =
+        `📊 [สรุปงบกำไรขาดทุนสด — ส่งจากหน้าเว็บ Admin] 🐟\n` +
+        `━━━━━━━━━━━━━━━━━━━━━━\n` +
+        `💵 รายรับจริง (รับเงินแล้ว): ${inc}\n` +
+        `⏳ รอเก็บเงินปลายทาง (COD): ${rec}\n` +
+        `🐟 ต้นทุนปลา+แพ็ก+ส่ง (COGS): ${cogs}\n` +
+        `📢 ค่าแอด & ดำเนินงาน (OPEX): ${opex}\n` +
+        `🏢 สินทรัพย์ถาวร/ตู้แช่ (CAPEX): ${capex}\n` +
+        `━━━━━━━━━━━━━━━━━━━━━━\n` +
+        `💎 กำไร/ขาดทุนสุทธิดำเนินงาน: ${net}\n` +
+        `🌐 เปิดตารางสมุดบัญชี: https://watt29.github.io/pakhem-shop/admin.html#accounting`;
+      notifyTelegramAccounting(msg);
+      showToast('📲 ส่งสรุปงบกำไรขาดทุนเข้า Telegram (@pakhem_fish_bot) เรียบร้อยแล้ว!');
+    }
+
     let cachedLedger = [];
 
     const ACC_CATEGORY_LABELS = {
@@ -1115,7 +1157,17 @@
         if (res.ok) {
           document.getElementById('expAmount').value = '';
           document.getElementById('expDesc').value = '';
-          showToast(`✅ บันทึกรายจ่าย "${desc}" (${amt.toLocaleString()} ฿) สำเร็จ!`);
+          showToast(`✅ บันทึกรายจ่าย "${desc}" (${amt.toLocaleString()} ฿) + แจ้ง Telegram แล้ว!`);
+          const catLabel = ACC_CATEGORY_LABELS[cat] || cat;
+          notifyTelegramAccounting(
+            `📝 [บันทึกรายจ่ายจากหน้าเว็บ Admin]\n` +
+            `━━━━━━━━━━━━━━━━━━\n` +
+            `📂 หมวดหมู่: ${catLabel}\n` +
+            `💬 รายการ: ${desc}\n` +
+            `💵 จำนวนเงิน: ${amt.toLocaleString('th-TH')} บาท\n` +
+            `📅 วันที่: ${dt}\n` +
+            `🌐 ดูงบบัญชีสด: https://watt29.github.io/pakhem-shop/admin.html#accounting`
+          );
           loadAccounting();
         } else {
           alert('ไม่สามารถบันทึกรายจ่ายได้');
@@ -1138,7 +1190,8 @@
           body: JSON.stringify({ pin: ADMIN_PIN, p_id: expId })
         });
         if (res.ok) {
-          showToast('🗑️ ลบรายการเรียบร้อยแล้ว!');
+          showToast('🗑️ ลบรายการ + อัปเดต Telegram เรียบร้อยแล้ว!');
+          notifyTelegramAccounting(`🗑️ [ลบรายการบัญชีจากหน้าเว็บ Admin] ลบรายการ "${desc}" (ID: EXP-${expId}) เรียบร้อยแล้วค่ะ`);
           loadAccounting();
         } else {
           alert('ไม่สามารถลบรายการได้');
@@ -1279,6 +1332,10 @@
         loadAccounting();
         renderBenchmarks();
         renderSuppliers();
+        if (window.location.hash === '#accounting') {
+          const accBtn = document.querySelector("nav button[onclick*=\"accounting\"]");
+          if (accBtn) switchTab('accounting', accBtn);
+        }
       } else {
         if (gate) {
           gate.style.display = 'flex';
@@ -1305,6 +1362,10 @@
         loadAccounting();
         renderBenchmarks();
         renderSuppliers();
+        if (window.location.hash === '#accounting') {
+          const accBtn = document.querySelector("nav button[onclick*=\"accounting\"]");
+          if (accBtn) switchTab('accounting', accBtn);
+        }
       } else {
         err.style.display = 'block';
         input.value = '';
