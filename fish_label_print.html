@@ -234,9 +234,10 @@
 
     <div class="controls">
       <div class="control-item">
-        <label>รูปแบบสติกเกอร์ที่ต้องการพิมพ์:</label>
+        <label>รูปแบบที่ต้องการพิมพ์:</label>
         <select id="styleSelect" onchange="renderStickers()">
-          <option value="artwork_pair" selected>🌟 ชุดคู่หน้า-หลังถุง (โลโก้หน้าถุง + ฉลากหลังถุงพร้อมวันที่)</option>
+          <option value="box_insert" selected>📦 ใบแนบในกล่องพัสดุ (พิมพ์กระดาษ A4 ธรรมดา ตัดใส่ในกล่อง — ไม่ต้องใช้สติกเกอร์)</option>
+          <option value="artwork_pair">🌟 ชุดคู่หน้า-หลังถุง (โลโก้หน้าถุง + ฉลากหลังถุงพร้อมวันที่)</option>
           <option value="artwork_front">🐟 เฉพาะโลโก้แปะหน้าถุงซีล (สติกเกอร์ไดคัทป้าเข็ม)</option>
           <option value="artwork_back">📋 เฉพาะฉลากหลังถุงซีล (รายละเอียด + น้ำหนัก & วันที่อัตโนมัติ)</option>
           <option value="classic">📄 แบบตารางมาตรฐาน (Classic Clean Label)</option>
@@ -261,8 +262,9 @@
       <div class="control-item">
         <label>จำนวนดวงต่อแผ่น A4:</label>
         <select id="countSelect" onchange="renderStickers()">
-          <option value="6" selected>6 ดวง / แผ่น A4 (3 คู่หน้า-หลัง มาตรฐาน)</option>
-          <option value="4">4 ดวง / แผ่น A4 (2 คู่หน้า-หลัง ไซส์ใหญ่)</option>
+          <option value="4" selected>4 ใบ / แผ่น A4 (ขนาดกำลังดี อ่านง่ายสำหรับผู้ใหญ่)</option>
+          <option value="6">6 ใบ / แผ่น A4 (ประหยัดกระดาษ)</option>
+          <option value="2">2 ใบ / แผ่น A4 (ครึ่งแผ่น A5 ใบใหญ่พิเศษ)</option>
         </select>
       </div>
     </div>
@@ -304,16 +306,80 @@
       `;
     }
 
+    function buildBoxInsertCard(weightText, mfgText, bbfText, qrUrl) {
+      return `
+        <div class="label-card" style="border: 1.5px dashed #334155; background: #ffffff; border-radius: 10px;">
+          <div style="background: #f8fafc; color: #0f172a; padding: 8px 12px; border-bottom: 1.5px solid #cbd5e1; display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <div style="font-size: 1rem; font-weight: 800; color: #9a3412;">🐟 ปลาสลิดแดดเดียวสุพรรณแท้ "ป้าเข็ม คัดพิเศษ"</div>
+              <div style="font-size: 0.68rem; color: #475569; font-weight: 600;">ไซส์จัมโบ้ 5–7 ตัว/กก. • เนื้อแน่นหนาฟู มันแทรก เค็มน้อยกลมกล่อม</div>
+            </div>
+            <div style="font-size:0.65rem; font-weight:700; border:1px solid #9a3412; color:#9a3412; padding:2px 7px; border-radius:6px; text-align:center;">✂️ ใบแนบในกล่อง<br>ปลอดสาร 100%</div>
+          </div>
+
+          <div class="label-body" style="padding: 9px 12px; font-size: 0.68rem; line-height: 1.48;">
+            <div style="margin-bottom: 6px; color: #0f172a;">
+              <b>🙏 ขอบพระคุณที่อุดหนุนปลาสลิดป้าเข็มนะคะ</b><br>
+              ป้าเข็มตั้งใจคัดปลาสลิดสุพรรณแท้ตัวใหญ่ สด สะอาด ตากแดดธรรมชาติ และซีลสูญญากาศแช่แข็งส่งตรงถึงมือคุณลูกค้าค่ะ
+            </div>
+
+            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:6px 8px; margin-bottom:6px;">
+              <div><b>❄️ 1. เมื่อได้รับสินค้าแล้ว (วิธีเก็บรักษา):</b></div>
+              <div>• เนื่องจากสินค้าแพ็กแช่แข็งมาในซองฟอยล์เก็บอุณหภูมิ <b>เมื่อแกะกล่องแล้ว แนะนำให้นำถุงปลาเข้าช่องฟรีซ (ช่องแช่แข็ง) ทันที</b></div>
+              <div>• <b>ช่องฟรีซ (≤ -18°C):</b> เก็บได้นาน <b>6–12 เดือน</b> | <b>ช่องเย็นธรรมดา:</b> เก็บได้ <b>7–10 วัน</b></div>
+            </div>
+
+            <div style="background:#fffbeb; border:1px solid #fde68a; border-radius:6px; padding:6px 8px; margin-bottom:6px;">
+              <div><b>🍳 2. เคล็ดลับการทอดให้หนังกรอบ เนื้อนุ่มฟู ไม่ติดกระทะ:</b></div>
+              <div>• นำปลาออกจากช่องฟรีซ พักไว้ให้คลายความเย็น (ไม่ต้องล้างน้ำซ้ำ) และซับผิวปลาให้แห้ง</div>
+              <div>• ตั้งกระทะใส่น้ำมันให้ร้อน แล้วลดเป็น <b>"ไฟกลางค่อนอ่อน"</b> ทอดจนเหลืองทองกรอบนอกนุ่มใน</div>
+            </div>
+
+            <div style="font-size:0.63rem; color:#334155; margin-bottom:6px;">
+              <b>🛡️ ส่วนประกอบและมาตรฐาน:</b> เนื้อปลาสลิดสุพรรณแท้ 97% + เกลือสมุทรธรรมชาติ 3% (ไร้สารกันบูด 0% • ไร้ฟอร์มาลีน 0% • ไร้ผงชูรส 0%) | <i>ข้อมูลผู้แพ้อาหาร: มีปลา</i>
+            </div>
+
+            <div class="meta-row">
+              <div class="meta-fields">
+                <div class="weight-highlight" style="background:#fef3c7; color:#92400e; border:1px solid #f59e0b;">ขนาดบรรจุ: ${weightText || '________________'}</div>
+                <div><b>วันที่ผลิต (MFG):</b> ${mfgText}</div>
+                <div><b>ควรบริโภคก่อน (BBF):</b> ${bbfText}</div>
+                <div style="font-size:0.6rem; color:#047857; font-weight:700;">💯 รับประกันความสด: หากถุงซีลรั่ว/เสียหาย ทักแชทเคลมชุดใหม่ฟรี 100%</div>
+              </div>
+              <div class="qr-box">
+                <img src="${qrUrl}" alt="QR สั่งซื้อปลาสลิดป้าเข็ม">
+                <span>สแกนสั่งเพิ่ม<br>LINE: @137gsref</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="label-footer" style="background:#1e293b;">
+            <span>💬 ทักแชทเพจ: ป้าเข็ม ขายของ | LINE: @137gsref</span>
+            <span>📍 ต.เสาธง อ.บางปะหัน จ.พระนครศรีอยุธยา</span>
+          </div>
+        </div>
+      `;
+    }
+
     function renderStickers() {
       const styleMode = document.getElementById('styleSelect').value;
       const weightText = document.getElementById('weightSelect').value;
       const mfgText = document.getElementById('mfgInput').value;
       const bbfText = document.getElementById('bbfInput').value;
-      const count = parseInt(document.getElementById('countSelect').value, 10) || 6;
+      const count = parseInt(document.getElementById('countSelect').value, 10) || 4;
       const qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=160x160&margin=2&data=' + encodeURIComponent('https://watt29.github.io/pakhem-shop/fish.html');
+
+      const sheetEl = document.getElementById('stickerSheet');
+      if (sheetEl) {
+        sheetEl.style.gridTemplateColumns = (count === 2) ? '1fr' : '1fr 1fr';
+      }
 
       let html = '';
       for (let i = 0; i < count; i++) {
+        if (styleMode === 'box_insert') {
+          html += buildBoxInsertCard(weightText, mfgText, bbfText, qrUrl);
+          continue;
+        }
         if (styleMode === 'artwork_pair') {
           html += (i % 2 === 0) ? buildFrontArtCard() : buildBackArtCard(weightText, mfgText, bbfText);
           continue;
