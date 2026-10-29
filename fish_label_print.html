@@ -183,6 +183,39 @@
       align-items: center;
     }
 
+    /* Official Branded Artwork Sticker Card */
+    .art-card {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #ffffff;
+      border: 1px dashed #cbd5e1;
+      border-radius: 12px;
+      padding: 4px;
+      page-break-inside: avoid;
+      overflow: hidden;
+    }
+    .art-card img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: contain;
+    }
+    .back-meta-overlay {
+      position: absolute;
+      bottom: 9.8%;
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: #7c2d12;
+      line-height: 1.15;
+      text-align: center;
+      pointer-events: none;
+    }
+    .back-meta-weight { left: 8.5%; width: 20%; }
+    .back-meta-mfg { left: 29.8%; width: 17.5%; }
+    .back-meta-bbf { left: 48.2%; width: 18%; }
+
     @media print {
       body { background: #fff; padding: 0; }
       .toolbar { display: none !important; }
@@ -194,18 +227,27 @@
 
   <div class="toolbar">
     <div>
-      <h1>🏷️ ระบบพิมพ์สติกเกอร์ฉลากแปะหน้าถุงซีลสูญญากาศ — ปลาสลิดแดดเดียว ป้าเข็ม</h1>
-      <p>ออกแบบตามมาตรฐานฉลากอาหารแช่แข็ง (ระบุส่วนประกอบ 97%/3%, ข้อมูลผู้แพ้อาหาร, อุณหภูมิเก็บรักษา ≤ -18°C และ QR สแกนสั่งซ้ำ)</p>
+      <h1>🏷️ ระบบพิมพ์สติกเกอร์ฉลากแปะถุงซีลสูญญากาศ — ปลาสลิดแดดเดียว ป้าเข็ม</h1>
+      <p>รองรับทั้งสติกเกอร์โลโก้ไดคัทหน้าถุง + ฉลากรายละเอียดหลังถุง (พิมพ์น้ำหนักสุทธิ วันผลิต และวันหมดอายุให้อัตโนมัติ)</p>
     </div>
     <button class="btn-print" onclick="window.print()">🖨️ สั่งพิมพ์สติกเกอร์ / บันทึก PDF</button>
 
     <div class="controls">
       <div class="control-item">
+        <label>รูปแบบสติกเกอร์ที่ต้องการพิมพ์:</label>
+        <select id="styleSelect" onchange="renderStickers()">
+          <option value="artwork_pair" selected>🌟 ชุดคู่หน้า-หลังถุง (โลโก้หน้าถุง + ฉลากหลังถุงพร้อมวันที่)</option>
+          <option value="artwork_front">🐟 เฉพาะโลโก้แปะหน้าถุงซีล (สติกเกอร์ไดคัทป้าเข็ม)</option>
+          <option value="artwork_back">📋 เฉพาะฉลากหลังถุงซีล (รายละเอียด + น้ำหนัก & วันที่อัตโนมัติ)</option>
+          <option value="classic">📄 แบบตารางมาตรฐาน (Classic Clean Label)</option>
+        </select>
+      </div>
+      <div class="control-item">
         <label>ขนาดน้ำหนักสุทธิบนฉลาก:</label>
         <select id="weightSelect" onchange="renderStickers()">
-          <option value="900 - 1,000 กรัม (ประมาณ 5-7 ตัว)" selected>ชุดขายดี 900 - 1,000 กรัม (ประมาณ 5-7 ตัว)</option>
-          <option value="450 - 500 กรัม (ประมาณ 3-4 ตัว)">ชุดพอดีมื้อ 450 - 500 กรัม (ประมาณ 3-4 ตัว)</option>
-          <option value="[ ] 450-500 กรัม (3-4 ตัว)   [ ] 900-1,000 กรัม (5-7 ตัว)">แบบมีช่องติ๊กเลือกได้ ([ ] 500g / [ ] 1,000g)</option>
+          <option value="900-1,000 กรัม (5-7 ตัว)" selected>ชุดขายดี 900 - 1,000 กรัม (ประมาณ 5-7 ตัว)</option>
+          <option value="450-500 กรัม (3-4 ตัว)">ชุดพอดีมื้อ 450 - 500 กรัม (ประมาณ 3-4 ตัว)</option>
+          <option value="" >เว้นว่างไว้เขียนเองหน้างาน</option>
         </select>
       </div>
       <div class="control-item">
@@ -219,8 +261,8 @@
       <div class="control-item">
         <label>จำนวนดวงต่อแผ่น A4:</label>
         <select id="countSelect" onchange="renderStickers()">
-          <option value="6" selected>6 ดวง / แผ่น A4 (ขนาดมาตรฐานแปะหน้าถุง)</option>
-          <option value="4">4 ดวง / แผ่น A4 (ขนาดใหญ่พิเศษ)</option>
+          <option value="6" selected>6 ดวง / แผ่น A4 (3 คู่หน้า-หลัง มาตรฐาน)</option>
+          <option value="4">4 ดวง / แผ่น A4 (2 คู่หน้า-หลัง ไซส์ใหญ่)</option>
         </select>
       </div>
     </div>
@@ -243,7 +285,27 @@
       renderStickers();
     }
 
+    function buildFrontArtCard() {
+      return `
+        <div class="art-card">
+          <img src="pakhem_logo_transparent.png?v=20261029" alt="โลโก้หน้าถุงซีล ปลาสลิดป้าเข็ม">
+        </div>
+      `;
+    }
+
+    function buildBackArtCard(weightText, mfgText, bbfText) {
+      return `
+        <div class="art-card">
+          <img src="pakhem_sticker_back.png?v=20261029" alt="ฉลากหลังถุงซีล ปลาสลิดป้าเข็ม">
+          <div class="back-meta-overlay back-meta-weight">${weightText}</div>
+          <div class="back-meta-overlay back-meta-mfg">${mfgText}</div>
+          <div class="back-meta-overlay back-meta-bbf">${bbfText}</div>
+        </div>
+      `;
+    }
+
     function renderStickers() {
+      const styleMode = document.getElementById('styleSelect').value;
       const weightText = document.getElementById('weightSelect').value;
       const mfgText = document.getElementById('mfgInput').value;
       const bbfText = document.getElementById('bbfInput').value;
@@ -252,6 +314,18 @@
 
       let html = '';
       for (let i = 0; i < count; i++) {
+        if (styleMode === 'artwork_pair') {
+          html += (i % 2 === 0) ? buildFrontArtCard() : buildBackArtCard(weightText, mfgText, bbfText);
+          continue;
+        }
+        if (styleMode === 'artwork_front') {
+          html += buildFrontArtCard();
+          continue;
+        }
+        if (styleMode === 'artwork_back') {
+          html += buildBackArtCard(weightText, mfgText, bbfText);
+          continue;
+        }
         html += `
           <div class="label-card">
             <div class="label-header">
