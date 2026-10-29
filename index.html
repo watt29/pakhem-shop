@@ -2695,6 +2695,126 @@
 
 
 
+
+    // === Guided Address Navigation Helpers (GPS + Zip Auto-Fill + Auto-Save Customer Info) ===
+    let lastAutoAreaText = '';
+
+    function syncQuickAddressHelper() {
+      const house = (document.getElementById('quickHouseNo')?.value || '').trim();
+      const zip = (document.getElementById('quickZipCode')?.value || '').trim();
+      const addrEl = document.getElementById('custAddress');
+      if (!addrEl) return;
+      if (house || lastAutoAreaText || zip) {
+        const parts = [];
+        if (house) parts.push('บ้านเลขที่ ' + house);
+        if (lastAutoAreaText) parts.push(lastAutoAreaText);
+        if (zip && (!lastAutoAreaText || !lastAutoAreaText.includes(zip))) parts.push(zip);
+        addrEl.value = parts.join(' ');
+      }
+    }
+
+    async function handleQuickZipLookup(zipVal) {
+      const cleanZip = (zipVal || '').replace(/\D/g, '').slice(0, 5);
+      const zipInput = document.getElementById('quickZipCode');
+      if (zipInput && zipInput.value !== cleanZip) zipInput.value = cleanZip;
+      const hintEl = document.getElementById('zipAutoResultHint');
+      if (cleanZip.length !== 5) {
+        if (hintEl) hintEl.style.display = 'none';
+        syncQuickAddressHelper();
+        return;
+      }
+      if (hintEl) {
+        hintEl.style.display = 'block';
+        hintEl.innerText = '⏳ กำลังค้นหา ตำบล/อำเภอ/จังหวัด จากรหัสไปรษณีย์ ' + cleanZip + '...';
+      }
+      try {
+        const res = await fetch('https://nominatim.openstreetmap.org/search?postalcode=' + cleanZip + '&country=Thailand&format=json&addressdetails=1&accept-language=th&limit=1');
+        if (res.ok) {
+          const data = await res.json();
+          if (data && data.length > 0) {
+            const a = data[0].address || {};
+            const sub = a.suburb || a.tambon || a.village || a.town || a.quarter || '';
+            const dist = a.city_district || a.amphoe || a.county || a.municipality || a.city || '';
+            const prov = a.state || a.province || a.city || '';
+            const areaParts = [];
+            if (sub) areaParts.push(sub);
+            if (dist && dist !== sub) areaParts.push(dist);
+            if (prov && prov !== dist) areaParts.push('จ.' + prov.replace(/^จังหวัด/, ''));
+            areaParts.push(cleanZip);
+            lastAutoAreaText = areaParts.join(' ');
+            if (hintEl) {
+              hintEl.innerText = '✅ เติมพื้นที่อัตโนมัติแล้ว: ' + lastAutoAreaText + ' (พิมพ์แค่บ้านเลขที่ด้านซ้ายได้เลยค่ะ)';
+            }
+            syncQuickAddressHelper();
+            return;
+          }
+        }
+      } catch (e) {
+        console.warn('Zip lookup error:', e);
+      }
+      if (hintEl) hintEl.style.display = 'none';
+      syncQuickAddressHelper();
+    }
+
+    function fillAddressFromGPS() {
+      const btn = document.getElementById('btnGpsAutoFill');
+      const hintEl = document.getElementById('zipAutoResultHint');
+      if (!navigator.geolocation) {
+        alert('อุปกรณ์ของคุณไม่รองรับการดึงพิกัด กรุณาพิมพ์รหัสไปรษณีย์ 5 หลักแทนนะคะ');
+        return;
+      }
+      if (btn) {
+        btn.disabled = true;
+        btn.innerText = '⏳ กำลังดึงที่อยู่จาก GPS...';
+      }
+      navigator.geolocation.getCurrentPosition(async function(pos) {
+        try {
+          const lat = pos.coords.latitude;
+          const lon = pos.coords.longitude;
+          const res = await fetch('https://nominatim.openstreetmap.org/reverse?format=json&lat=' + lat + '&lon=' + lon + '&addressdetails=1&accept-language=th');
+          if (res.ok) {
+            const data = await res.json();
+            const a = data.address || {};
+            const road = a.road || a.soi || '';
+            const sub = a.suburb || a.tambon || a.village || a.quarter || '';
+            const dist = a.city_district || a.amphoe || a.county || a.municipality || '';
+            const prov = a.state || a.province || a.city || '';
+            const zip = a.postcode || '';
+            const areaParts = [];
+            if (road) areaParts.push(road);
+            if (sub) areaParts.push(sub);
+            if (dist && dist !== sub) areaParts.push(dist);
+            if (prov && prov !== dist) areaParts.push('จ.' + prov.replace(/^จังหวัด/, ''));
+            if (zip) {
+              areaParts.push(zip);
+              const zipEl = document.getElementById('quickZipCode');
+              if (zipEl) zipEl.value = zip;
+            }
+            lastAutoAreaText = areaParts.join(' ');
+            syncQuickAddressHelper();
+            if (hintEl) {
+              hintEl.style.display = 'block';
+              hintEl.innerText = '📍 ดึงเขตพื้นที่จาก GPS สำเร็จแล้วค่ะ! กรอกเพิ่มแค่ [บ้านเลขที่] ช่องที่ 1 ได้เลยจ้า';
+            }
+            document.getElementById('quickHouseNo')?.focus();
+          }
+        } catch (err) {
+          console.warn('GPS reverse geocode error:', err);
+        } finally {
+          if (btn) {
+            btn.disabled = false;
+            btn.innerText = '✅ ดึงตำแหน่งสำเร็จ (กดเพื่ออัปเดต)';
+          }
+        }
+      }, function() {
+        if (btn) {
+          btn.disabled = false;
+          btn.innerText = '📍 ดึงตำแหน่งปัจจุบัน (ไม่ต้องพิมพ์จังหวัด/อำเภอเอง)';
+        }
+        alert('กรุณากดอนุญาตตำแหน่งที่ตั้ง หรือพิมพ์รหัสไปรษณีย์ 5 หลักเพื่อให้ระบบเติมจังหวัดอัตโนมัติค่ะ');
+      }, { enableHighAccuracy: true, timeout: 10000 });
+    }
+
     let currentSelectedSku = 'SKU-SLID-MD-1KG';
 
     let currentPayment = 'TRANSFER';
