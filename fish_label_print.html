@@ -216,6 +216,23 @@
     .back-meta-mfg { left: 29.8%; width: 17.5%; }
     .back-meta-bbf { left: 48.2%; width: 18%; }
 
+    /* New Vacuum Bag Sticker MFG/BBF Overlay (819x1024) */
+    .vacuum-date-overlay {
+      position: absolute;
+      left: 14.2%;
+      width: 22.5%;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #fef3c7;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9);
+      text-align: center;
+      line-height: 1;
+      pointer-events: none;
+      letter-spacing: 0.2px;
+    }
+    .vacuum-date-mfg { bottom: 17.5%; }
+    .vacuum-date-bbf { bottom: 12.8%; }
+
     @media print {
       body { background: #fff; padding: 0; }
       .toolbar { display: none !important; }
@@ -236,7 +253,8 @@
       <div class="control-item">
         <label>รูปแบบที่ต้องการพิมพ์:</label>
         <select id="styleSelect" onchange="renderStickers()">
-          <option value="box_insert" selected>📦 ใบแนบในกล่องพัสดุ (พิมพ์กระดาษ A4 ธรรมดา ตัดใส่ในกล่อง — ไม่ต้องใช้สติกเกอร์)</option>
+          <option value="vacuum_sticker" selected>🏷️ สติกเกอร์บนถุงซีลสูญญากาศ (ดีไซน์ใหม่ ต.เสาธง อ.บางปะหัน — พิมพ์ MFG/BBF อัตโนมัติ)</option>
+          <option value="box_insert">📦 ใบแนบในกล่องพัสดุ (พิมพ์กระดาษ A4 ธรรมดา ตัดใส่ในกล่อง — ไม่ต้องใช้สติกเกอร์)</option>
           <option value="artwork_pair">🌟 ชุดคู่หน้า-หลังถุง (โลโก้หน้าถุง + ฉลากหลังถุงพร้อมวันที่)</option>
           <option value="artwork_front">🐟 เฉพาะโลโก้แปะหน้าถุงซีล (สติกเกอร์ไดคัทป้าเข็ม)</option>
           <option value="artwork_back">📋 เฉพาะฉลากหลังถุงซีล (รายละเอียด + น้ำหนัก & วันที่อัตโนมัติ)</option>
@@ -285,6 +303,20 @@
       document.getElementById('mfgInput').value = fmtThaiDate(now);
       document.getElementById('bbfInput').value = fmtThaiDate(bbf);
       renderStickers();
+    }
+
+    function buildVacuumStickerCard(weightText, mfgText, bbfText) {
+      const is500g = (weightText || '').includes('500');
+      const imgSrc = is500g
+        ? 'pakhem_vacuum_bag_sticker.jpg?v=20261030'
+        : 'pakhem_vacuum_bag_sticker_1kg.jpg?v=20261030';
+      return `
+        <div class="art-card" style="padding: 2px;">
+          <img src="${imgSrc}" alt="สติกเกอร์บนถุงซีล ปลาสลิดป้าเข็ม">
+          <div class="vacuum-date-overlay vacuum-date-mfg">${mfgText}</div>
+          <div class="vacuum-date-overlay vacuum-date-bbf">${bbfText}</div>
+        </div>
+      `;
     }
 
     function buildFrontArtCard() {
@@ -381,6 +413,10 @@
 
       let html = '';
       for (let i = 0; i < count; i++) {
+        if (styleMode === 'vacuum_sticker') {
+          html += buildVacuumStickerCard(weightText, mfgText, bbfText);
+          continue;
+        }
         if (styleMode === 'box_insert') {
           html += buildBoxInsertCard(weightText, mfgText, bbfText, qrUrl);
           continue;
