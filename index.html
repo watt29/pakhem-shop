@@ -2210,28 +2210,130 @@
           <label>📦 เงื่อนไขการจัดส่งและการชำระเงิน (เลือกตามพื้นที่จัดส่ง) *</label>
           <div class="pay-methods">
             <div class="pay-opt active" id="ship-foil" onclick="selectShippingMode('FOIL_ICE')">
-              🚚 แบบที่ 1: พื้นที่ถึงใน 1–2 วัน<br><small id="shipFoilSub" style="font-weight:500; font-size:0.75rem; color:#047857;">แช่แข็ง+ฟอยล์เก็บอุณหภูมิ (มีปลายทาง)</small>
+              🚚 แบบที่ 1: พื้นที่ถึงภายใน 1–2 วัน<br><small id="shipFoilSub" style="font-weight:500; font-size:0.75rem; color:#047857;">แช่แข็ง + ฟอยล์เก็บอุณหภูมิ (มีปลายทาง)</small>
             </div>
             <div class="pay-opt" id="ship-cold" onclick="selectShippingMode('COLD_TRUCK')">
-              ❄️ แบบที่ 2: พื้นที่ 3–4 วัน (รถห้องเย็น)<br><small id="shipColdSub" style="font-weight:500; font-size:0.75rem; color:#64748b;">รถควบคุมอุณหภูมิ (โอนชำระล่วงหน้า)</small>
+              ❄️ แบบที่ 2: พื้นที่ 3–4 วัน (รถห้องเย็น)<br><small id="shipColdSub" style="font-weight:500; font-size:0.75rem; color:#64748b;">รถควบคุมอุณหภูมิ (ชำระเงินล่วงหน้า)</small>
             </div>
           </div>
           <div style="margin-top:10px; background:#f0fdf4; border:1.5px solid #86efac; border-radius:10px; padding:12px 14px; font-size:0.83rem; color:#065f46; line-height:1.55;">
             <div style="font-weight:700; margin-bottom:4px;">📦 เงื่อนไขการจัดส่งและการชำระเงิน</div>
             <div style="margin-bottom:6px;">เพื่อรักษาคุณภาพและความสดใหม่ของปลาสลิด ทางร้านเลือกวิธีจัดส่งให้เหมาะสมกับระยะเวลาขนส่งในแต่ละพื้นที่ ดังนี้ค่ะ</div>
             <div style="margin-bottom:6px;">
-              <b>🚚 แบบที่ 1: พื้นที่จัดส่งถึงภายใน 1–2 วัน</b> (กรุงเทพฯ ปริมณฑล และจังหวัดที่จัดส่งถึงได้ภายใน 1–2 วัน)<br>
+              <b>🚚 แบบที่ 1: พื้นที่จัดส่งถึงภายใน 1–2 วัน</b> (สำหรับกรุงเทพฯ ปริมณฑล และจังหวัดที่สามารถจัดส่งถึงได้ภายใน 1–2 วัน)<br>
               • จัดส่งสินค้าแช่แข็ง พร้อมบรรจุภัณฑ์ฟอยล์เก็บอุณหภูมิ<br>
               • สามารถเลือกชำระเงินปลายทางได้ในพื้นที่ที่ผู้ให้บริการรองรับ
             </div>
             <div style="margin-bottom:6px;">
-              <b>❄️ แบบที่ 2: พื้นที่จัดส่งใช้เวลา 3–4 วัน</b> (จังหวัดที่ใช้ระยะเวลาขนส่งนานกว่า จัดส่งด้วยรถควบคุมอุณหภูมิ / รถห้องเย็น)<br>
+              <b>❄️ แบบที่ 2: พื้นที่จัดส่งใช้เวลา 3–4 วัน</b> (สำหรับจังหวัดที่ใช้ระยะเวลาขนส่งนานกว่า ทางร้านจะจัดส่งด้วยรถควบคุมอุณหภูมิ / รถห้องเย็น เพื่อช่วยรักษาคุณภาพสินค้าให้เหมาะสมตลอดการขนส่ง)<br>
               • ขอสงวนสิทธิ์จัดส่งหลังจากได้รับชำระเงินเต็มจำนวนแล้ว<br>
               • ไม่สามารถใช้บริการเก็บเงินปลายทางได้ เนื่องจากเป็นรูปแบบการจัดส่งเฉพาะสำหรับพื้นที่ดังกล่าว
             </div>
-            <div style="font-size:0.8rem; color:#047857;">💚 ก่อนยืนยันคำสั่งซื้อ ทางร้านจะแจ้งวิธีจัดส่ง ระยะเวลาโดยประมาณ และยอดชำระให้ทราบอย่างชัดเจนค่ะ 🙏</div>
+            <div style="font-size:0.8rem; color:#047857;">💚 ทางร้านให้ความสำคัญกับคุณภาพสินค้าและความมั่นใจของลูกค้าทุกออเดอร์ ก่อนยืนยันคำสั่งซื้อ ทางร้านจะแจ้งวิธีจัดส่ง ระยะเวลาโดยประมาณ และยอดชำระให้ทราบอย่างชัดเจนค่ะ ขอบคุณที่ไว้วางใจเลือกซื้อปลาสลิดจากทางร้านนะคะ 🙏</div>
           </div>
         </div>
+
+<div class="form-group">
+
+          <label>วิธีชำระเงิน (โอนเงินส่งด่วนเก็บความเย็นฟรี 0 บาททุกชุด!) *</label>
+
+          <div class="pay-methods">
+
+            <div class="pay-opt active" id="pay-transfer" onclick="selectPayment('TRANSFER')">
+
+              💳 โอนเงิน / แนบสลิป<br><small style="font-weight:700; font-size:0.76rem; color:#047857;">🌟 แนะนำ: ส่งฟรี 0 บาท!</small>
+
+            </div>
+
+            <div class="pay-opt" id="pay-cod" onclick="selectPayment('COD')">
+
+              🚚 เก็บเงินปลายทาง (COD)<br><small id="codSubLabel" style="font-weight:600; font-size:0.75rem; color:#64748b;">ค่าบริการ COD +20 บาท</small>
+
+            </div>
+
+            <div class="pay-opt" id="pay-usdt" onclick="selectPayment('USDT')">
+
+              🟡 เหรียญดิจิทัล USDT<br><small style="font-weight:700; font-size:0.76rem; color:#d97706;">⚡ BEP-20 (ส่งฟรี!)</small>
+
+            </div>
+
+          </div>
+
+          <!-- COD Notice & Delivery Estimate Box -->
+
+          <div id="codNoticeBox" style="display:none; margin-top:10px; background:#fffbeb; border:1.5px solid #fcd34d; border-radius:10px; padding:11px 14px; font-size:0.84rem; color:#92400e; line-height:1.5;">
+
+            <div><b>🚚 เงื่อนไขเก็บเงินปลายทาง (COD +20 บาท):</b></div>
+
+            <div id="codDeliveryEtaText" style="margin-top:3px;">• ⏱️ <b>รอบการจัดส่ง:</b> ทางร้านจะไปส่งที่ขนส่งภายใน <b>1–2 วัน</b> <i>(เพราะทำปลาสดใหม่ ตากแดด 1 วัน และแช่แข็งอย่างน้อย 12 ชม. ก่อนแพ็กส่งค่ะ)</i></div>
+
+            <div>• ❄️ เนื่องจากเป็นปลาสลิดแพ็กเจลความเย็นสดใหม่ <b>รบกวนสแตนด์บายรับสายพนักงานขนส่งและเตรียมเงินสดให้พอดี</b> เมื่อพัสดุไปถึงด้วยนะคะ (เปลี่ยนเป็น <b>"💳 โอนเงิน"</b> เพื่อรับสิทธิ์ส่งฟรี 0 บาท ประหยัดทันที 20.- ค่ะ!)</div>
+
+          </div>
+
+          <!-- 2KG Transfer-Only Protection Notice -->
+
+          <div id="cod2kgLockNotice" style="display:none; margin-top:10px; background:#eff6ff; border:1.5px solid #93c5fd; border-radius:10px; padding:11px 14px; font-size:0.84rem; color:#1e40af; line-height:1.5;">
+
+            🛡️ <b>ชุดครอบครัวใหญ่ 2 กิโลกรัม (1,090.- ส่งฟรีรถควบคุมความเย็น)</b> ขอสงวนสิทธิ์รับเฉพาะ <b>โอนชำระล่วงหน้า</b> เพื่อป้องกันพัสดุอาหารแช่แข็งยอดสูงตกค้างและรับประกันความสดใหม่ 100% ถึงมือคุณลูกค้าค่ะ 💕
+
+          </div>
+
+        </div>
+
+
+
+                <!-- Crypto (USDT & BTC) Payment Details Box -->
+
+        <div id="usdtDetailsBox" style="display:none; background:#fffbeb; border:1.5px dashed #f59e0b; border-radius:12px; padding:16px; margin-top:12px;">
+
+          <div style="font-weight:700; color:#b45309; margin-bottom:10px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px;">
+
+            <span>🪙 ชำระด้วยเหรียญดิจิทัล (Crypto)</span>
+
+            <div style="display:flex; gap:6px;">
+
+              <button type="button" id="tab-usdt" onclick="switchCryptoTab('USDT')" style="background:#fef3c7; color:#b45309; border:1.5px solid #f59e0b; border-radius:6px; padding:3px 10px; font-size:0.8rem; font-weight:700; cursor:pointer;">🟡 USDT (BEP-20)</button>
+
+              <button type="button" id="tab-btc" onclick="switchCryptoTab('BTC')" style="background:#ffffff; color:#64748b; border:1.5px solid #cbd5e1; border-radius:6px; padding:3px 10px; font-size:0.8rem; font-weight:700; cursor:pointer;">🟠 Bitcoin (BTC)</button>
+
+            </div>
+
+          </div>
+
+
+
+          <!-- USDT Sub-Box -->
+
+          <div id="cryptoUsdtSubBox">
+
+            <div style="background:#ffffff; border-radius:8px; padding:12px 14px; font-size:0.92rem; margin-bottom:12px; border:1px solid #fde68a; line-height:1.65;">
+
+              <div><b>สินทรัพย์:</b> <span style="color:#059669; font-weight:700;">USDT (Tether)</span></div>
+
+              <div><b>เครือข่าย (Network):</b> <span style="color:#d97706; font-weight:800; background:#fef3c7; padding:2px 6px; border-radius:4px;">BNB Smart Chain (BEP-20)</span> <span style="font-size:0.8rem; color:#64748b;">(ค่าโอนถูกมาก)</span></div>
+
+              <div style="display:flex; align-items:center; flex-wrap:wrap; gap:8px; margin-top:4px;">
+
+                <span><b>Wallet Address:</b> <span id="usdtWalletAddress" style="font-family:monospace; font-size:0.92rem; color:#0f172a; font-weight:700; word-break:break-all;">0x54Debd9f5fA08053B9a37bC3B09Ba5024Ec9dd0b</span></span>
+
+                <button type="button" onclick="navigator.clipboard.writeText('0x54Debd9f5fA08053B9a37bC3B09Ba5024Ec9dd0b'); this.innerText='✅ คัดลอกแล้ว!'; setTimeout(()=>this.innerText='📋 คัดลอกเลขกระเป๋า', 2200);" style="background:#fef3c7; color:#b45309; border:1px solid #fcd34d; border-radius:6px; padding:2px 8px; font-size:0.78rem; font-weight:700; cursor:pointer;">📋 คัดลอกเลขกระเป๋า</button>
+
+              </div>
+
+              <div style="margin-top:8px; font-size:0.92rem; color:#b45309;">ยอดชำระ: <b id="usdtExactAmount" style="font-size:1.15rem; color:#d97706;">16 USDT</b> <span style="font-size:0.82rem; color:#475569;">(ส่งด่วนฟรีถึงหน้าบ้าน)</span></div>
+
+            </div>
+
+            <div style="text-align:center; margin-top:10px;">
+
+              <img src="usdt_qr_bep20.png" alt="USDT BEP-20 QR Code" style="max-width:200px; width:100%; border-radius:8px; border:1px solid #cbd5e1; box-shadow:0 2px 6px rgba(0,0,0,0.08);">
+
+              <div style="font-size:0.8rem; color:#64748b; margin-top:6px;">สแกนเพื่อโอน USDT ผ่านแอปกระเป๋าคริปโต (เลือก Network: BEP-20)</div>
+
+            </div>
+
+          </div>
 
 
 
