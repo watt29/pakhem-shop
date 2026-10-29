@@ -2842,6 +2842,18 @@
         });
 
         const urlParams = new URLSearchParams(window.location.search);
+        const paramUid = urlParams.get('uid');
+        if (paramUid) {
+          try { localStorage.setItem('pakhem_line_uid', paramUid.trim()); } catch(e) {}
+        }
+        const paramName = urlParams.get('name');
+        if (paramName && document.getElementById('custName')) {
+          document.getElementById('custName').value = paramName.trim();
+        }
+        const paramPhone = urlParams.get('phone');
+        if (paramPhone && document.getElementById('custPhone')) {
+          document.getElementById('custPhone').value = paramPhone.trim();
+        }
         const paramPkg = urlParams.get('pkg');
         if (paramPkg && typeof selectProduct === 'function') {
           setTimeout(function() { selectProduct(paramPkg); }, 150);
@@ -4007,7 +4019,9 @@
 
         : `[🧊 ส่งด่วนแพ็กซองฟอยล์เก็บความเย็น]`;
 
-      const combinedNote = [shipLabel, selectedSlipOcrText, note].filter(Boolean).join(' ');
+      const savedLineUid = (new URLSearchParams(window.location.search).get('uid') || localStorage.getItem('pakhem_line_uid') || '').trim();
+      const lineUidTag = savedLineUid ? `[LINE_UID:${savedLineUid}]` : '';
+      const combinedNote = [shipLabel, selectedSlipOcrText, note, lineUidTag].filter(Boolean).join(' ');
 
 
 
@@ -4036,6 +4050,7 @@
         note: combinedNote,
 
         slip_url: uploadedSlipUrl,
+        line_uid: savedLineUid || null,
 
         fbc: window.pkfFbc || localStorage.getItem('pkf_fbc') || null,
 
