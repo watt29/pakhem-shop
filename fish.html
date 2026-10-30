@@ -2200,7 +2200,7 @@
 
           <label for="custPhone">เบอร์โทรศัพท์ (สำหรับพนักงานส่งของ) *</label>
 
-          <input type="tel" id="custPhone" class="form-control" placeholder="ระบุเบอร์โทรศัพท์ 10 หลัก" required pattern="[0-9]{9,10}">
+          <input type="tel" id="custPhone" class="form-control" oninput="this.value = normalizeThaiDigitsWeb(this.value)" placeholder="ระบุเบอร์โทรศัพท์ 10 หลัก" required pattern="[0-9]{9,10}">
 
         </div>
 
@@ -2727,8 +2727,14 @@
     let lastAutoAreaText = '';
     let currentZipInfo = null;
 
+    function normalizeThaiDigitsWeb(str) {
+      return String(str == null ? '' : str)
+        .replace(/[๐-๙]/g, ch => String(ch.charCodeAt(0) - 0x0E50))
+        .replace(/[０-９]/g, ch => String(ch.charCodeAt(0) - 0xFF10));
+    }
+
     function lookupThaiZipWeb(zipCode) {
-      const clean = String(zipCode || '').replace(/\D/g, '');
+      const clean = normalizeThaiDigitsWeb(zipCode).replace(/\D/g, '');
       if (clean.length !== 5 || typeof THAI_ZIP_DB === 'undefined' || !THAI_ZIP_DB[clean]) return null;
       const entry = THAI_ZIP_DB[clean];
       const isBkk = clean.indexOf('10') === 0 || String(entry.p || '').indexOf('กรุงเทพ') !== -1;
@@ -2737,7 +2743,7 @@
     }
 
     function validateThaiPhoneWeb(rawPhone) {
-      const digits = String(rawPhone || '').replace(/\D/g, '');
+      const digits = normalizeThaiDigitsWeb(rawPhone).replace(/\D/g, '');
       if (!digits) return { valid: false, phone: '', reason: 'ยังไม่ได้ระบุเบอร์โทรศัพท์' };
       if (digits.length < 10) return { valid: false, phone: digits, reason: 'เบอร์โทรศัพท์มีแค่ ' + digits.length + ' หลัก (ต้องครบ 10 หลัก)' };
       if (digits.length > 10) return { valid: false, phone: digits, reason: 'เบอร์โทรศัพท์เกินเป็น ' + digits.length + ' หลัก (ต้องมี 10 หลักพอดี)' };
@@ -2750,7 +2756,7 @@
     }
 
     function enrichThaiAddressWeb(rawAddress) {
-      let addr = String(rawAddress || '').trim();
+      let addr = normalizeThaiDigitsWeb(rawAddress).trim();
       if (!addr) return addr;
       const zipM = addr.match(/\b([1-9]\d{4})\b/);
       const zipCode = zipM ? zipM[1] : '';
@@ -2808,8 +2814,8 @@
     }
 
     function syncQuickAddressHelper() {
-      const house = (document.getElementById('quickHouseNo')?.value || '').trim();
-      const zip = (document.getElementById('quickZipCode')?.value || '').trim();
+      const house = normalizeThaiDigitsWeb(document.getElementById('quickHouseNo')?.value || '').trim();
+      const zip = normalizeThaiDigitsWeb(document.getElementById('quickZipCode')?.value || '').trim();
       const tambonSel = (document.getElementById('quickTambonSelect')?.value || '').trim();
       const addrEl = document.getElementById('custAddress');
       if (!addrEl) return;
@@ -2824,7 +2830,7 @@
     }
 
     async function handleQuickZipLookup(zipVal) {
-      const cleanZip = (zipVal || '').replace(/\D/g, '').slice(0, 5);
+      const cleanZip = normalizeThaiDigitsWeb(zipVal || '').replace(/\D/g, '').slice(0, 5);
       const zipInput = document.getElementById('quickZipCode');
       if (zipInput && zipInput.value !== cleanZip) zipInput.value = cleanZip;
       const hintEl = document.getElementById('zipAutoResultHint');
