@@ -599,6 +599,67 @@
     </div>
   </div>
 
+  <!-- Edit Order / Customer CRM Modal -->
+  <div id="editRecordModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(15,23,42,0.8); z-index:999999; justify-content:center; align-items:center; padding:16px;">
+    <div style="background:#fff; border-radius:16px; width:100%; max-width:520px; max-height:92vh; overflow-y:auto; padding:22px; box-shadow:0 25px 50px rgba(0,0,0,0.4);">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; border-bottom:1px solid #e2e8f0; padding-bottom:10px;">
+        <h3 style="font-size:1.1rem; color:#0f172a; font-weight:700;" id="editModalTitle">✏️ แก้ไขข้อมูลออเดอร์ / ลูกค้า</h3>
+        <button type="button" onclick="closeEditModal()" style="background:none; border:none; font-size:1.4rem; cursor:pointer; color:#64748b;">×</button>
+      </div>
+      <form onsubmit="submitEditRecord(event)" style="display:flex; flex-direction:column; gap:10px;">
+        <input type="hidden" id="editRecType" value="ORDER">
+        <input type="hidden" id="editRecId" value="">
+        <div>
+          <label style="display:block; font-size:0.8rem; font-weight:600; color:#334155; margin-bottom:3px;">👤 ชื่อลูกค้า / ผู้รับพัสดุ:</label>
+          <input type="text" id="editCustName" required style="width:100%; padding:8px 10px; border:1px solid var(--border); border-radius:8px; font-size:0.88rem;">
+        </div>
+        <div>
+          <label style="display:block; font-size:0.8rem; font-weight:600; color:#334155; margin-bottom:3px;">📞 เบอร์โทรศัพท์ (10 หลัก):</label>
+          <input type="text" id="editCustPhone" style="width:100%; padding:8px 10px; border:1px solid var(--border); border-radius:8px; font-size:0.88rem;">
+        </div>
+        <div>
+          <label style="display:block; font-size:0.8rem; font-weight:600; color:#334155; margin-bottom:3px;">📍 ที่อยู่จัดส่ง (บ้านเลขที่ ตำบล อำเภอ จังหวัด รหัสไปรษณีย์) / ข้อความ:</label>
+          <textarea id="editCustAddress" rows="3" required style="width:100%; padding:8px 10px; border:1px solid var(--border); border-radius:8px; font-size:0.88rem; font-family:inherit;"></textarea>
+        </div>
+        <div id="editOrderOnlyFields" style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+          <div style="grid-column:span 2;">
+            <label style="display:block; font-size:0.8rem; font-weight:600; color:#334155; margin-bottom:3px;">📦 รายการสินค้า / แพ็กเกจ:</label>
+            <input type="text" id="editPkgName" style="width:100%; padding:8px 10px; border:1px solid var(--border); border-radius:8px; font-size:0.88rem;">
+          </div>
+          <div>
+            <label style="display:block; font-size:0.8rem; font-weight:600; color:#334155; margin-bottom:3px;">💵 ยอดเงิน (บาท):</label>
+            <input type="number" id="editPrice" step="0.01" style="width:100%; padding:8px 10px; border:1px solid var(--border); border-radius:8px; font-size:0.88rem;">
+          </div>
+          <div>
+            <label style="display:block; font-size:0.8rem; font-weight:600; color:#334155; margin-bottom:3px;">💳 วิธีชำระเงิน:</label>
+            <select id="editPayMethod" style="width:100%; padding:8px 10px; border:1px solid var(--border); border-radius:8px; font-size:0.88rem; background:#fff;">
+              <option value="TRANSFER">🏦 โอนเงิน (TRANSFER)</option>
+              <option value="COD">🚚 เก็บเงินปลายทาง (COD)</option>
+            </select>
+          </div>
+          <div>
+            <label style="display:block; font-size:0.8rem; font-weight:600; color:#334155; margin-bottom:3px;">📌 สถานะออเดอร์:</label>
+            <select id="editStatus" style="width:100%; padding:8px 10px; border:1px solid var(--border); border-radius:8px; font-size:0.88rem; background:#fff;">
+              <option value="PENDING">🟡 รอจัดส่ง (Pending)</option>
+              <option value="CONFIRMED">🔵 ยืนยันแล้ว (Confirmed)</option>
+              <option value="SHIPPED">🚚 จัดส่งแล้ว (Shipped)</option>
+              <option value="DELIVERED">🟢 สำเร็จ (Delivered)</option>
+              <option value="CANCELLED">⚪ ยกเลิก (Cancelled)</option>
+            </select>
+          </div>
+          <div>
+            <label style="display:block; font-size:0.8rem; font-weight:600; color:#334155; margin-bottom:3px;">📝 หมายเหตุ / โน้ต:</label>
+            <input type="text" id="editNote" style="width:100%; padding:8px 10px; border:1px solid var(--border); border-radius:8px; font-size:0.88rem;">
+          </div>
+        </div>
+        <div style="display:flex; gap:8px; margin-top:8px;">
+          <button type="submit" class="btn-action green" style="flex:1; padding:10px; font-size:0.9rem; justify-content:center; font-weight:700;">💾 บันทึกการแก้ไข</button>
+          <button type="button" onclick="closeEditModal()" class="btn-action" style="padding:10px 18px; font-size:0.9rem;">ยกเลิก</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <script>
     const SUPA_URL = 'https://usqhvujqmnxqrdoovvnp.supabase.co/rest/v1';
     const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVzcWh2dWpxbW54cXJkb292dm5wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQyOTc4NjAsImV4cCI6MjA2OTg3Mzg2MH0.3kCGGAe1OoSJ_SCN_NDSdnKep1hXIMgMxR1lBd_i2eI';
@@ -776,7 +837,11 @@
             </div>
           </td>
           <td>
-            <button onclick="printShippingSlip(${o.id})" class="btn-action green" style="padding:4px 8px; font-size:0.75rem;">📦 ใบปะหน้า</button>
+            <div style="display:flex; gap:4px; flex-wrap:wrap;">
+              <button onclick="printShippingSlip(${o.id})" class="btn-action green" style="padding:4px 8px; font-size:0.74rem;" title="พิมพ์ใบปะหน้า">📦 ใบปะหน้า</button>
+              <button onclick="openEditOrderModal(${o.id})" class="btn-action" style="padding:4px 8px; font-size:0.74rem; background:#eff6ff; color:#1d4ed8; border-color:#bfdbfe;" title="แก้ไขข้อมูลออเดอร์">✏️ แก้ไข</button>
+              <button onclick="deleteOrderRecord(${o.id}, '${(o.order_code || '').replace(/'/g, '')}')" class="btn-action" style="padding:4px 8px; font-size:0.74rem; background:#fef2f2; color:#dc2626; border-color:#fecaca;" title="ลบออเดอร์นี้">🗑️ ลบ</button>
+            </div>
           </td>
         </tr>
       `;
@@ -839,6 +904,7 @@
             lastDate: l.created_at,
             lastOrderCode: l.platform || 'CHAT',
             lastOrderId: null,
+            lastLeadId: l.id,
             group: 'DROP'
           });
         }
@@ -894,7 +960,10 @@
             <td>${summaryTxt}</td>
             <td><small style="color:var(--text-muted);">${new Date(c.lastDate).toLocaleString('th-TH')}</small></td>
             <td>
-              <button type="button" onclick="navigator.clipboard.writeText('${(c.name + ' ' + c.phone + ' ' + c.address).replace(/'/g, '')}'); showToast('📋 คัดลอกชื่อ-เบอร์-ที่อยู่แล้ว!');" class="btn-action" style="font-size:0.74rem; padding:3px 8px;">📋 คัดลอกที่อยู่</button>
+              <div style="display:flex; gap:4px; flex-wrap:wrap;">
+                <button type="button" onclick="navigator.clipboard.writeText('${(c.name + ' ' + c.phone + ' ' + c.address).replace(/'/g, '')}'); showToast('📋 คัดลอกชื่อ-เบอร์-ที่อยู่แล้ว!');" class="btn-action" style="font-size:0.73rem; padding:3px 7px;">📋 คัดลอก</button>
+                ${c.lastOrderId ? `<button type="button" onclick="openEditOrderModal(${c.lastOrderId})" class="btn-action" style="font-size:0.73rem; padding:3px 7px; background:#eff6ff; color:#1d4ed8; border-color:#bfdbfe;">✏️ แก้ไข</button><button type="button" onclick="deleteOrderRecord(${c.lastOrderId}, '${(c.lastOrderCode || c.name || '').replace(/'/g, '')}')" class="btn-action" style="font-size:0.73rem; padding:3px 7px; background:#fef2f2; color:#dc2626; border-color:#fecaca;">🗑️ ลบ</button>` : (c.lastLeadId ? `<button type="button" onclick="openEditLeadModal(${c.lastLeadId})" class="btn-action" style="font-size:0.73rem; padding:3px 7px; background:#eff6ff; color:#1d4ed8; border-color:#bfdbfe;">✏️ แก้ไข</button><button type="button" onclick="deleteLeadRecord(${c.lastLeadId}, '${(c.name || '').replace(/'/g, '')}')" class="btn-action" style="font-size:0.73rem; padding:3px 7px; background:#fef2f2; color:#dc2626; border-color:#fecaca;">🗑️ ลบ</button>` : '')}
+              </div>
             </td>
           </tr>
         `;
@@ -993,12 +1062,170 @@
               <td><b>${l.sender_name || '-'}</b>${l.phone ? `<br><small>📞 ${l.phone}</small>` : ''}</td>
               <td>${l.message || '-'}</td>
               <td><span class="badge confirmed">${l.private_replied ? '✅ บอทตอบแล้ว' : '⏳ รอตอบ'}</span></td>
-              <td><a href="${linkUrl}" target="_blank" class="btn-action" style="font-size:0.75rem;">🔗 เปิดดูแชท/โพสต์</a></td>
+              <td>
+                <div style="display:flex; gap:4px; flex-wrap:wrap;">
+                  <a href="${linkUrl}" target="_blank" class="btn-action" style="font-size:0.74rem; padding:3px 7px;">🔗 เปิดดู</a>
+                  <button type="button" onclick="openEditLeadModal(${l.id})" class="btn-action" style="font-size:0.74rem; padding:3px 7px; background:#eff6ff; color:#1d4ed8; border-color:#bfdbfe;">✏️ แก้ไข</button>
+                  <button type="button" onclick="deleteLeadRecord(${l.id}, '${(l.sender_name || '').replace(/'/g, '')}')" class="btn-action" style="font-size:0.74rem; padding:3px 7px; background:#fef2f2; color:#dc2626; border-color:#fecaca;">🗑️ ลบ</button>
+                </div>
+              </td>
             </tr>
           `;
         }).join('');
       } catch (e) {
         tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; color:red; padding:16px;">โหลดรายชื่อไม่สำเร็จ: ${e.message}</td></tr>`;
+      }
+    }
+
+    function openEditOrderModal(orderId) {
+      const o = (cachedOrders || []).find(x => x.id === orderId);
+      if (!o) return;
+      document.getElementById('editRecType').value = 'ORDER';
+      document.getElementById('editRecId').value = o.id;
+      document.getElementById('editModalTitle').innerText = '✏️ แก้ไขออเดอร์: ' + (o.order_code || ('#' + o.id));
+      document.getElementById('editCustName').value = o.customer_name || '';
+      document.getElementById('editCustPhone').value = o.phone || '';
+      document.getElementById('editCustAddress').value = o.address || '';
+      document.getElementById('editPkgName').value = o.package_name || o.product_name || '';
+      document.getElementById('editPrice').value = parseFloat(o.price) || 0;
+      document.getElementById('editPayMethod').value = (o.payment_method || '').toUpperCase().includes('COD') ? 'COD' : 'TRANSFER';
+      document.getElementById('editStatus').value = (o.status || 'PENDING').toUpperCase();
+      document.getElementById('editNote').value = o.note || '';
+      document.getElementById('editOrderOnlyFields').style.display = 'grid';
+      document.getElementById('editRecordModal').style.display = 'flex';
+    }
+
+    function openEditLeadModal(leadId) {
+      const l = (cachedLeadsList || []).find(x => x.id === leadId);
+      if (!l) return;
+      document.getElementById('editRecType').value = 'LEAD';
+      document.getElementById('editRecId').value = l.id;
+      document.getElementById('editModalTitle').innerText = '✏️ แก้ไขข้อมูลลูกค้าทักแชท: ' + (l.sender_name || ('#' + l.id));
+      document.getElementById('editCustName').value = l.sender_name || '';
+      document.getElementById('editCustPhone').value = l.phone || '';
+      document.getElementById('editCustAddress').value = l.message || '';
+      document.getElementById('editOrderOnlyFields').style.display = 'none';
+      document.getElementById('editRecordModal').style.display = 'flex';
+    }
+
+    function closeEditModal() {
+      document.getElementById('editRecordModal').style.display = 'none';
+    }
+
+    async function submitEditRecord(e) {
+      e.preventDefault();
+      const recType = document.getElementById('editRecType').value;
+      const recId = parseInt(document.getElementById('editRecId').value, 10);
+      const name = document.getElementById('editCustName').value.trim();
+      const phone = document.getElementById('editCustPhone').value.trim();
+      const addr = document.getElementById('editCustAddress').value.trim();
+      if (!recId) return;
+
+      try {
+        if (recType === 'ORDER') {
+          const pkgName = document.getElementById('editPkgName').value.trim();
+          const price = parseFloat(document.getElementById('editPrice').value) || 0;
+          const payMethod = document.getElementById('editPayMethod').value;
+          const status = document.getElementById('editStatus').value;
+          const note = document.getElementById('editNote').value.trim();
+
+          const res = await fetch(`${SUPA_URL}/rpc/edit_admin_order`, {
+            method: 'POST',
+            headers: {
+              'apikey': SUPA_KEY,
+              'Authorization': 'Bearer ' + SUPA_KEY,
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              pin: ADMIN_PIN,
+              p_id: recId,
+              p_customer_name: name,
+              p_phone: phone,
+              p_address: addr,
+              p_package_name: pkgName,
+              p_price: price,
+              p_payment_method: payMethod,
+              p_status: status,
+              p_note: note || null
+            })
+          });
+          if (!res.ok) throw new Error('บันทึกการแก้ไขออเดอร์ไม่สำเร็จ');
+          closeEditModal();
+          showToast('✅ บันทึกการแก้ไขข้อมูลออเดอร์ & ลูกค้าเรียบร้อย!');
+          notifyTelegramAccounting('');
+          loadOrders();
+        } else {
+          const res = await fetch(`${SUPA_URL}/rpc/edit_admin_lead`, {
+            method: 'POST',
+            headers: {
+              'apikey': SUPA_KEY,
+              'Authorization': 'Bearer ' + SUPA_KEY,
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              pin: ADMIN_PIN,
+              p_id: recId,
+              p_sender_name: name,
+              p_phone: phone || null,
+              p_message: addr
+            })
+          });
+          if (!res.ok) throw new Error('บันทึกการแก้ไขข้อมูลลูกค้าไม่สำเร็จ');
+          closeEditModal();
+          showToast('✅ บันทึกการแก้ไขข้อมูลลูกค้าเรียบร้อย!');
+          loadLeads();
+        }
+      } catch (err) {
+        alert('เกิดข้อผิดพลาด: ' + err.message);
+      }
+    }
+
+    async function deleteOrderRecord(orderId, label) {
+      if (!confirm(`⚠️ ยืนยันการลบออเดอร์ "${label}" ออกจากระบบใช่หรือไม่?`)) return;
+      try {
+        const res = await fetch(`${SUPA_URL}/rpc/delete_admin_order`, {
+          method: 'POST',
+          headers: {
+            'apikey': SUPA_KEY,
+            'Authorization': 'Bearer ' + SUPA_KEY,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ pin: ADMIN_PIN, p_id: orderId })
+        });
+        if (res.ok) {
+          cachedOrders = (cachedOrders || []).filter(x => x.id !== orderId);
+          refreshOrderStatsAndRender();
+          notifyTelegramAccounting('');
+          showToast(`🗑️ ลบออเดอร์ "${label}" เรียบร้อยแล้ว!`);
+        } else {
+          alert('ไม่สามารถลบออเดอร์ได้');
+        }
+      } catch (err) {
+        alert('เกิดข้อผิดพลาด: ' + err.message);
+      }
+    }
+
+    async function deleteLeadRecord(leadId, label) {
+      if (!confirm(`⚠️ ยืนยันการลบรายชื่อ "${label}" ออกจากระบบใช่หรือไม่?`)) return;
+      try {
+        const res = await fetch(`${SUPA_URL}/rpc/delete_admin_lead`, {
+          method: 'POST',
+          headers: {
+            'apikey': SUPA_KEY,
+            'Authorization': 'Bearer ' + SUPA_KEY,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ pin: ADMIN_PIN, p_id: leadId })
+        });
+        if (res.ok) {
+          cachedLeadsList = (cachedLeadsList || []).filter(x => x.id !== leadId);
+          loadLeads();
+          showToast(`🗑️ ลบรายชื่อ "${label}" เรียบร้อยแล้ว!`);
+        } else {
+          alert('ไม่สามารถลบรายชื่อได้');
+        }
+      } catch (err) {
+        alert('เกิดข้อผิดพลาด: ' + err.message);
       }
     }
 
