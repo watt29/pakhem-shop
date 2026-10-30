@@ -2732,7 +2732,7 @@
       if (clean.length !== 5 || typeof THAI_ZIP_DB === 'undefined' || !THAI_ZIP_DB[clean]) return null;
       const entry = THAI_ZIP_DB[clean];
       const isBkk = clean.indexOf('10') === 0 || String(entry.p || '').indexOf('กรุงเทพ') !== -1;
-      const tambons = entry.t ? String(entry.t).split('|').filter(Boolean) : [];
+      const tambons = Array.isArray(entry.t) ? entry.t : (entry.t ? String(entry.t).split('|').filter(Boolean) : []);
       return { zip: clean, amphoe: entry.a || '', province: entry.p || '', tambons: tambons, isBkk: isBkk };
     }
 
@@ -2782,12 +2782,12 @@
         }
         if (!hasDist && zipInfo.amphoe) {
           const dLabel = zipInfo.amphoe.indexOf('เขต') === 0 ? zipInfo.amphoe : (zipInfo.isBkk ? ('เขต' + zipInfo.amphoe) : ('อ.' + zipInfo.amphoe));
-          if (addr.indexOf(zipInfo.amphoe) !== -1 && !zipInfo.isBkk) addr = addr.replace(zipInfo.amphoe, dLabel);
+          if (zipInfo.amphoe !== matchedTambon && addr.indexOf(zipInfo.amphoe) !== -1 && !zipInfo.isBkk && addr.indexOf('ต.' + zipInfo.amphoe) === -1 && addr.indexOf('ตำบล' + zipInfo.amphoe) === -1) addr = addr.replace(zipInfo.amphoe, dLabel);
           else addParts.push(dLabel);
         }
         if (!hasProv && zipInfo.province) {
           const pLabel = zipInfo.isBkk ? zipInfo.province : ('จ.' + zipInfo.province);
-          if (addr.indexOf(zipInfo.province) !== -1 && !zipInfo.isBkk) addr = addr.replace(zipInfo.province, pLabel);
+          if (zipInfo.province !== zipInfo.amphoe && zipInfo.province !== matchedTambon && addr.indexOf(zipInfo.province) !== -1 && !zipInfo.isBkk && addr.indexOf('อ.' + zipInfo.province) === -1 && addr.indexOf('ต.' + zipInfo.province) === -1) addr = addr.replace(zipInfo.province, pLabel);
           else addParts.push(pLabel);
         }
         if (addParts.length > 0) {
